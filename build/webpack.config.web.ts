@@ -9,6 +9,7 @@ import { WebpackManifestPlugin } from 'webpack-manifest-plugin'
 import SitemapPlugin from 'sitemap-webpack-plugin'
 import { prerenderRoutes } from './routes'
 import { createOutputNameFn } from './createOutputNameFn'
+import 'webpack-dev-server'
 
 // ----------------------------------------------------------------------------
 // Web
@@ -37,17 +38,27 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
     },
 
     devServer: {
-        index: 'app.html',
+        devMiddleware: {
+            index: 'app.html',
+            writeToDisk: (filePath) => {
+                // Since output.publicPath is '/public', app.html can only be accessed at /public/index.html
+                // Instead, we need to write it to disk and have webpack-dev-server serve it from '/' (contentBasePublicPath)
+                return filePath.endsWith('.html')
+            },
+        },
         historyApiFallback: {
             index: 'app.html',
         },
-        writeToDisk: (filePath) => {
-            // Since output.publicPath is '/public', app.html can only be accessed at /public/index.html
-            // Instead, we need to write it to disk and have webpack-dev-server serve it from '/' (contentBasePublicPath)
-            return filePath.endsWith('.html')
-        },
-        contentBase: [distWebDir, staticDir],
-        contentBasePublicPath: '/',
+        static: [
+            {
+                directory: distWebDir,
+                publicPath: '/',
+            },
+            {
+                directory: staticDir,
+                publicPath: '/',
+            },
+        ],
         proxy: {
             '/api': 'http://localhost:3000',
         },
