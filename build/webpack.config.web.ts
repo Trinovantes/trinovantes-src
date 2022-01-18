@@ -24,7 +24,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
 
     output: {
         path: distWebPublicDir,
-        publicPath: publicPath,
+        publicPath,
         filename: createOutputNameFn('js', true),
         chunkFilename: createOutputNameFn('js', false),
     },
