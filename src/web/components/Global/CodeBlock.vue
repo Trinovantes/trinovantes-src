@@ -1,7 +1,6 @@
 <script lang="ts">
 import { ref, computed, defineComponent, watch } from 'vue'
 import hljs from 'highlight.js'
-import 'highlight.js/styles/stackoverflow-light.css'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
 import { sleep } from '@/common/utils/sleep'
 
