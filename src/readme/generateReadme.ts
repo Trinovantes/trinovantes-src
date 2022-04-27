@@ -106,7 +106,7 @@ class ReadmeGenerator {
                         ? `<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank">${project.name}</a>`
                         : project.name
                     const projectRepoTag = (project.repo && !project.isPrivate)
-                        ? ` <a href="${project.repo}" title="${project.repo}" target="_blank"><img src="./src/web/assets/img/icons/github.svg" width="16" height="16"></a>`
+                        ? ` <a href="${project.repo}" title="${project.repo}" target="_blank"><img src="https://github.com/Trinovantes/trinovantes/blob/dev/src/web/assets/img/icons/github.svg" width="16" height="16"></a>`
                         : ''
 
                     this.addLn(`## ${projectLabelTag}${projectRepoTag}`)
