@@ -5964,10 +5964,10 @@ vue-router@^4.0.10:
   dependencies:
     "@vue/devtools-api" "^6.0.0"
 
-vue-ssr-assets-plugin@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/vue-ssr-assets-plugin/-/vue-ssr-assets-plugin-0.1.6.tgz#0d7405a7fa497e49f49a73248a4affebe5909378"
-  integrity sha512-cKW7E4/zsE0PCdZP5KkHKvf250YKuXvH7haPH2SgiwMRneFgAZOmUttqJjrLMfi/gkMW2sZa2XBbgP1x7YUNAg==
+vue-ssr-assets-plugin@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vue-ssr-assets-plugin/-/vue-ssr-assets-plugin-0.2.0.tgz#07a3c2f2474fc385fe1ad55e4049dbd2e0949bac"
+  integrity sha512-xjX1adeFETxRszfQisu/cAX+e+Xqz1+prrqDfdzlOijPIEtAWGO9OxV151XJQ1Qa0sJd7TD0FV1q2tgRwR38YQ==
   dependencies:
     ajv "^8.6.0"
 
