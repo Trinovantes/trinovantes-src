@@ -4,12 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - dev
     paths-ignore:
       - README.md
       - .vscode
       - .editorconfig
       - .gitignore
+
+env:
+  BUILD_DIR: dist
+  WORKTREE_DIR: master
 
 jobs:
   generate-readme:
@@ -39,7 +43,15 @@ jobs:
       - name: Run
         run: yarn generateReadme
 
-      - name: Commit changes
+      - name: Set up worktree
+        run: |
+          git fetch
+          git worktree add $WORKTREE_DIR master
+          find $WORKTREE_DIR -not -path $WORKTREE_DIR -not -path '*/\.*' | xargs -t rm -rf
+          mv README.md $WORKTREE_DIR
+
+      - name: Commit worktree branch
+        working-directory: ${{ env.WORKTREE_DIR }}
         run: |
           git config --global user.name 'Generate README Workflow'
           git config --global user.email '<>'
