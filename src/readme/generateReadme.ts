@@ -82,7 +82,7 @@ class ReadmeGenerator {
                 {
                     const imgPath = project.img?.startsWith('http')
                         ? project.img
-                        : `./src/web/pages/Projects/img/${project.img}`
+                        : `https://github.com/Trinovantes/trinovantes/blob/dev/src/web/pages/Projects/img/${project.img}`
                     const imgTag = `<img src="${imgPath}" width="${IMG_WIDTH}" title="${project.name}">`
 
                     let previewUrl = ''
