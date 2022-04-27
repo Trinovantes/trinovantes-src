@@ -1,13 +1,13 @@
 <script lang="ts">
 import { Projects, projects as unhydratedProjects } from '@/common/Project'
-import { defineComponent, useSSRContext } from 'vue'
+import { defineComponent } from 'vue'
 import { HydrationKey, loadStateFromDom } from '@/web/utils/hydration'
 import axios from 'axios'
 import { getIconSvgRaw, ResponsiveImage } from '@/web/utils/ResponsiveLoader'
 import { useMeta } from 'vue-meta'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { AppContext } from '@/web/AppContext'
 import { formatUrl } from '@/common/utils/formatUrl'
+import { useAppContext } from '@/web/app'
 
 export default defineComponent({
     async setup() {
@@ -62,8 +62,8 @@ async function loadProjects(): Promise<Projects> {
     let projects: Projects | undefined
 
     if (DEFINE.IS_SSR) {
-        const ssrContext = useSSRContext()
-        projects = (ssrContext as AppContext).projects
+        const ssrContext = useAppContext()
+        projects = ssrContext?.projects
     } else {
         projects = loadStateFromDom<Projects>(HydrationKey.Projects)
 

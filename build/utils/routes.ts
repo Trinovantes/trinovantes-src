@@ -1,4 +1,4 @@
-import { srcWebDir } from './webpack.common'
+import { srcWebDir } from '../webpack.common'
 import fs from 'fs/promises'
 import path from 'path'
 import { blogEntries } from '@/web/pages/Blog/getBlogPosts'

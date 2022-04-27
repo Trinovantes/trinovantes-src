@@ -1,59 +1,69 @@
-import { VueSsgServer } from 'puppeteer-prerender-plugin'
-import { createApp } from './app'
+import { SpaServer } from 'puppeteer-prerender-plugin'
+import express from 'express'
+import { AppContext, createApp } from './app'
 import { renderMetaToString } from 'vue-meta/ssr'
-import { HydrationKey, saveStateToDom } from '@/web/utils/hydration'
+import { renderToString } from '@vue/server-renderer'
+import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { Projects } from '@/common/Project'
-import { AppContext } from './AppContext'
+import { HydrationKey, saveStateToDom } from './utils/hydration'
 
-let projects: Projects | null = null
+function createAsyncHandler(handler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>): express.RequestHandler {
+    return (req, res, next) => {
+        handler(req, res, next).catch(next)
+    }
+}
 
-const server = new VueSsgServer<AppContext>({
+const assetRenderer = new VueSsrAssetRenderer(DEFINE.MANIFEST_FILE)
+
+const server = new SpaServer({
+    entryFile: DEFINE.ENTRY_FILE,
     staticDir: DEFINE.PUBLIC_DIR,
     publicPath: DEFINE.PUBLIC_PATH,
-    clientEntryJs: DEFINE.CLIENT_ENTRY_JS,
-    clientEntryCss: DEFINE.CLIENT_ENTRY_CSS,
-    manifestFile: DEFINE.MANIFEST_FILE,
 
-    async createSsrContext(req) {
-        if (!projects) {
-            projects = await fetchProjects()
-        }
+    handlers: {
+        '*': createAsyncHandler(async(req, res) => {
+            const url = req.originalUrl
+            const appContext: AppContext = {
+                _matchedComponents: new Set(),
+                url,
+                projects: await fetchProjects(),
+            }
 
-        const appContext: AppContext = {
-            url: req.originalUrl,
-            projects,
-        }
+            const { app, router } = await createApp(appContext)
+            if (router.currentRoute.value.fullPath !== url) {
+                res.redirect(router.currentRoute.value.fullPath)
+                return
+            }
 
-        return appContext
-    },
+            const appHtml = await renderToString(app, appContext)
+            await renderMetaToString(app, appContext)
+            const { header, footer } = assetRenderer.renderAssets(appContext._matchedComponents)
 
-    async createApp(ssrContext) {
-        return await createApp(ssrContext)
-    },
-
-    async onPostRender(app, ssrContext) {
-        await renderMetaToString(app, ssrContext)
-
-        const appContext = ssrContext
-        if (!appContext.teleports) {
-            appContext.teleports = {}
-        }
-        if (!appContext.teleports.head) {
-            appContext.teleports.head = ''
-        }
-
-        appContext.teleports.head += `
-            <link rel="icon" type="image/png" href="/favicon.png">
-
-            <link rel="preconnect" href="https://fonts.googleapis.com">
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-            <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
-
-            <script>
-                ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
-            </script>
-        `
+            res.setHeader('Content-Type', 'text/html')
+            res.status(200)
+            res.send(`
+                <!DOCTYPE html ${appContext.teleports?.htmlAttrs ?? ''}>
+                <html lang="en">
+                <head ${appContext.teleports?.headAttrs ?? ''}>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1">
+                    <link rel="icon" type="image/png" href="/favicon.png">
+                    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+                    <script>
+                        ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
+                    </script>
+                    ${header}
+                    ${appContext.teleports?.head ?? ''}
+                </head>
+                <body ${appContext.teleports?.bodyAttrs ?? ''}>
+                    <noscript><span class="noscript">This website requires JavaScript</span></noscript>
+                    <div id="app">${appHtml}</div>
+                    ${appContext.teleports?.body ?? ''}
+                    ${footer}
+                </body>
+                </html>
+            `)
+        }),
     },
 })
 

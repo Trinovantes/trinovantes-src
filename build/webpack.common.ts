@@ -1,7 +1,7 @@
 import path from 'path'
 import { Configuration, DefinePlugin } from 'webpack'
 import { VueLoaderPlugin } from 'vue-loader'
-import { getGitHash } from './secrets'
+import { getGitHash } from './utils/secrets'
 import { merge } from 'webpack-merge'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import nodeExternals from 'webpack-node-externals'
@@ -14,6 +14,8 @@ import nodeExternals from 'webpack-node-externals'
 const rootDir = path.resolve()
 
 export const isDev = (process.env.NODE_ENV === 'development')
+export const manifestFileName = 'ssr-manifest.json'
+export const entryFileName = 'app.html'
 export const gitHash = getGitHash(rootDir)
 export const publicPath = '/public/'
 
@@ -21,9 +23,10 @@ export const distDir = path.resolve(rootDir, 'dist')
 export const distApiDir = path.resolve(distDir, 'api')
 export const distReadmeDir = path.resolve(distDir, 'readme')
 export const distWebDir = path.resolve(distDir, 'web')
-export const distWebPublicDir = path.resolve(distDir, 'web', 'public')
+export const distWebPublicDir = path.resolve(distWebDir, 'public')
+export const entryFilePath = path.resolve(distWebDir, entryFileName)
 export const distSsgDir = path.resolve(distDir, 'ssg')
-export const manifestFilePath = path.resolve(distDir, 'ssg', 'ssr-manifest.json')
+export const manifestFilePath = path.resolve(distSsgDir, manifestFileName)
 
 export const srcDir = path.resolve(rootDir, 'src')
 export const srcApiDir = path.resolve(srcDir, 'api')
@@ -87,9 +90,6 @@ const commonConfig: Configuration = {
                 test: /\.vue$/,
                 use: [{
                     loader: 'vue-loader',
-                    options: {
-                        exposeFilename: true,
-                    },
                 }],
             },
         ],

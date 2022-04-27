@@ -2,13 +2,12 @@ import path from 'path'
 import { merge } from 'webpack-merge'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig } from './webpack.common'
+import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev } from './webpack.common'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { Configuration } from 'webpack'
-import { WebpackManifestPlugin } from 'webpack-manifest-plugin'
 import SitemapPlugin from 'sitemap-webpack-plugin'
-import { prerenderRoutes } from './routes'
-import { createOutputNameFn } from './createOutputNameFn'
+import { prerenderRoutes } from './utils/routes'
+import { VueSsrAssetsClientPlugin } from 'vue-ssr-assets-plugin'
 import 'webpack-dev-server'
 
 // ----------------------------------------------------------------------------
@@ -25,16 +24,9 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
     output: {
         path: distWebPublicDir,
         publicPath,
-        filename: createOutputNameFn('js', true),
-        chunkFilename: createOutputNameFn('js', false),
-    },
-
-    optimization: {
-        chunkIds: 'named',
-        splitChunks: {
-            chunks: 'all',
-            minSize: 0,
-        },
+        filename: isDev
+            ? '[name].js'
+            : '[name].[contenthash].js',
     },
 
     devServer: {
@@ -75,19 +67,20 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
             ],
         }),
         new MiniCssExtractPlugin({
-            filename: createOutputNameFn('css', true),
-            chunkFilename: createOutputNameFn('css', false),
+            filename: isDev
+                ? '[name].css'
+                : '[name].[contenthash].css',
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(srcWebDir, 'index.html'),
             filename: path.resolve(distWebDir, 'app.html'),
         }),
-        new WebpackManifestPlugin({
-            fileName: manifestFilePath,
-        }),
         new SitemapPlugin({
             base: 'https://www.stephenli.ca',
             paths: await prerenderRoutes,
+        }),
+        new VueSsrAssetsClientPlugin({
+            fileName: manifestFilePath,
         }),
     ],
 }))()
