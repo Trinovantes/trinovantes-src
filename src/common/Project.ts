@@ -113,6 +113,13 @@ export const projects: Projects = {
 
     [ProjectCategory.Misc]: [
         {
+            name: 'Quasar Unused Plugin',
+            repo: 'https://github.com/Trinovantes/quasar-unused-plugin',
+            tech: [
+                Tech.Typescript,
+            ],
+        },
+        {
             name: 'Puppeteer Prerender Plugin',
             repo: 'https://github.com/Trinovantes/puppeteer-prerender-plugin',
             tech: [
