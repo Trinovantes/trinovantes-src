@@ -4,6 +4,7 @@ import { defineAsyncComponent, defineComponent } from 'vue'
 
 export const TITLE = 'Vuex 4 Typescript Declarations Generator'
 export const CREATED_AT = dayjs.utc('2021-07-22')
+export const UPDATED_AT = dayjs.utc('2022-04-28')
 
 export default defineComponent({
     components: {
@@ -14,6 +15,7 @@ export default defineComponent({
         return {
             TITLE,
             CREATED_AT,
+            UPDATED_AT,
         }
     },
 })
@@ -23,8 +25,19 @@ export default defineComponent({
     <BlogPost
         :title="TITLE"
         :created-at="CREATED_AT"
+        :updated-at="UPDATED_AT"
         :with-sidebar="true"
     >
+        <div class="callout warning all-cols">
+            <p>
+                <strong>Update: Apr 28, 2022</strong>
+                <br>
+                <a href="https://vuejs.org/guide/scaling-up/state-management.html#pinia">Vuex is officially deprecated</a> and should not be used anymore.
+                You should use Pinia instead which already has great Typescript support out of the box.
+                Alternatively if your state is simple, you can simply use a global reactive object.
+            </p>
+        </div>
+
         <VuexGenerator class="all-cols" />
 
         <section>
