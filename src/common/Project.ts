@@ -113,6 +113,13 @@ export const projects: Projects = {
 
     [ProjectCategory.Misc]: [
         {
+            name: 'Vue SSR Assets Plugin',
+            repo: 'https://github.com/Trinovantes/vue-ssr-assets-plugin',
+            tech: [
+                Tech.Typescript,
+            ],
+        },
+        {
             name: 'Quasar Unused Plugin',
             repo: 'https://github.com/Trinovantes/quasar-unused-plugin',
             tech: [
