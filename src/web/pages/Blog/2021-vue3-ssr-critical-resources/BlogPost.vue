@@ -4,12 +4,14 @@ import { defineComponent } from 'vue'
 
 export const TITLE = 'Critical Webpack Resource Injection for Vue 3 SSR Applications'
 export const CREATED_AT = dayjs.utc('2021-09-03')
+export const UPDATED_AT = dayjs.utc('2022-04-28')
 
 export default defineComponent({
     setup() {
         return {
             TITLE,
             CREATED_AT,
+            UPDATED_AT,
         }
     },
 })
@@ -19,7 +21,17 @@ export default defineComponent({
     <BlogPost
         :title="TITLE"
         :created-at="CREATED_AT"
+        :updated-at="UPDATED_AT"
     >
+        <div class="callout positive">
+            <p>
+                <strong>Update: Apr 28, 2022</strong>
+                <br>
+                I've created a separate <a href="https://www.npmjs.com/package/vue-ssr-assets-plugin">Webpack plugin</a> to generate the manifest of critical assets without any of the limitations from my original solution below.
+                It consists of a client plugin and server plugin similar to how SSR worked in Vue 2.
+            </p>
+        </div>
+
         <p>
             Vue 3 has been officially released for almost a year but presently, at the time of writing this post, its Server Side Rendering (SSR) support is still <em>very</em> lackluster
             &mdash; unless you use an opinionated toolchain like Nuxt 3 (still not released), Quasar 2, or Vite &mdash; you're somewhat screwed as a Webpack user.
@@ -97,7 +109,7 @@ export default defineComponent({
         />
 
         <TextHeading>
-            My Webpack 5 Solution
+            My Hacky Webpack 5 Solution
         </TextHeading>
 
         <p>

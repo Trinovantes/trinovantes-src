@@ -51,7 +51,7 @@ const dateInfos = computed<Array<DateInfo>>(() => {
     if (props.updatedAt) {
         dateInfos.push({
             date: formatDate(props.updatedAt),
-            label: `Last update on ${formatDateDisplay(props.updatedAt)}`,
+            label: `Updated on ${formatDateDisplay(props.updatedAt)}`,
         })
     }
 

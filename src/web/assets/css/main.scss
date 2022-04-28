@@ -209,6 +209,11 @@ select{
         border-left-color: $warning;
         background-color: lighten($warning, 30%);
     }
+
+    &.positive{
+        border-left-color: $positive;
+        background-color: lighten($positive, 50%);
+    }
 }
 
 .full-height{
