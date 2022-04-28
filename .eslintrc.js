@@ -155,6 +155,10 @@ module.exports = {
                     'variableLike',
                     'method',
                 ],
+                'filter': {
+                    'regex': '^update:',
+                    'match': false,
+                },
                 'format': ['strictCamelCase', 'UPPER_CASE'],
             },
         ],
