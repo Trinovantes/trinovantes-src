@@ -94,6 +94,7 @@ async function loadProjects(): Promise<Projects> {
                     <a
                         v-if="project.url"
                         :href="project.url"
+                        :title="project.url"
                         target="_blank"
                         rel="noopener"
                     >
@@ -106,6 +107,7 @@ async function loadProjects(): Promise<Projects> {
                     <a
                         v-if="project.repo && !project.isPrivate"
                         :href="project.repo"
+                        :title="project.repo"
                         target="_blank"
                         rel="noopener"
                     >
