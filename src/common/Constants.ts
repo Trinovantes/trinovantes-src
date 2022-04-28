@@ -9,7 +9,7 @@ export const CONTACTS = [
     },
     {
         service: 'Twitter',
-        label: '@trinovantes',
+        label: 'trinovantes',
         url: 'https://twitter.com/trinovantes',
     },
     {
