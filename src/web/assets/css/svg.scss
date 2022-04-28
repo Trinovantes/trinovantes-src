@@ -1,0 +1,35 @@
+.svg-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.email{
+        svg{
+            fill: $dark;
+        }
+    }
+
+    &.github,
+    &.twitter{
+        path{
+            fill: $dark;
+        }
+    }
+}
+
+.dark{
+    .svg-wrapper{
+        &.email{
+            svg{
+                fill: white;
+            }
+        }
+
+        &.github,
+        &.twitter{
+            path{
+                fill: white;
+            }
+        }
+    }
+}

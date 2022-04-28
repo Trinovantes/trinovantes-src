@@ -1,52 +1,35 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { Projects, projects as unhydratedProjects } from '@/common/Project'
-import { defineComponent } from 'vue'
 import { HydrationKey, loadStateFromDom } from '@/web/utils/hydration'
 import axios from 'axios'
-import { getIconSvgRaw, ResponsiveImage } from '@/web/utils/ResponsiveLoader'
+import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/utils/ResponsiveLoader'
 import { useMeta } from 'vue-meta'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/app'
 
-export default defineComponent({
-    async setup() {
-        const title = 'Projects'
-        const desc = `My projects include: ${getProjectTitles()}`
+const title = 'Projects'
+useMeta(createPageHeadOptions({
+    title,
+    desc: getProjectTitles(),
+    image: getProfilePicture().src,
+    imageSize: TwitterCard.Summary,
+}))
 
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const img = require('@/web/assets/img/profile.jpg?size=200') as ResponsiveImage
-
-        useMeta(createPageHeadOptions({
-            title,
-            desc,
-            image: img.src,
-            imageSize: TwitterCard.Summary,
-        }))
-
-        const getImage = (fileName: string): ResponsiveImage => {
-            if (fileName.startsWith('https')) {
-                return {
-                    src: fileName,
-                    width: 0,
-                    height: 0,
-                }
-            }
-
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
-            return require(`./img/${fileName}`) as ResponsiveImage
-        }
-
-        const projects = await loadProjects()
-
+const getImage = (fileName: string): ResponsiveImage => {
+    if (fileName.startsWith('https')) {
         return {
-            projects,
-            getImage,
-            formatUrl,
-            getIconSvgRaw,
+            src: fileName,
+            width: 0,
+            height: 0,
         }
-    },
-})
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    return require(`./img/${fileName}`) as ResponsiveImage
+}
+
+const projects = await loadProjects()
 
 function getProjectTitles(): string {
     let projectNames: Array<string> = []
@@ -98,6 +81,7 @@ async function loadProjects(): Promise<Projects> {
                     :img="getImage(project.img)"
                     :title="project.name"
                     :enable-zoom="false"
+                    :enable-background="false"
                 />
             </div>
 
@@ -149,7 +133,7 @@ async function loadProjects(): Promise<Projects> {
     </article>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 article.project-category{
     display: flex;
     flex-direction: column;
@@ -160,7 +144,7 @@ article.project-category{
     .project{
         display: grid;
         gap: $column-gap;
-        grid-template-columns: 50% 1fr;
+        grid-template-columns: (100% - $container-width) 1fr;
 
         @media (max-width: $large-mobile-breakpoint) {
             gap: $padding * 2;
@@ -168,7 +152,8 @@ article.project-category{
         }
 
         .preview{
-            figure{
+            .simple-image{
+                background: $dark;
                 border: math.div($padding, 2) solid $dark;
             }
         }
@@ -178,6 +163,10 @@ article.project-category{
             flex-direction: column;
             justify-content: center;
             gap: $padding;
+
+            p{
+                line-height: $padding * 2;
+            }
 
             .links{
                 display: flex;
@@ -213,10 +202,6 @@ article.project-category{
                     color: lighten($dark, 30%);
                     font-size: 1rem;
                 }
-            }
-
-            p{
-                line-height: 1.618;
             }
         }
     }

@@ -1,28 +1,17 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { APP_NAME } from '@/common/Constants'
-import { defineComponent } from 'vue'
-
-export default defineComponent({
-    setup() {
-        return {
-            APP_NAME,
-        }
-    },
-})
 </script>
 
 <template>
-    <footer class="main-layout-footer">
-        <div class="container">
-            &copy; {{ APP_NAME }}
-        </div>
+    <footer>
+        &copy; {{ APP_NAME }}
     </footer>
 </template>
 
-<style lang="scss">
-.main-layout-footer{
+<style lang="scss" scoped>
+footer{
     background: $dark;
-    color: $light-on-dark;
+    color: $text-on-dark;
     padding: $padding * 2;
 
     font-size: 1rem;

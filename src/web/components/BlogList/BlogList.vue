@@ -1,18 +1,8 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import { formatDate } from '@/common/utils/formatDate'
 import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
 
-export default defineComponent({
-    setup() {
-        const blogPosts = getBlogPosts()
-
-        return {
-            blogPosts,
-            formatDate,
-        }
-    },
-})
+const blogPosts = getBlogPosts()
 </script>
 
 <template>
@@ -32,7 +22,7 @@ export default defineComponent({
     </ul>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 ul.blog-posts{
     list-style: none;
     padding: 0;

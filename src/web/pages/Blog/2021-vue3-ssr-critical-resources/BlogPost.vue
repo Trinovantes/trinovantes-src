@@ -171,7 +171,7 @@ export default defineComponent({
             Limitations
         </TextHeading>
 
-        <ul class="spaced">
+        <ul class="flex-vgap">
             <li>
                 <strong>Your component file names must be globally unique.</strong>
                 For example, you cannot have multiple components named <code>Header.vue</code> in different directories since <code>createOutputNameFn</code> only returns the file name.

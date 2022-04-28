@@ -10,6 +10,10 @@ $breakpoint-xl-min: 1920px;
 $max-page-width: 1280px;
 $mobile-breakpoint: $breakpoint-sm-min - 1px;
 $large-mobile-breakpoint: $breakpoint-md-min - 1px;
+$text-container-breakpoint: $breakpoint-lg-min - 1px;
+
+$ratio: 1.618;
+$container-width: math.div(1, $ratio) * 100%;
 
 $padding: 16px;
 $column-gap: $padding * 4;
@@ -28,12 +32,12 @@ $footer-height: (($padding * 2) * 2) + $footer-line-height;
 
 $primary   : #0077b8;
 $dark      : #111;
-
 $positive  : #21BA45;
 $negative  : #C10015;
 $info      : #31CCEC;
 $warning   : #F2C037;
 
 $primary-on-dark:   lighten($primary, 20%);
-$light-on-dark:     rgba(#ccc, 0.8);
+$light-on-dark:     rgba(#ccc, 0.2);
+$text-on-dark:      rgba(#ccc, 0.8);
 $light-on-light:  rgba(22, 22, 22, 0.1);

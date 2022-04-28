@@ -1,23 +1,13 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { CONTACTS } from '@/common/Constants'
 import { slugify } from '@/common/utils/slugify'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
-import { defineComponent } from 'vue'
+import { defineProps } from 'vue'
 
-export default defineComponent({
-    props: {
-        isDark: {
-            type: Boolean,
-            default: false,
-        },
-    },
-
-    setup() {
-        return {
-            CONTACTS,
-            slugify,
-            getIconSvgRaw,
-        }
+defineProps({
+    isDark: {
+        type: Boolean,
+        default: false,
     },
 })
 </script>
@@ -35,7 +25,7 @@ export default defineComponent({
             class="link"
         >
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <div :class="`icon ${slugify(contact.service)}`" v-html="getIconSvgRaw(slugify(contact.service))" />
+            <div :class="`svg-wrapper ${slugify(contact.service)}`" v-html="getIconSvgRaw(slugify(contact.service))" />
 
             <a
                 :href="contact.url"
@@ -49,11 +39,17 @@ export default defineComponent({
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .contact{
     display: flex;
     flex-direction: column;
     gap: $padding;
+
+    &.dark{
+        a{
+            color: white;
+        }
+    }
 
     .link{
         $icon-size: $padding * 1.5;
@@ -63,34 +59,10 @@ export default defineComponent({
         gap: $padding;
         line-height: $icon-size;
 
-        .icon{
-            align-items: center;
-            display: flex;
-
+        .svg-wrapper{
             svg{
                 width: $icon-size;
                 height: $icon-size;
-            }
-        }
-    }
-
-    &.dark{
-        a{
-            color: white;
-        }
-
-        .icon{
-            &.email{
-                svg{
-                    fill: white;
-                }
-            }
-
-            &.github,
-            &.twitter{
-                path{
-                    fill: white;
-                }
             }
         }
     }

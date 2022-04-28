@@ -1,12 +1,10 @@
-<script lang="ts">
-import { defineComponent, PropType } from 'vue'
+<script lang="ts" setup>
+import { defineProps, PropType } from 'vue'
 
-export default defineComponent({
-    props: {
-        data: {
-            type: Object as PropType<Array<Array<unknown>>>,
-            required: true,
-        },
+defineProps({
+    data: {
+        type: Object as PropType<Array<Array<unknown>>>,
+        required: true,
     },
 })
 </script>
@@ -43,7 +41,7 @@ export default defineComponent({
     </figure>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 figure.simple-table{
     table{
         margin: 0 auto;

@@ -1,103 +1,81 @@
-<script lang="ts">
-import { ref, computed, defineComponent, watch } from 'vue'
+<script lang="ts" setup>
+import { ref, computed, defineProps, watch } from 'vue'
 import hljs from 'highlight.js'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
 import { sleep } from '@/common/utils/sleep'
 
-export default defineComponent({
-    props: {
-        code: {
-            type: String,
-            required: true,
-        },
-        language: {
-            type: String,
-            default: '',
-        },
-        autoDetect: {
-            type: Boolean,
-            default: true,
-        },
-        ignoreIllegals: {
-            type: Boolean,
-            default: true,
-        },
+const props = defineProps({
+    code: {
+        type: String,
+        required: true,
     },
-    setup(props) {
-        const language = ref(props.language)
-        watch(() => props.language, (newLanguage) => {
-            language.value = newLanguage
-        })
-
-        const autoDetect = computed(() => !language.value && props.autoDetect)
-        const cannotDetectLanguage = computed(() => !autoDetect.value && !hljs.getLanguage(language.value))
-
-        const className = computed((): string => {
-            let cssClass = ''
-
-            if (!cannotDetectLanguage.value) {
-                cssClass += 'hljs'
-            }
-
-            if (language.value) {
-                cssClass += ' ' + language.value
-            }
-
-            return cssClass
-        })
-
-        const highlightedCode = ref<string>()
-        const updateCode = () => {
-            // No idea what language to use, return raw code
-            if (cannotDetectLanguage.value) {
-                console.warn(`The language "${language.value}" you specified could not be found.`)
-                highlightedCode.value = escapeHtml(props.code)
-                return
-            }
-
-            if (autoDetect.value) {
-                const result = hljs.highlightAuto(props.code)
-                language.value = result.language ?? ''
-                highlightedCode.value = result.value
-            } else {
-                const result = hljs.highlight(props.code, {
-                    language: language.value,
-                    ignoreIllegals: props.ignoreIllegals,
-                })
-                highlightedCode.value = result.value
-            }
-        }
-
-        watch([cannotDetectLanguage, autoDetect, props], updateCode, { deep: true })
-        updateCode()
-
-        const isOnClipboard = ref(false)
-        const copyIcon = computed<string>(() => {
-            if (isOnClipboard.value) {
-                return getIconSvgRaw('done')
-            }
-
-            return getIconSvgRaw('copy')
-        })
-        const copyToClipboard = async() => {
-            await navigator.clipboard.writeText(props.code)
-
-            // Update icon temporarily
-            isOnClipboard.value = true
-            await sleep(3000)
-            isOnClipboard.value = false
-        }
-
-        return {
-            className,
-            highlightedCode,
-            getIconSvgRaw,
-            copyToClipboard,
-            isOnClipboard,
-            copyIcon,
-        }
+    language: {
+        type: String,
+        default: '',
+    },
+    autoDetect: {
+        type: Boolean,
+        default: true,
+    },
+    ignoreIllegals: {
+        type: Boolean,
+        default: true,
+    },
+    preWhiteSpace: {
+        type: String,
+        default: 'pre',
     },
 })
+
+const code = computed(() => props.code)
+const ignoreIllegals = computed(() => props.ignoreIllegals)
+
+const language = ref(props.language)
+watch(() => props.language, (newLanguage) => {
+    language.value = newLanguage
+})
+
+const autoDetect = computed(() => !language.value && props.autoDetect)
+const cannotDetectLanguage = computed(() => !autoDetect.value && !hljs.getLanguage(language.value))
+
+const highlightedCode = ref<string>()
+watch([cannotDetectLanguage, autoDetect, code, ignoreIllegals], () => {
+    // No idea what language to use, return raw code
+    if (cannotDetectLanguage.value) {
+        console.warn(`The language "${language.value}" you specified could not be found.`)
+        highlightedCode.value = escapeHtml(code.value)
+    } else if (autoDetect.value) {
+        const result = hljs.highlightAuto(code.value)
+        language.value = result.language ?? ''
+        highlightedCode.value = result.value
+    } else {
+        const result = hljs.highlight(code.value, {
+            language: language.value,
+            ignoreIllegals: ignoreIllegals.value,
+        })
+        highlightedCode.value = result.value
+    }
+}, {
+    immediate: true,
+})
+
+const showCheckmark = ref(false)
+const copyIcon = computed<string>(() => {
+    if (showCheckmark.value) {
+        return getIconSvgRaw('done')
+    } else {
+        return getIconSvgRaw('copy')
+    }
+})
+
+async function copyToClipboard() {
+    await navigator.clipboard.writeText(code.value)
+
+    // Update icon temporarily
+    showCheckmark.value = true
+    await sleep(3000)
+    showCheckmark.value = false
+}
 
 function escapeHtml(value: string): string {
     return value
@@ -107,6 +85,20 @@ function escapeHtml(value: string): string {
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#x27;')
 }
+
+const className = computed((): string => {
+    let cssClass = ''
+
+    if (!cannotDetectLanguage.value) {
+        cssClass += 'hljs'
+    }
+
+    if (language.value) {
+        cssClass += ' ' + language.value
+    }
+
+    return cssClass
+})
 </script>
 
 <template>
@@ -115,11 +107,11 @@ function escapeHtml(value: string): string {
         <button title="Copy code to clipboard" @click="copyToClipboard" v-html="copyIcon" />
 
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <pre :class="className"><code v-html="highlightedCode" /></pre>
+        <pre :class="className" :style="`white-space: ${props.preWhiteSpace};`"><code v-html="highlightedCode" /></pre>
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .code-block{
     position: relative;
 

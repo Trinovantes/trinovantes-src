@@ -94,7 +94,7 @@ export default defineComponent({
             Our search results now automatically excludes all the spam websites
         </SimpleImage>
 
-        <div class="url-generator">
+        <div class="border-box flex-vgap">
             <TextHeading>
                 Search Url
             </TextHeading>
@@ -106,9 +106,10 @@ export default defineComponent({
             <CodeBlock
                 :code="bookmarkUrl"
                 language="txt"
+                pre-white-space="pre-line"
             />
 
-            <div class="editor">
+            <div class="editor border-box">
                 <div class="domain-input">
                     <input
                         ref="domainInputRef"
@@ -145,42 +146,37 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-.url-generator{
-    border: 1px solid $dark;
-    padding: $padding * 2;
+.editor{
+    display: grid;
+    gap: $padding;
 
-    .editor{
-        display: grid;
+    button{
+        background: $light-on-light;
+        border: 1px solid $light-on-light;
+        border-radius: math.div($padding, 4);
+        cursor: pointer;
+        display: block;
+        line-height: 1;
+        padding: math.div($padding, 2) $padding;
+        transition: 0.5s;
+
+        &:hover{
+            background: $text-on-dark;
+        }
+    }
+
+    .domain-input,
+    .site{
+        display: flex;
         gap: $padding;
 
-        button{
-            background: $light-on-light;
-            border: 1px solid $light-on-light;
-            border-radius: math.div($padding, 4);
-            cursor: pointer;
-            display: block;
-            line-height: 1;
-            padding: math.div($padding, 2) $padding;
-            transition: 0.5s;
-
-            &:hover{
-                background: $light-on-dark;
-            }
+        input{
+            flex: 1;
         }
 
-        .domain-input,
-        .site{
-            display: flex;
-            gap: $padding;
-
-            input{
-                flex: 1;
-            }
-
-            span{
-                display: block;
-                flex: 1;
-            }
+        span{
+            display: block;
+            flex: 1;
         }
     }
 }

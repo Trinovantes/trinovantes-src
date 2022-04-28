@@ -1,65 +1,61 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
 import { createPageHeadOptions } from '@/web/utils/PageHeadOptions'
 import { Dayjs } from 'dayjs'
-import { computed, defineComponent, PropType } from 'vue'
+import { computed, defineProps, PropType } from 'vue'
 import { useMeta } from 'vue-meta'
+
+const props = defineProps({
+    title: {
+        type: String,
+        required: true,
+    },
+    image: {
+        type: String as PropType<string | null>,
+        default: null,
+    },
+    createdAt: {
+        type: Object as PropType<Dayjs>,
+        required: true,
+    },
+    updatedAt: {
+        type: Object as PropType<Dayjs | null>,
+        default: null,
+    },
+    withSidebar: {
+        type: Boolean,
+        default: false,
+    },
+})
+
+useMeta(computed(() => {
+    return createPageHeadOptions({
+        title: props.title,
+        image: props.image,
+    })
+}))
 
 interface DateInfo {
     date: string
     label: string
 }
 
-export default defineComponent({
-    props: {
-        title: {
-            type: String,
-            required: true,
+const dateInfos = computed<Array<DateInfo>>(() => {
+    const dateInfos: Array<DateInfo> = [
+        {
+            date: formatDate(props.createdAt),
+            label: `Published on ${formatDateDisplay(props.createdAt)}`,
         },
-        image: {
-            type: String as PropType<string | null>,
-            default: null,
-        },
-        createdAt: {
-            type: Object as PropType<Dayjs>,
-            required: true,
-        },
-        updatedAt: {
-            type: Object as PropType<Dayjs | null>,
-            default: null,
-        },
-    },
+    ]
 
-    setup(props) {
-        useMeta(computed(() => {
-            return createPageHeadOptions({
-                title: props.title,
-                image: props.image,
-            })
-        }))
-
-        const dateInfos = computed<Array<DateInfo>>(() => {
-            const dateInfos: Array<DateInfo> = [
-                {
-                    date: formatDate(props.createdAt),
-                    label: `Published on ${formatDateDisplay(props.createdAt)}`,
-                },
-            ]
-
-            if (props.updatedAt) {
-                dateInfos.push({
-                    date: formatDate(props.updatedAt),
-                    label: `Last update on ${formatDateDisplay(props.updatedAt)}`,
-                })
-            }
-
-            return dateInfos
+    if (props.updatedAt) {
+        dateInfos.push({
+            date: formatDate(props.updatedAt),
+            label: `Last update on ${formatDateDisplay(props.updatedAt)}`,
         })
+    }
 
-        return {
-            dateInfos,
-        }
-    },
+    return dateInfos
 })
 </script>
 
@@ -92,59 +88,46 @@ export default defineComponent({
             :class="{
                 'container': true,
                 'text-container': true,
-                'full': !$slots.sidebar
+                'with-sidebar': withSidebar,
             }"
         >
-            <slot name="top" />
-
-            <section>
-                <slot />
-            </section>
-            <aside v-if="$slots.sidebar">
-                <slot name="sidebar" />
-            </aside>
+            <slot />
         </div>
     </article>
 </template>
 
-<style lang="scss">
-.blog-post{
-    .hero-unit{
-        background-color: lighten($dark, 10%);
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        padding: $vspace 0;
+<style lang="scss" scoped>
+.hero-unit{
+    background-color: lighten($dark, 10%);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-bottom: math.div($padding, 2) solid lighten($dark, 10%);
+    padding: $vspace 0 ($vspace - math.div($padding, 2));
 
-        h1{
-            color: white;
-            text-shadow: 0 math.div($padding, 8) math.div($padding, 4) rgba($dark, 0.8);
-        }
+    h1{
+        color: white;
+        text-shadow: 0 math.div($padding, 8) math.div($padding, 4) rgba($dark, 0.8);
+    }
+}
+
+.meta{
+    display: flex;
+    gap: $padding;
+    margin-top: $padding * 2;
+
+    time{
+        background: rgba($dark, 0.8);
+        color: white;
+        padding: math.div($padding, 2) $padding;
     }
 
-    .meta{
-        display: flex;
-        gap: $padding;
-        margin-top: $padding * 2;
-
-        time{
-            background: rgba($dark, 0.8);
-            color: white;
-            padding: math.div($padding, 2) $padding;
-        }
-
-        @media (max-width: $mobile-breakpoint) {
-            flex-direction: column;
-        }
+    @media (max-width: $mobile-breakpoint) {
+        flex-direction: column;
     }
+}
 
-    figure{
-        background: #f6f6f6;
-        padding: $padding * 2;
-
-        figcaption{
-            font-style: italic;
-        }
-    }
+.text-container:not(.with-sidebar){
+    gap: $padding * 2;
 }
 </style>

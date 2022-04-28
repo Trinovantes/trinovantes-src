@@ -1,41 +1,21 @@
-<script lang="ts">
-import { APP_NAME, APP_DESC, CONTACTS } from '@/common/Constants'
-import { slugify } from '@/common/utils/slugify'
+<script lang="ts" setup>
+import { APP_NAME, APP_DESC } from '@/common/Constants'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { ResponsiveImage } from '@/web/utils/ResponsiveLoader'
-import { defineComponent } from 'vue'
+import { getProfilePicture } from '@/web/utils/ResponsiveLoader'
 import { useMeta } from 'vue-meta'
 import ContactLinks from '@/web/components/ContactLinks/ContactLinks.vue'
 
-export default defineComponent({
-    components: {
-        ContactLinks,
-    },
-
-    setup() {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const img = require('@/web/assets/img/profile.jpg?size=200') as ResponsiveImage
-
-        useMeta(createPageHeadOptions({
-            title: APP_NAME,
-            desc: APP_DESC,
-            image: img.src,
-            imageSize: TwitterCard.Summary,
-        }))
-
-        return {
-            APP_NAME,
-            APP_DESC,
-            CONTACTS,
-            slugify,
-        }
-    },
-})
+useMeta(createPageHeadOptions({
+    title: APP_NAME,
+    desc: APP_DESC,
+    image: getProfilePicture().src,
+    imageSize: TwitterCard.Summary,
+}))
 </script>
 
 <template>
     <article class="home-page">
-        <div class="container full-height-container vertical-container">
+        <div class="container full-height">
             <h1 class="animate__animated animate__fadeInUp">
                 {{ APP_NAME }}
             </h1>
@@ -52,7 +32,7 @@ export default defineComponent({
     </article>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 article.home-page{
     background: lighten($dark, 10%);
     color: white;
@@ -60,6 +40,19 @@ article.home-page{
     .container{
         padding-top: $padding * 2;
         padding-bottom: $padding * 2;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: $padding * 4;
+
+        @media (max-width: $large-mobile-breakpoint) {
+            gap: $padding * 3;
+        }
+
+        @media (max-width: $mobile-breakpoint) {
+            gap: $padding * 2;
+        }
     }
 
     h1{
@@ -77,7 +70,7 @@ article.home-page{
     }
 
     h2{
-        color: $light-on-dark;
+        color: $text-on-dark;
         font-weight: normal;
         font-size: 3rem;
 

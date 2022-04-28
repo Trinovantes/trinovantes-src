@@ -1,48 +1,30 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { ResponsiveImage } from '@/web/utils/ResponsiveLoader'
-import { defineComponent, onMounted, ref } from 'vue'
+import { getProfilePicture } from '@/web/utils/ResponsiveLoader'
+import { onMounted, ref } from 'vue'
 import { useMeta } from 'vue-meta'
 import ContactLinks from '@/web/components/ContactLinks/ContactLinks.vue'
 import { APP_DESC } from '@/common/Constants'
 
-export default defineComponent({
-    components: {
-        ContactLinks,
-    },
+const title = 'About'
+const desc = `Hi, I'm Stephen. ${APP_DESC}`
+useMeta(createPageHeadOptions({
+    title,
+    desc,
+    image: getProfilePicture().src,
+    imageSize: TwitterCard.Summary,
+}))
 
-    setup() {
-        const title = 'About'
-        const desc = `Hi, I'm Stephen. ${APP_DESC}`
-
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const img = require('@/web/assets/img/profile.jpg?size=200') as ResponsiveImage
-
-        useMeta(createPageHeadOptions({
-            title,
-            desc,
-            image: img.src,
-            imageSize: TwitterCard.Summary,
-        }))
-
-        const startedProgramming = 2004
-        const yearsSinceStartedProgramming = ref('')
-        onMounted(() => {
-            yearsSinceStartedProgramming.value = `${new Date().getFullYear() - startedProgramming} years ago!`
-        })
-
-        return {
-            title,
-            desc,
-            yearsSinceStartedProgramming,
-        }
-    },
+const startedProgramming = 2004 // Grade 6
+const yearsSinceStartedProgramming = ref<string | undefined>(undefined)
+onMounted(() => {
+    yearsSinceStartedProgramming.value = `${new Date().getFullYear() - startedProgramming} years ago!`
 })
 </script>
 
 <template>
-    <article class="container text-container about-page">
-        <h1>
+    <article class="container text-container with-sidebar">
+        <h1 class="all-cols">
             {{ title }}
         </h1>
 
@@ -92,6 +74,8 @@ export default defineComponent({
             <SimpleImage
                 :img="require('@/web/assets/img/profile.jpg?size=400')"
                 :enable-zoom="false"
+                :enable-background="false"
+                :round-image="true"
                 title="Stephen Li"
             />
 
@@ -100,26 +84,19 @@ export default defineComponent({
     </article>
 </template>
 
-<style lang="scss">
-article.about-page{
-    @media (max-width: $large-mobile-breakpoint) {
-        grid-template-columns: minmax(0, 1fr);
-
+<style lang="scss" scoped>
+.text-container{
+    @media (max-width: $text-container-breakpoint) {
         aside {
             grid-row-start: 2;
         }
     }
 
     aside{
-        .simple-image{
-            img{
-                border-radius: 50%;
-            }
-        }
+        gap: $column-gap;
 
         .contact{
             margin: 0 auto;
-            margin-top: $column-gap;
             width: -moz-fit-content;
             width: fit-content;
         }

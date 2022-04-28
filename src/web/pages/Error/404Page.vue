@@ -1,31 +1,15 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { ResponsiveImage } from '@/web/utils/ResponsiveLoader'
-import { defineAsyncComponent, defineComponent } from 'vue'
+import { getProfilePicture } from '@/web/utils/ResponsiveLoader'
 import { useMeta } from 'vue-meta'
+import BlogList from '../../components/BlogList/BlogList.vue'
 
-export default defineComponent({
-    components: {
-        BlogList: defineAsyncComponent(() => import('@/web/components/BlogList/BlogList.vue')),
-    },
-
-    setup() {
-        const title = '404: Page Not Found'
-
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const img = require('@/web/assets/img/profile.jpg?size=200') as ResponsiveImage
-
-        useMeta(createPageHeadOptions({
-            title,
-            image: img.src,
-            imageSize: TwitterCard.Summary,
-        }))
-
-        return {
-            title,
-        }
-    },
-})
+const title = '404: Page Not Found'
+useMeta(createPageHeadOptions({
+    title,
+    image: getProfilePicture().src,
+    imageSize: TwitterCard.Summary,
+}))
 </script>
 
 <template>
@@ -53,7 +37,9 @@ export default defineComponent({
                 </li>
             </ul>
 
-            <h2>Blog</h2>
+            <h2>
+                Blog
+            </h2>
             <BlogList />
         </section>
     </article>
