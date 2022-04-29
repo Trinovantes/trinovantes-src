@@ -5,7 +5,7 @@ import pluralize from 'pluralize'
 import { professions } from './professions'
 
 export const TITLE = 'If X Were Hired Like Programmers'
-export const CREATED_AT = dayjs.utc('2015-02-14')
+export const CREATED_AT = dayjs.utc('2015-02-14').unix()
 
 export default defineComponent({
     setup() {

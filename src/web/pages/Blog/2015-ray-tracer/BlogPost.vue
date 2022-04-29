@@ -3,7 +3,7 @@ import { defineComponent } from 'vue'
 import dayjs from 'dayjs'
 
 export const TITLE = 'Finally, A Ray Tracer!'
-export const CREATED_AT = dayjs.utc('2015-07-22')
+export const CREATED_AT = dayjs.utc('2015-07-22').unix()
 
 export default defineComponent({
     setup() {

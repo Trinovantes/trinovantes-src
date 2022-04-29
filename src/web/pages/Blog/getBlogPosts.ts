@@ -1,5 +1,4 @@
 import { slugify } from '@/common/utils/slugify'
-import { Dayjs } from 'dayjs'
 import { ComponentOptions } from 'vue'
 
 // These are blog post locations on disk; has no relation to their final slug
@@ -12,11 +11,11 @@ export const blogEntries = [
     '2014-os',
 ]
 
-export interface BlogPostSource {
+export interface BlogPostSourceFile {
     TITLE?: string
     SLUG?: string
-    CREATED_AT?: Dayjs
-    UPDATED_AT?: Dayjs
+    CREATED_AT?: number
+    UPDATED_AT?: number
 
     default: ComponentOptions
 }
@@ -24,8 +23,8 @@ export interface BlogPostSource {
 export interface BlogPost {
     title: string
     slug: string
-    createdAt: Dayjs
-    updatedAt?: Dayjs
+    createdAt: number
+    updatedAt?: number
     dir: string
 }
 
@@ -35,13 +34,13 @@ export async function getBlogPosts(): Promise<BlogPosts> {
     const posts: BlogPosts = []
 
     for (const entry of blogEntries) {
-        const blogPostSrc = await import(`./${entry}/BlogPost.vue`) as BlogPostSource
+        const blogPostSrc = await import(`./${entry}/BlogPost.vue`) as BlogPostSourceFile
 
         if (!blogPostSrc.TITLE) {
             throw new Error(`${blogPostSrc.default.__file} is missing TITLE export`)
         }
 
-        if (!blogPostSrc.CREATED_AT) {
+        if (typeof blogPostSrc.CREATED_AT !== 'number') {
             throw new Error(`${blogPostSrc.default.__file} is missing CREATED_AT export`)
         }
 
@@ -55,6 +54,6 @@ export async function getBlogPosts(): Promise<BlogPosts> {
     }
 
     return posts.sort((postA, postB) => {
-        return postB.createdAt.unix() - postA.createdAt.unix()
+        return postB.createdAt - postA.createdAt
     })
 }

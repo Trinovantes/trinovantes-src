@@ -1,15 +1,15 @@
-import { Dayjs } from 'dayjs'
+import dayjs from 'dayjs'
 
-export function formatDate(date?: Dayjs): string {
-    if (!date) {
+export function formatDate(timestamp?: number): string {
+    if (typeof timestamp !== 'number') {
         return ''
     }
 
-    return date?.utc().format('YYYY/MM/DD')
+    return dayjs.unix(timestamp).utc().format('YYYY/MM/DD')
 }
 
-export function formatDateDisplay(date?: Dayjs): string {
-    if (!date) {
+export function formatDateDisplay(timestamp?: number): string {
+    if (typeof timestamp !== 'number') {
         return ''
     }
 
@@ -18,5 +18,5 @@ export function formatDateDisplay(date?: Dayjs): string {
         timeZone: 'UTC',
     } as unknown as Intl.DateTimeFormatOptions)
 
-    return formatter.format(date.toDate())
+    return formatter.format(timestamp)
 }

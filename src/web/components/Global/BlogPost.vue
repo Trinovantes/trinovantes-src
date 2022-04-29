@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
 import { createPageHeadOptions } from '@/web/utils/PageHeadOptions'
-import { Dayjs } from 'dayjs'
 import { computed, defineProps, PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 
@@ -15,11 +14,11 @@ const props = defineProps({
         default: null,
     },
     createdAt: {
-        type: Object as PropType<Dayjs>,
+        type: Number,
         required: true,
     },
     updatedAt: {
-        type: Object as PropType<Dayjs | null>,
+        type: Number as PropType<number | null>,
         default: null,
     },
     withSidebar: {
@@ -48,7 +47,7 @@ const dateInfos = computed<Array<DateInfo>>(() => {
         },
     ]
 
-    if (props.updatedAt) {
+    if (typeof props.updatedAt === 'number') {
         dateInfos.push({
             date: formatDate(props.updatedAt),
             label: `Updated on ${formatDateDisplay(props.updatedAt)}`,
