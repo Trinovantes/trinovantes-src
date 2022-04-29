@@ -1,15 +1,15 @@
 import path from 'path'
-import { merge } from 'webpack-merge'
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev } from './webpack.common'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
-import type { Configuration } from 'webpack'
 import SitemapPlugin from 'sitemap-webpack-plugin'
-import { prerenderRoutes } from './utils/routes'
 import { VueSsrAssetsClientPlugin } from 'vue-ssr-assets-plugin'
-import 'webpack-dev-server'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
+import 'webpack-dev-server'
+import { merge } from 'webpack-merge'
+import { prerenderRoutes } from './utils/routes'
+import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev } from './webpack.common'
+import type { Configuration } from 'webpack'
 
 // ----------------------------------------------------------------------------
 // Web

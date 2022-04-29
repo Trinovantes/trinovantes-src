@@ -1,5 +1,5 @@
-import { config } from 'dotenv'
 import fs from 'fs'
+import { config } from 'dotenv'
 
 // Loads .env into process.env
 config()

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { ref, computed, defineProps, watch } from 'vue'
-import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
-import { sleep } from '@/common/utils/sleep'
-import hljs from 'highlight.js/lib/core'
-import type { LanguageFn } from 'highlight.js'
 import { escapeHtml } from '@vue/shared'
+import hljs from 'highlight.js/lib/core'
+import { ref, computed, defineProps, watch } from 'vue'
+import { sleep } from '@/common/utils/sleep'
+import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
+import type { LanguageFn } from 'highlight.js'
 
 const props = defineProps({
     code: {

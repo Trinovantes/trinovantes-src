@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import MainLayoutHeader from './MainLayoutHeader.vue'
 import MainLayoutFooter from './MainLayoutFooter.vue'
+import MainLayoutHeader from './MainLayoutHeader.vue'
 </script>
 
 <template>

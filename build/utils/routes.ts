@@ -1,9 +1,9 @@
-import { srcWebDir } from '../webpack.common'
+import { existsSync } from 'fs'
 import fs from 'fs/promises'
 import path from 'path'
-import { blogEntries } from '@/web/pages/Blog/getBlogPosts'
-import { existsSync } from 'fs'
+import { srcWebDir } from '../webpack.common'
 import { slugify } from '@/common/utils/slugify'
+import { blogEntries } from '@/web/pages/Blog/getBlogPosts'
 
 // ----------------------------------------------------------------------------
 // Routes

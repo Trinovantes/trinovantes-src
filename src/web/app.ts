@@ -1,20 +1,21 @@
 // Must be imported first so it can extend the dayjs global
+// eslint-disable-next-line import/order
 import '@/common/utils/setupDayjs'
 
 import { createSSRApp, useSSRContext } from 'vue'
-import { createAppRouter } from './router'
-import AppLoader from './components/AppLoader.vue'
-import ClientOnly from './components/Global/ClientOnly.vue'
-import SimpleTable from './components/Global/SimpleTable.vue'
-import SimpleImage from './components/Global/SimpleImage.vue'
-import TextHeading from './components/Global/TextHeading.vue'
-import BlogPost from './components/Global/BlogPost.vue'
-import CodeBlock from './components/Global/CodeBlock.vue'
 import { createMetaManager } from 'vue-meta'
-import type { Router } from 'vue-router'
 import type { Projects } from '@/common/Project'
-import type { SSRContext } from '@vue/server-renderer'
+import AppLoader from './components/AppLoader.vue'
+import BlogPost from './components/Global/BlogPost.vue'
+import ClientOnly from './components/Global/ClientOnly.vue'
+import CodeBlock from './components/Global/CodeBlock.vue'
+import SimpleImage from './components/Global/SimpleImage.vue'
+import SimpleTable from './components/Global/SimpleTable.vue'
+import TextHeading from './components/Global/TextHeading.vue'
+import { createAppRouter } from './router'
 import type { BlogPosts } from './pages/Blog/getBlogPosts'
+import type { SSRContext } from '@vue/server-renderer'
+import type { Router } from 'vue-router'
 
 interface CreatedApp {
     app: ReturnType<typeof createSSRApp>

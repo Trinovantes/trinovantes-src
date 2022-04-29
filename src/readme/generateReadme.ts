@@ -1,14 +1,16 @@
+// eslint-disable-next-line import/order
 import '@/common/utils/setupDayjs'
+
+import assert from 'assert'
+import { writeFile } from 'fs/promises'
+import path from 'path'
+import axios from 'axios'
 import { fetchProjects } from '@/api/services/fetchProjects'
 import type { Projects } from '@/common/Project'
 import { formatDate } from '@/common/utils/formatDate'
-import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
-import assert from 'assert'
-import axios from 'axios'
-import { slugify } from '@/common/utils/slugify'
-import path from 'path'
-import { writeFile } from 'fs/promises'
 import { formatUrl } from '@/common/utils/formatUrl'
+import { slugify } from '@/common/utils/slugify'
+import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
 
 const IMG_WIDTH = 400
 

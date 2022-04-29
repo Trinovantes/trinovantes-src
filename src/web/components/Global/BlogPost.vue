@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
-import { createPageHeadOptions } from '@/web/utils/PageHeadOptions'
 import { computed, defineProps, PropType } from 'vue'
 import { useMeta } from 'vue-meta'
+import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
+import { createPageHeadOptions } from '@/web/utils/PageHeadOptions'
 
 const props = defineProps({
     title: {

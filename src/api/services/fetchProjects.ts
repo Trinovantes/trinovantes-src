@@ -1,8 +1,8 @@
-import { Project, Projects, projects } from '@/common/Project'
 import { Octokit } from '@octokit/rest'
-import { getSecret, Secrets } from '@/api/utils/secrets'
 import axios from 'axios'
 import { JSDOM } from 'jsdom'
+import { getSecret, Secrets } from '@/api/utils/secrets'
+import { Project, Projects, projects } from '@/common/Project'
 
 let hydratedProjects: Projects | null = null
 

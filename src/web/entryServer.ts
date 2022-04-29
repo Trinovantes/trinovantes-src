@@ -1,12 +1,12 @@
-import { SpaServer } from 'puppeteer-prerender-plugin'
-import type express from 'express'
-import { AppContext, createApp } from './app'
-import { renderMetaToString } from 'vue-meta/ssr'
 import { renderToString } from '@vue/server-renderer'
+import { SpaServer } from 'puppeteer-prerender-plugin'
+import { renderMetaToString } from 'vue-meta/ssr'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { HydrationKey, saveStateToDom } from './utils/hydration'
+import { AppContext, createApp } from './app'
 import { getBlogPosts } from './pages/Blog/getBlogPosts'
+import { HydrationKey, saveStateToDom } from './utils/hydration'
+import type express from 'express'
 
 function createAsyncHandler(handler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>): express.RequestHandler {
     return (req, res, next) => {

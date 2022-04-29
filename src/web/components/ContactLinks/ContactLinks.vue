@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { defineProps } from 'vue'
 import { CONTACTS } from '@/common/Constants'
 import { slugify } from '@/common/utils/slugify'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
-import { defineProps } from 'vue'
 
 defineProps({
     isDark: {

@@ -1,7 +1,7 @@
 <script lang="ts">
 import dayjs from 'dayjs'
-import { computed, defineComponent, ref } from 'vue'
 import pluralize from 'pluralize'
+import { computed, defineComponent, ref } from 'vue'
 import { professions } from './professions'
 
 export const TITLE = 'If X Were Hired Like Programmers'

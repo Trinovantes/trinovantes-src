@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { slugify } from '@/common/utils/slugify'
-import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
 import { computed, defineProps, h, useSlots } from 'vue'
 import { useRoute } from 'vue-router'
+import { slugify } from '@/common/utils/slugify'
+import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
 
 const slots = useSlots()
 const props = defineProps({

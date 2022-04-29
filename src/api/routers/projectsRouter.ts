@@ -1,6 +1,6 @@
 import express, { Response, Request } from 'express'
-import { createAsyncHandler } from '@/api/utils/asyncHandler'
 import { fetchProjects } from '../services/fetchProjects'
+import { createAsyncHandler } from '@/api/utils/asyncHandler'
 
 // ----------------------------------------------------------------------------
 // Router

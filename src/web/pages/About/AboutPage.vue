@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { getProfilePicture } from '@/web/utils/ResponsiveLoader'
 import { onMounted, ref } from 'vue'
 import { useMeta } from 'vue-meta'
-import ContactLinks from '@/web/components/ContactLinks/ContactLinks.vue'
 import { APP_DESC } from '@/common/Constants'
+import ContactLinks from '@/web/components/ContactLinks/ContactLinks.vue'
+import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
+import { getProfilePicture } from '@/web/utils/ResponsiveLoader'
 
 const title = 'About'
 const desc = `Hi, I'm Stephen. ${APP_DESC}`

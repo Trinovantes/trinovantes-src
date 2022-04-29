@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { Projects, projects as unhydratedProjects } from '@/common/Project'
-import { HydrationKey, loadStateFromDom } from '@/web/utils/hydration'
 import axios from 'axios'
-import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/utils/ResponsiveLoader'
 import { useMeta } from 'vue-meta'
-import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
+import { Projects, projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/app'
+import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
+import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/utils/ResponsiveLoader'
+import { HydrationKey, loadStateFromDom } from '@/web/utils/hydration'
 
 const title = 'Projects'
 useMeta(createPageHeadOptions({

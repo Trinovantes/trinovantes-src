@@ -1,10 +1,10 @@
 import path from 'path'
-import { Configuration, DefinePlugin } from 'webpack'
-import { VueLoaderPlugin } from 'vue-loader'
-import { getGitHash } from './utils/secrets'
-import { merge } from 'webpack-merge'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import { VueLoaderPlugin } from 'vue-loader'
+import { Configuration, DefinePlugin } from 'webpack'
+import { merge } from 'webpack-merge'
 import nodeExternals from 'webpack-node-externals'
+import { getGitHash } from './utils/secrets'
 
 // ----------------------------------------------------------------------------
 // Constants

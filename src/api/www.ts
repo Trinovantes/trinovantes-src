@@ -1,11 +1,11 @@
-import express, { ErrorRequestHandler } from 'express'
 import http from 'http'
-import morgan from 'morgan'
-import { normalizePort } from './utils/normalizePort'
-import createHttpError, { HttpError } from 'http-errors'
 import axios from 'axios'
-import { projectsRouter } from './routers/projectsRouter'
+import express, { ErrorRequestHandler } from 'express'
+import createHttpError, { HttpError } from 'http-errors'
+import morgan from 'morgan'
 import type { ErrorResponse } from '@/common/schemas/ApiResponse'
+import { projectsRouter } from './routers/projectsRouter'
+import { normalizePort } from './utils/normalizePort'
 
 // -----------------------------------------------------------------------------
 // Express

@@ -1,5 +1,5 @@
-import type { RouteRecordRaw } from 'vue-router'
 import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
+import type { RouteRecordRaw } from 'vue-router'
 
 export enum RouteName {
     Home = 'Home',

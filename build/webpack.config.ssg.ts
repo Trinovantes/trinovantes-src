@@ -1,10 +1,10 @@
 import path from 'path'
-import { merge } from 'webpack-merge'
-import { srcWebDir, publicPath, manifestFilePath, distWebPublicDir, distWebDir, distSsgDir, commonNodeConfig, entryFilePath } from './webpack.common'
 import { PuppeteerPrerenderPlugin } from 'puppeteer-prerender-plugin'
-import { Configuration, DefinePlugin } from 'webpack'
-import { prerenderRoutes } from './utils/routes'
 import { VueSsrAssetsServerPlugin } from 'vue-ssr-assets-plugin'
+import { Configuration, DefinePlugin } from 'webpack'
+import { merge } from 'webpack-merge'
+import { prerenderRoutes } from './utils/routes'
+import { srcWebDir, publicPath, manifestFilePath, distWebPublicDir, distWebDir, distSsgDir, commonNodeConfig, entryFilePath } from './webpack.common'
 
 // ----------------------------------------------------------------------------
 // Server
