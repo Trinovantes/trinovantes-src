@@ -9,6 +9,7 @@ import SitemapPlugin from 'sitemap-webpack-plugin'
 import { prerenderRoutes } from './utils/routes'
 import { VueSsrAssetsClientPlugin } from 'vue-ssr-assets-plugin'
 import 'webpack-dev-server'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 // ----------------------------------------------------------------------------
 // Web
@@ -81,6 +82,10 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
         }),
         new VueSsrAssetsClientPlugin({
             fileName: manifestFilePath,
+        }),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'disabled',
+            generateStatsFile: false,
         }),
     ],
 }))()
