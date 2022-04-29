@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { ref, computed, defineProps, watch } from 'vue'
-import hljs from 'highlight.js'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
 import { sleep } from '@/common/utils/sleep'
+import hljs from 'highlight.js/lib/core'
+import type { LanguageFn } from 'highlight.js'
+import { escapeHtml } from '@vue/shared'
 
 const props = defineProps({
     code: {
@@ -11,11 +13,7 @@ const props = defineProps({
     },
     language: {
         type: String,
-        default: '',
-    },
-    autoDetect: {
-        type: Boolean,
-        default: true,
+        default: 'txt',
     },
     ignoreIllegals: {
         type: Boolean,
@@ -27,33 +25,27 @@ const props = defineProps({
     },
 })
 
-const code = computed(() => props.code)
-const ignoreIllegals = computed(() => props.ignoreIllegals)
-
-const language = ref(props.language)
-watch(() => props.language, (newLanguage) => {
-    language.value = newLanguage
-})
-
-const autoDetect = computed(() => !language.value && props.autoDetect)
-const cannotDetectLanguage = computed(() => !autoDetect.value && !hljs.getLanguage(language.value))
+const languageMap = new Map<string, string>([
+    ['js', 'javascript'],
+    ['ts', 'typescript'],
+    ['html', 'xml'],
+])
 
 const highlightedCode = ref<string>()
-watch([cannotDetectLanguage, autoDetect, code, ignoreIllegals], () => {
-    // No idea what language to use, return raw code
-    if (cannotDetectLanguage.value) {
-        console.warn(`The language "${language.value}" you specified could not be found.`)
-        highlightedCode.value = escapeHtml(code.value)
-    } else if (autoDetect.value) {
-        const result = hljs.highlightAuto(code.value)
-        language.value = result.language ?? ''
-        highlightedCode.value = result.value
+watch(() => props, async() => {
+    if (props.language === 'txt') {
+        highlightedCode.value = escapeHtml(props.code)
     } else {
-        const result = hljs.highlight(code.value, {
-            language: language.value,
-            ignoreIllegals: ignoreIllegals.value,
-        })
-        highlightedCode.value = result.value
+        if (!hljs.getLanguage(props.language)) {
+            const fileName = languageMap.get(props.language) ?? props.language
+            const { default: languageFn } = await import(`highlight.js/lib/languages/${fileName}`) as { default: LanguageFn }
+            hljs.registerLanguage(props.language, languageFn)
+        }
+
+        highlightedCode.value = hljs.highlight(props.code, {
+            language: props.language,
+            ignoreIllegals: props.ignoreIllegals,
+        }).value
     }
 }, {
     immediate: true,
@@ -69,36 +61,13 @@ const copyIcon = computed<string>(() => {
 })
 
 async function copyToClipboard() {
-    await navigator.clipboard.writeText(code.value)
+    await navigator.clipboard.writeText(props.code)
 
     // Update icon temporarily
     showCheckmark.value = true
     await sleep(3000)
     showCheckmark.value = false
 }
-
-function escapeHtml(value: string): string {
-    return value
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;')
-}
-
-const className = computed((): string => {
-    let cssClass = ''
-
-    if (!cannotDetectLanguage.value) {
-        cssClass += 'hljs'
-    }
-
-    if (language.value) {
-        cssClass += ' ' + language.value
-    }
-
-    return cssClass
-})
 </script>
 
 <template>
@@ -107,7 +76,7 @@ const className = computed((): string => {
         <button title="Copy code to clipboard" @click="copyToClipboard" v-html="copyIcon" />
 
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <pre :class="className" :style="`white-space: ${props.preWhiteSpace};`"><code v-html="highlightedCode" /></pre>
+        <pre :class="`hljs ${language}`" :style="`white-space: ${props.preWhiteSpace};`"><code v-html="highlightedCode" /></pre>
     </div>
 </template>
 

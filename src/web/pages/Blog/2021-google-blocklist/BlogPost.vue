@@ -105,7 +105,6 @@ export default defineComponent({
 
             <CodeBlock
                 :code="bookmarkUrl"
-                language="txt"
                 pre-white-space="pre-line"
             />
 
