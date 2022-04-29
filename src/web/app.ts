@@ -9,6 +9,7 @@ import AppLoader from './components/AppLoader.vue'
 import BlogPost from './components/Global/BlogPost.vue'
 import ClientOnly from './components/Global/ClientOnly.vue'
 import CodeBlock from './components/Global/CodeBlock.vue'
+import LoadingSpinner from './components/Global/LoadingSpinner.vue'
 import SimpleImage from './components/Global/SimpleImage.vue'
 import SimpleTable from './components/Global/SimpleTable.vue'
 import TextHeading from './components/Global/TextHeading.vue'
@@ -42,12 +43,13 @@ export async function createApp(ssrContext?: AppContext): Promise<CreatedApp> {
 
     // Vue
     const app = createSSRApp(AppLoader)
-    app.component('ClientOnly', ClientOnly)
-    app.component('SimpleImage', SimpleImage)
     app.component('BlogPost', BlogPost)
+    app.component('ClientOnly', ClientOnly)
+    app.component('CodeBlock', CodeBlock)
+    app.component('LoadingSpinner', LoadingSpinner)
+    app.component('SimpleImage', SimpleImage)
     app.component('SimpleTable', SimpleTable)
     app.component('TextHeading', TextHeading)
-    app.component('CodeBlock', CodeBlock)
 
     // Vue Router
     const router = await createAppRouter(ssrContext)
