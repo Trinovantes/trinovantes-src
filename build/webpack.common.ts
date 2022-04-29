@@ -202,6 +202,7 @@ export const commonNodeConfig = merge(commonConfig, {
         // You should also whitelist deps that modify `global` (e.g. polyfills)
         nodeExternals({
             allowlist: [
+                'lodash-es',
                 /^vue*/,
                 /\.(css|sass|scss)$/,
                 /\.(vue)$/,

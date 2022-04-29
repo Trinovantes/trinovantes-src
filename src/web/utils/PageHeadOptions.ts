@@ -1,6 +1,6 @@
 import { MetaSource } from 'vue-meta'
 import { APP_NAME } from '@/common/Constants'
-import { merge } from 'lodash'
+import { merge } from 'lodash-es'
 
 export enum TwitterCard {
     Summary = 'summary',
