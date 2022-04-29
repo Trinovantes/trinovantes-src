@@ -5,7 +5,7 @@ import { normalizePort } from './utils/normalizePort'
 import createHttpError, { HttpError } from 'http-errors'
 import axios from 'axios'
 import { projectsRouter } from './routers/projectsRouter'
-import { ErrorResponse } from '@/common/schemas/ApiResponse'
+import type { ErrorResponse } from '@/common/schemas/ApiResponse'
 
 // -----------------------------------------------------------------------------
 // Express

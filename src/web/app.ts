@@ -11,10 +11,10 @@ import TextHeading from './components/Global/TextHeading.vue'
 import BlogPost from './components/Global/BlogPost.vue'
 import CodeBlock from './components/Global/CodeBlock.vue'
 import { createMetaManager } from 'vue-meta'
-import { Router } from 'vue-router'
-import { Projects } from '@/common/Project'
-import { SSRContext } from '@vue/server-renderer'
-import { BlogPosts } from './pages/Blog/getBlogPosts'
+import type { Router } from 'vue-router'
+import type { Projects } from '@/common/Project'
+import type { SSRContext } from '@vue/server-renderer'
+import type { BlogPosts } from './pages/Blog/getBlogPosts'
 
 interface CreatedApp {
     app: ReturnType<typeof createSSRApp>

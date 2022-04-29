@@ -1,5 +1,5 @@
 import { slugify } from '@/common/utils/slugify'
-import { ComponentOptions } from 'vue'
+import type { ComponentOptions } from 'vue'
 
 // These are blog post locations on disk; has no relation to their final slug
 export const blogEntries = [

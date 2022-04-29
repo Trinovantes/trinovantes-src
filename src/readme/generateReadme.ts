@@ -1,6 +1,6 @@
 import '@/common/utils/setupDayjs'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { Projects } from '@/common/Project'
+import type { Projects } from '@/common/Project'
 import { formatDate } from '@/common/utils/formatDate'
 import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
 import assert from 'assert'

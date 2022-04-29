@@ -1,5 +1,5 @@
 import { SpaServer } from 'puppeteer-prerender-plugin'
-import express from 'express'
+import type express from 'express'
 import { AppContext, createApp } from './app'
 import { renderMetaToString } from 'vue-meta/ssr'
 import { renderToString } from '@vue/server-renderer'
