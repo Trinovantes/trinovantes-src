@@ -1,6 +1,7 @@
 import devalue from '@nuxt/devalue'
 
 export enum HydrationKey {
+    BlogPosts = '__BLOG_POSTS__',
     Projects = '__PROJECTS__',
 }
 

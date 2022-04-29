@@ -1,8 +1,26 @@
 <script lang="ts" setup>
 import { formatDate } from '@/common/utils/formatDate'
-import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
+import { useAppContext } from '@/web/app'
+import { BlogPosts, getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
+import { HydrationKey, loadStateFromDom } from '@/web/utils/hydration'
 
-const blogPosts = getBlogPosts()
+const blogPosts = await loadBlogPosts()
+async function loadBlogPosts(): Promise<BlogPosts> {
+    let blogPosts: BlogPosts | undefined
+
+    if (DEFINE.IS_SSR) {
+        const ssrContext = useAppContext()
+        blogPosts = ssrContext?.blogPosts
+    } else {
+        blogPosts = loadStateFromDom<BlogPosts>(HydrationKey.BlogPosts)
+
+        if (DEFINE.IS_DEV && blogPosts === undefined) {
+            blogPosts = await getBlogPosts()
+        }
+    }
+
+    return blogPosts ?? []
+}
 </script>
 
 <template>

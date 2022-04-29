@@ -14,6 +14,7 @@ declare global {
     }
 
     interface Window {
+        [HydrationKey.BlogPosts]: unknown
         [HydrationKey.Projects]: unknown
     }
 }

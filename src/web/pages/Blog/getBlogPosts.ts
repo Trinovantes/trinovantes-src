@@ -29,12 +29,13 @@ export interface BlogPost {
     dir: string
 }
 
-export function getBlogPosts(): Array<BlogPost> {
-    const posts: Array<BlogPost> = []
+export type BlogPosts = Array<BlogPost>
+
+export async function getBlogPosts(): Promise<BlogPosts> {
+    const posts: BlogPosts = []
 
     for (const entry of blogEntries) {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
-        const blogPostSrc = require(`./${entry}/BlogPost.vue`) as BlogPostSource
+        const blogPostSrc = await import(`./${entry}/BlogPost.vue`) as BlogPostSource
 
         if (!blogPostSrc.TITLE) {
             throw new Error(`${blogPostSrc.default.__file} is missing TITLE export`)

@@ -14,6 +14,7 @@ import { createMetaManager } from 'vue-meta'
 import { Router } from 'vue-router'
 import { Projects } from '@/common/Project'
 import { SSRContext } from '@vue/server-renderer'
+import { BlogPosts } from './pages/Blog/getBlogPosts'
 
 interface CreatedApp {
     app: ReturnType<typeof createSSRApp>
@@ -23,6 +24,7 @@ interface CreatedApp {
 export type AppContext = SSRContext & {
     _matchedComponents: Set<string>
     url: string
+    blogPosts: BlogPosts
     projects: Projects
 }
 

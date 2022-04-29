@@ -6,6 +6,7 @@ import { renderToString } from '@vue/server-renderer'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '@/api/services/fetchProjects'
 import { HydrationKey, saveStateToDom } from './utils/hydration'
+import { getBlogPosts } from './pages/Blog/getBlogPosts'
 
 function createAsyncHandler(handler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>): express.RequestHandler {
     return (req, res, next) => {
@@ -26,6 +27,7 @@ const server = new SpaServer({
             const appContext: AppContext = {
                 _matchedComponents: new Set(),
                 url,
+                blogPosts: await getBlogPosts(),
                 projects: await fetchProjects(),
             }
 
@@ -50,6 +52,7 @@ const server = new SpaServer({
                     <link rel="icon" type="image/png" href="/favicon.png">
                     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
                     <script>
+                        ${saveStateToDom(HydrationKey.BlogPosts, appContext.blogPosts)};
                         ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
                     </script>
                     ${header}

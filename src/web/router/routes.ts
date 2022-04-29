@@ -6,43 +6,49 @@ export enum RouteName {
     Error404 = 'Error404',
 }
 
-export const routes: Array<RouteRecordRaw> = [
-    {
-        path: '/',
-        component: () => import('@/web/layouts/MainLayout.vue'),
-        children: [
-            {
-                name: RouteName.Home,
-                path: '',
-                component: () => import('@/web/pages/Home/HomePage.vue'),
-            },
-            {
-                path: 'about',
-                component: () => import('@/web/pages/About/AboutPage.vue'),
-            },
-            {
-                path: 'blog',
-                component: () => import('@/web/pages/Blog/BlogPage.vue'),
-            },
-            {
-                path: 'projects',
-                component: () => import('@/web/pages/Projects/ProjectsPage.vue'),
-            },
-            ...getBlogPosts().map((post) => ({
-                path: post.slug,
-                component: () => import(`@/web/pages/Blog/${post.dir}/BlogPost.vue`),
-            })),
-            {
-                name: RouteName.Error404,
-                path: '404',
-                component: () => import('@/web/pages/Error/404Page.vue'),
-            },
-        ],
-    },
-    {
-        path: '/:pathMatch(.*)*',
-        redirect: {
-            name: RouteName.Error404,
+export async function getRoutes(): Promise<Array<RouteRecordRaw>> {
+    const blogPosts = (await getBlogPosts()).map((post) => ({
+        path: post.slug,
+        component: () => import(`@/web/pages/Blog/${post.dir}/BlogPost.vue`),
+    }))
+
+    const routes: Array<RouteRecordRaw> = [
+        {
+            path: '/',
+            component: () => import('@/web/layouts/MainLayout.vue'),
+            children: [
+                {
+                    name: RouteName.Home,
+                    path: '',
+                    component: () => import('@/web/pages/Home/HomePage.vue'),
+                },
+                {
+                    path: 'about',
+                    component: () => import('@/web/pages/About/AboutPage.vue'),
+                },
+                {
+                    path: 'blog',
+                    component: () => import('@/web/pages/Blog/BlogPage.vue'),
+                },
+                {
+                    path: 'projects',
+                    component: () => import('@/web/pages/Projects/ProjectsPage.vue'),
+                },
+                ...blogPosts,
+                {
+                    name: RouteName.Error404,
+                    path: '404',
+                    component: () => import('@/web/pages/Error/404Page.vue'),
+                },
+            ],
         },
-    },
-]
+        {
+            path: '/:pathMatch(.*)*',
+            redirect: {
+                name: RouteName.Error404,
+            },
+        },
+    ]
+
+    return routes
+}

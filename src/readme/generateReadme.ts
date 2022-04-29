@@ -47,15 +47,15 @@ class ReadmeGenerator {
         this._output = ''
         this._stack = 0
 
-        this.generateBlog()
+        await this.generateBlog()
         await this.generateProjects()
 
         assert(this._stack === 0)
         return this._output
     }
 
-    private generateBlog(): void {
-        const blogPosts = getBlogPosts()
+    private async generateBlog(): Promise<void> {
+        const blogPosts = await getBlogPosts()
 
         this.addLn('# Blog')
 
