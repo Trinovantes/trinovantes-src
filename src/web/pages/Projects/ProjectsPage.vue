@@ -11,7 +11,7 @@ import { useAppContext } from '@/web/app'
 const title = 'Projects'
 useMeta(createPageHeadOptions({
     title,
-    desc: getProjectTitles(),
+    desc: Object.values(unhydratedProjects).flatMap((projects) => projects.map((project) => project.name)).join(', '),
     image: getProfilePicture().src,
     imageSize: TwitterCard.Summary,
 }))
@@ -30,17 +30,6 @@ const getImage = (fileName: string): ResponsiveImage => {
 }
 
 const projects = await loadProjects()
-
-function getProjectTitles(): string {
-    let projectNames: Array<string> = []
-
-    for (const categoryProjects of Object.values(unhydratedProjects)) {
-        projectNames = projectNames.concat(categoryProjects.map((project) => project.name))
-    }
-
-    return projectNames.join(', ')
-}
-
 async function loadProjects(): Promise<Projects> {
     let projects: Projects | undefined
 
