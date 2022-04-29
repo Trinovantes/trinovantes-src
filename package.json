@@ -14,7 +14,8 @@
         "dev": "  concurrently 'yarn devApi'   'yarn devReadme'   'yarn devWeb'",
         "build": "concurrently 'yarn buildApi' 'yarn buildReadme' 'yarn buildWeb'",
         "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
-        "analyze": "webpack-bundle-analyzer dist/web/public/stats.json"
+        "analyze": "webpack-bundle-analyzer dist/web/public/stats.json",
+        "postinstall": "patch-package"
     },
     "babel": {
         "presets": [
@@ -91,7 +92,9 @@
         "mini-css-extract-plugin": "^2.0.0",
         "morgan": "^1.10.0",
         "null-loader": "^4.0.1",
+        "patch-package": "^6.4.7",
         "pluralize": "^8.0.0",
+        "postinstall-postinstall": "^2.1.0",
         "puppeteer-prerender-plugin": "^3.0.10",
         "responsive-loader": "^2.3.0",
         "sass": "^1.32.8",
