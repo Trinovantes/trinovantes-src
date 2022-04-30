@@ -91,6 +91,7 @@ export const projects: Projects = {
             repo: 'https://github.com/Trinovantes/userscript-youtube-playlist-organizer',
             tech: [
                 Tech.Typescript,
+                Tech.VueJs,
             ],
         },
         {
