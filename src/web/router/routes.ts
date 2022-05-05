@@ -8,7 +8,7 @@ export enum RouteName {
 }
 
 export async function getRoutes(): Promise<Array<RouteRecordRaw>> {
-    const blogPosts = (loadStateFromDom<BlogPosts>(HydrationKey.BlogPosts) ?? await getBlogPosts())
+    const blogPosts = (!DEFINE.IS_SSR && loadStateFromDom<BlogPosts>(HydrationKey.BlogPosts)) || await getBlogPosts()
     const blogPostRoutes: Array<RouteRecordRaw> = blogPosts.map((post) => ({
         path: post.slug,
         component: () => import(`@/web/pages/Blog/${post.dir}/BlogPost.vue`),
