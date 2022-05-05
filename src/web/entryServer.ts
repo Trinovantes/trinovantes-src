@@ -49,17 +49,23 @@ const server = new SpaServer({
                 <head ${appContext.teleports?.headAttrs ?? ''}>
                     <meta charset="utf-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1">
+
                     <link rel="icon" type="image/png" href="/favicon.png">
-                    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+
                     <script>
                         ${saveStateToDom(HydrationKey.BlogPosts, appContext.blogPosts)};
                         ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
                     </script>
+
                     ${header}
                     ${appContext.teleports?.head ?? ''}
                 </head>
                 <body ${appContext.teleports?.bodyAttrs ?? ''}>
-                    <noscript><span class="noscript">This website requires JavaScript</span></noscript>
+                    <noscript>This website requires JavaScript</noscript>
                     <div id="app">${appHtml}</div>
                     ${appContext.teleports?.body ?? ''}
                     ${footer}
