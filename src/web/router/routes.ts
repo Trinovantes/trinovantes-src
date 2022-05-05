@@ -1,4 +1,5 @@
-import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
+import { HydrationKey, loadStateFromDom } from '../utils/hydration'
+import { BlogPosts, getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
 import type { RouteRecordRaw } from 'vue-router'
 
 export enum RouteName {
@@ -7,7 +8,8 @@ export enum RouteName {
 }
 
 export async function getRoutes(): Promise<Array<RouteRecordRaw>> {
-    const blogPosts = (await getBlogPosts()).map((post) => ({
+    const blogPosts = (loadStateFromDom<BlogPosts>(HydrationKey.BlogPosts) ?? await getBlogPosts())
+    const blogPostRoutes: Array<RouteRecordRaw> = blogPosts.map((post) => ({
         path: post.slug,
         component: () => import(`@/web/pages/Blog/${post.dir}/BlogPost.vue`),
     }))
@@ -34,7 +36,7 @@ export async function getRoutes(): Promise<Array<RouteRecordRaw>> {
                     path: 'projects',
                     component: () => import('@/web/pages/Projects/ProjectsPage.vue'),
                 },
-                ...blogPosts,
+                ...blogPostRoutes,
                 {
                     name: RouteName.Error404,
                     path: '404',
