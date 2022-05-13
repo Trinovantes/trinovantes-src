@@ -79,6 +79,9 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
         new SitemapPlugin({
             base: 'https://www.stephenli.ca',
             paths: await prerenderRoutes,
+            options: {
+                filename: path.join(path.relative(distWebPublicDir, distWebDir), 'sitemap.xml'),
+            },
         }),
         new VueSsrAssetsClientPlugin({
             fileName: manifestFilePath,
