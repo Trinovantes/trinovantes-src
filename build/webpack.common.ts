@@ -4,7 +4,7 @@ import { VueLoaderPlugin } from 'vue-loader'
 import { Configuration, DefinePlugin } from 'webpack'
 import { merge } from 'webpack-merge'
 import nodeExternals from 'webpack-node-externals'
-import { getGitHash } from './utils/secrets'
+import { getGitHash } from './utils/BuildSecret'
 
 // ----------------------------------------------------------------------------
 // Constants

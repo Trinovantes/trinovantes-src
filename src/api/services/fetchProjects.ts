@@ -1,7 +1,7 @@
 import { Octokit } from '@octokit/rest'
 import axios from 'axios'
 import { JSDOM } from 'jsdom'
-import { getSecret, Secrets } from '@/api/utils/secrets'
+import { getRuntimeSecret, RuntimeSecret } from '@/api/utils/RuntimeSecret'
 import { Project, Projects, projects } from '@/common/Project'
 
 let hydratedProjects: Projects | null = null
@@ -30,7 +30,7 @@ async function hydrateProjects(projects: Projects): Promise<Projects> {
 
 async function hydrateProject(project: Project): Promise<Project> {
     const octokit = new Octokit({
-        auth: getSecret(Secrets.GITHUB_PAT),
+        auth: getRuntimeSecret(RuntimeSecret.GITHUB_PAT),
     })
 
     const repoInfo = getRepoInfo(project.repo)

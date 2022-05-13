@@ -1,14 +1,18 @@
+import { execSync } from 'child_process'
 import fs from 'fs'
+import path from 'path'
 import { config } from 'dotenv'
 
 // Loads .env into process.env
 config()
 
-export enum Secrets {
-    GITHUB_PAT = 'GITHUB_PAT',
+export enum BuildSecret {
+    GIT_HASH = 'GIT_HASH',
+    APP_URL = 'APP_URL',
+    APP_PORT = 'APP_PORT',
 }
 
-export function getSecret(key: string): string {
+export function getBuildSecret(key: string): string {
     // Check if it's already defined in process.env
     const envValue = process.env[key]
     if (envValue) {
@@ -24,4 +28,13 @@ export function getSecret(key: string): string {
 
     // Cannot find the secret anywhere
     throw new Error(`Cannot find ${key}`)
+}
+
+export function getGitHash(rootDir: string): string {
+    const gitDir = path.resolve(rootDir, '.git')
+    if (fs.existsSync(gitDir)) {
+        return execSync('git rev-parse HEAD').toString().trim()
+    }
+
+    return getBuildSecret(BuildSecret.GIT_HASH)
 }
