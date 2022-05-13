@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { useMeta } from 'vue-meta'
 import BlogList from '../../components/BlogList/BlogList.vue'
-import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
 import { getProfilePicture } from '@/web/utils/ResponsiveImage'
+import { createPageHeadOptions, TwitterCard } from '@/web/utils/createPageHeadOptions'
 
 const title = '404: Page Not Found'
 useMeta(createPageHeadOptions({
