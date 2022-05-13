@@ -2,7 +2,7 @@
 import { useMeta } from 'vue-meta'
 import BlogList from '@/web/components/BlogList/BlogList.vue'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { getProfilePicture } from '@/web/utils/ResponsiveLoader'
+import { getProfilePicture } from '@/web/utils/ResponsiveImage'
 
 const title = 'Blog'
 const desc = "I sometimes write about interesting stuff I've encountered in life"

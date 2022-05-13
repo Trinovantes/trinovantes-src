@@ -5,7 +5,7 @@ import { Projects, projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/app'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/PageHeadOptions'
-import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/utils/ResponsiveLoader'
+import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/utils/ResponsiveImage'
 import { HydrationKey, loadStateFromDom } from '@/web/utils/hydration'
 
 const title = 'Projects'
