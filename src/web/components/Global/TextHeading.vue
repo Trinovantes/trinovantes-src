@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, defineProps, h, useSlots } from 'vue'
+import { computed, h, useSlots } from 'vue'
 import { useRoute } from 'vue-router'
 import { slugify } from '@/common/utils/slugify'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'

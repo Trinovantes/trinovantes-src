@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { escapeHtml } from '@vue/shared'
 import hljs from 'highlight.js/lib/core'
-import { ref, computed, defineProps, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { sleep } from '@/common/utils/sleep'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveLoader'
 import type { LanguageFn } from 'highlight.js'
