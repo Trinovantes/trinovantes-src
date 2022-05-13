@@ -15,7 +15,7 @@ useMeta(createPageHeadOptions({
 </script>
 
 <template>
-    <article class="container text-container full">
+    <article class="container text-container">
         <h1>
             {{ title }}
         </h1>
