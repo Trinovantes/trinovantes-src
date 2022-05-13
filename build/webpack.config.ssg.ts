@@ -3,7 +3,7 @@ import { PuppeteerPrerenderPlugin } from 'puppeteer-prerender-plugin'
 import { VueSsrAssetsServerPlugin } from 'vue-ssr-assets-plugin'
 import { Configuration, DefinePlugin } from 'webpack'
 import { merge } from 'webpack-merge'
-import { prerenderRoutes } from './utils/routes'
+import { prerenderRoutes } from './utils/prerenderRoutes'
 import { srcWebDir, publicPath, manifestFilePath, distWebPublicDir, distWebDir, distSsgDir, commonNodeConfig, entryFilePath } from './webpack.common'
 
 // ----------------------------------------------------------------------------

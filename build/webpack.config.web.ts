@@ -7,7 +7,7 @@ import { VueSsrAssetsClientPlugin } from 'vue-ssr-assets-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import 'webpack-dev-server'
 import { merge } from 'webpack-merge'
-import { prerenderRoutes } from './utils/routes'
+import { prerenderRoutes } from './utils/prerenderRoutes'
 import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev } from './webpack.common'
 import type { Configuration } from 'webpack'
 

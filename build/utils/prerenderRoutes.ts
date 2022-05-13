@@ -9,7 +9,8 @@ import { blogEntries } from '@/web/pages/Blog/getBlogPosts'
 // Routes
 // ----------------------------------------------------------------------------
 
-export async function getBlogPostSlugs(blogDir: string): Promise<Array<string>> {
+export const prerenderRoutes: Promise<Array<string>> = (async() => {
+    const blogDir = path.resolve(srcWebDir, 'pages', 'Blog')
     const postSlugs: Array<string> = []
 
     for (const entry of blogEntries) {
@@ -30,12 +31,6 @@ export async function getBlogPostSlugs(blogDir: string): Promise<Array<string>> 
         const slug = slugify(title)
         postSlugs.push(slug)
     }
-
-    return postSlugs
-}
-
-export const prerenderRoutes: Promise<Array<string>> = (async() => {
-    const postSlugs = await getBlogPostSlugs(path.resolve(srcWebDir, 'pages', 'Blog'))
 
     return [
         ...postSlugs.map((slug) => `/${slug}`),
