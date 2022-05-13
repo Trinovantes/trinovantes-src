@@ -37,7 +37,7 @@ async function loadProjects(): Promise<Projects> {
         const ssrContext = useAppContext()
         projects = ssrContext?.projects
     } else {
-        projects = loadStateFromDom<Projects>(HydrationKey.Projects)
+        projects = loadStateFromDom(HydrationKey.Projects)
 
         if (DEFINE.IS_DEV && projects === undefined) {
             const res = await axios.get<Projects>('/api/projects')

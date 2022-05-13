@@ -1,5 +1,5 @@
 import { HydrationKey, loadStateFromDom } from '../utils/hydration'
-import { BlogPosts, getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
+import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
 import type { RouteRecordRaw } from 'vue-router'
 
 export enum RouteName {
@@ -8,7 +8,7 @@ export enum RouteName {
 }
 
 export async function getRoutes(): Promise<Array<RouteRecordRaw>> {
-    const blogPosts = (!DEFINE.IS_SSR && loadStateFromDom<BlogPosts>(HydrationKey.BlogPosts)) || await getBlogPosts()
+    const blogPosts = (!DEFINE.IS_SSR && loadStateFromDom(HydrationKey.BlogPosts)) || await getBlogPosts()
     const blogPostRoutes: Array<RouteRecordRaw> = blogPosts.map((post) => ({
         path: post.slug,
         component: () => import(`@/web/pages/Blog/${post.dir}/BlogPost.vue`),

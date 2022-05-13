@@ -1,4 +1,4 @@
-import { HydrationKey } from '@/web/utils/hydration'
+import { HydrationMap } from '@/web/utils/hydration'
 
 declare global {
     const DEFINE: {
@@ -13,10 +13,8 @@ declare global {
         MANIFEST_FILE: string
     }
 
-    interface Window {
-        [HydrationKey.BlogPosts]: unknown
-        [HydrationKey.Projects]: unknown
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+    interface Window extends HydrationMap {}
 }
 
 export {}

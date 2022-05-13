@@ -12,7 +12,7 @@ async function loadBlogPosts(): Promise<BlogPosts> {
         const ssrContext = useAppContext()
         blogPosts = ssrContext?.blogPosts
     } else {
-        blogPosts = loadStateFromDom<BlogPosts>(HydrationKey.BlogPosts)
+        blogPosts = loadStateFromDom(HydrationKey.BlogPosts)
 
         if (DEFINE.IS_DEV && blogPosts === undefined) {
             blogPosts = await getBlogPosts()
