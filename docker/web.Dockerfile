@@ -11,6 +11,7 @@ COPY patches/                   ./patches/
 RUN yarn install
 
 # Build app
+COPY babel.config.js            ./
 COPY build/                     ./build/
 COPY src/                       ./src/
 RUN --mount=type=secret,id=GIT_HASH \
