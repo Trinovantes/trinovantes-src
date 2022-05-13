@@ -15,7 +15,7 @@ useMeta(createPageHeadOptions({
 
 <template>
     <article class="home-page">
-        <div class="container full-height">
+        <div class="container full-height-container">
             <h1 class="animate__animated animate__fadeInUp">
                 {{ APP_NAME }}
             </h1>

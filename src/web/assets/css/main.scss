@@ -216,7 +216,7 @@ select{
     }
 }
 
-.full-height{
+.full-height-container{
     min-height: calc(100vh - #{$header-height} - #{$footer-height});
 
     @media (max-width: $mobile-breakpoint) {

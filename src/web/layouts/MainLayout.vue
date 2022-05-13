@@ -6,7 +6,7 @@ import MainLayoutHeader from './MainLayoutHeader.vue'
 <template>
     <MainLayoutHeader />
 
-    <main class="full-height">
+    <main class="full-height-container">
         <router-view />
     </main>
 
