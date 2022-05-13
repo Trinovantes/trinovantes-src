@@ -26,12 +26,15 @@ jobs:
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
+      - name: Save yarn cache location to env
+        run: echo "YARN_CACHE=$(yarn cache dir)" >> $GITHUB_ENV
+
       - name: Cache node_modules
         uses: actions/cache@v2
         env:
           CACHE_NAME: cache-node-modules
         with:
-          path: '**/node_modules'
+          path: ${{ env.YARN_CACHE }}
           key: ${{ runner.os }}-build-${{ env.CACHE_NAME }}-${{ hashFiles('**/yarn.lock', '**/package-lock.json') }}
 
       - name: Install dependencies
