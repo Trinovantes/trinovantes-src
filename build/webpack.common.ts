@@ -82,7 +82,7 @@ const commonConfig: Configuration = {
                     loader: 'esbuild-loader',
                     options: {
                         loader: 'ts',
-                        target: 'es2020',
+                        target: 'es2021',
                     },
                 }],
             },
