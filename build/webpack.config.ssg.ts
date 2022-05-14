@@ -4,7 +4,7 @@ import { VueSsrAssetsServerPlugin } from 'vue-ssr-assets-plugin'
 import { Configuration, DefinePlugin } from 'webpack'
 import { merge } from 'webpack-merge'
 import { prerenderRoutes } from './utils/prerenderRoutes'
-import { srcWebDir, publicPath, manifestFilePath, distWebPublicDir, distWebDir, distSsgDir, commonNodeConfig, entryFilePath } from './webpack.common'
+import { srcWebDir, publicPath, manifestFilePath, distWebPublicDir, distSsgDir, commonNodeConfig, entryFilePath, distWebDir } from './webpack.common'
 
 // ----------------------------------------------------------------------------
 // Server
@@ -30,8 +30,9 @@ export default (async(): Promise<Configuration> => merge(commonNodeConfig, {
         new PuppeteerPrerenderPlugin({
             enabled: true,
             enablePageJs: false,
-            entryDir: distWebDir,
-            entryFile: path.resolve(distSsgDir, 'www.js'),
+            entryDir: distSsgDir,
+            entryFile: 'www.js',
+            outputDir: distWebDir,
             routes: [
                 '/404',
                 ...await prerenderRoutes,
