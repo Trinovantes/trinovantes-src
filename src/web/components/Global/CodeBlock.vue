@@ -82,21 +82,24 @@ async function copyToClipboard() {
 
 <style lang="scss" scoped>
 .code-block{
+    $btn-size: 24px;
+    $btn-total-size: $btn-size + $padding;
+    $pre-padding: $padding * 2;
+    $btn-offset: math.div(($pre-padding + $btn-size + $pre-padding) - ($btn-total-size), 2);
+
     position: relative;
 
     button{
-        $size: $padding * 3;
-
         border: 1px solid #aaa;
         border-radius: math.div($padding, 2);
         background: #eee;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: $size; height: $size;
+        width: $btn-total-size; height: $btn-total-size;
 
         position: absolute;
-        top: $padding; right: $padding;
+        top: $btn-offset; right: $btn-offset;
 
         cursor: pointer;
         opacity: 0;
@@ -107,8 +110,8 @@ async function copyToClipboard() {
         }
 
         svg{
-            width: math.div($size, 2);
-            height: math.div($size, 2);
+            width: $btn-size;
+            height: $btn-size;
         }
     }
 
@@ -119,7 +122,7 @@ async function copyToClipboard() {
     }
 
     pre.hljs{
-        line-height: 1.25;
+        line-height: $btn-size;
 
         code{
             background: unset;
