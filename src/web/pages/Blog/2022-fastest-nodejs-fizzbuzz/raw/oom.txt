@@ -1,0 +1,23 @@
+<--- Last few GCs --->
+
+[13497:0x5f97850]    40767 ms: Mark-sweep 4045.2 (4131.6) -> 4040.7 (4142.8) MB, 2416.9 / 0.0 ms  (average mu = 0.518, current mu = 0.069) allocation failure; scavenge might not succeed
+[13497:0x5f97850]    44305 ms: Mark-sweep 4056.5 (4142.8) -> 4051.6 (4153.6) MB, 3522.2 / 0.0 ms  (average mu = 0.269, current mu = 0.004) allocation failure; scavenge might not succeed
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+ 1: 0xb652d0 node::Abort() [node]
+ 2: 0xa761b5 node::FatalError(char const*, char const*) [node]
+ 3: 0xd55b6e v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [node]
+ 4: 0xd55ee7 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [node]
+ 5: 0xf32f15  [node]
+ 6: 0xf453fd v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [node]
+ 7: 0xf1fafe v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [node]
+ 8: 0xf20ec7 v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [node]
+ 9: 0xf01410 v8::internal::Factory::AllocateRaw(int, v8::internal::AllocationType, v8::internal::AllocationAlignment) [node]
+10: 0xef8e84 v8::internal::FactoryBase<v8::internal::Factory>::AllocateRawWithImmortalMap(int, v8::internal::AllocationType, v8::internal::Map, v8::internal::AllocationAlignment) [node]
+11: 0xefb138 v8::internal::FactoryBase<v8::internal::Factory>::NewRawOneByteString(int, v8::internal::AllocationType) [node]
+12: 0x1070231 v8::internal::BigInt::ToString(v8::internal::Isolate*, v8::internal::Handle<v8::internal::BigInt>, int, v8::internal::ShouldThrow) [node]
+13: 0x12d340e v8::internal::Runtime_ToString(int, unsigned long*, v8::internal::Isolate*) [node]
+14: 0x16f6939  [node]

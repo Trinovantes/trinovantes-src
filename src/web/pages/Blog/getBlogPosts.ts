@@ -3,6 +3,7 @@ import type { ComponentOptions } from 'vue'
 
 // These are blog post locations on disk; has no relation to their final slug
 export const blogEntries = [
+    '2022-fastest-nodejs-fizzbuzz',
     '2021-google-blocklist',
     '2021-vue3-ssr-critical-resources',
     '2021-vuex4-generator',
