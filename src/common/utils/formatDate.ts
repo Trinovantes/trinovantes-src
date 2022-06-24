@@ -18,5 +18,5 @@ export function formatDateDisplay(timestamp?: number): string {
         timeZone: 'UTC',
     } as unknown as Intl.DateTimeFormatOptions)
 
-    return formatter.format(timestamp)
+    return formatter.format(dayjs.unix(timestamp).toDate())
 }
