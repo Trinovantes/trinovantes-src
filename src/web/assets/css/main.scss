@@ -19,6 +19,11 @@ body{
     font-size: 1.25rem;
     font-family: 'Roboto', sans-serif;
     line-height: 2;
+
+    > iframe{
+        // Hide cloudflare's injected iframe
+        position: fixed;
+    }
 }
 
 a{
