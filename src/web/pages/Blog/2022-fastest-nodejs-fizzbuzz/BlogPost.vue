@@ -4,12 +4,14 @@ import { defineComponent } from 'vue'
 
 export const TITLE = 'Fastest Node.js Fizzbuzz'
 export const CREATED_AT = dayjs.utc('2022-06-24').unix()
+export const UPDATED_AT = dayjs.utc('2022-07-12').unix()
 
 export default defineComponent({
     setup() {
         return {
             TITLE,
             CREATED_AT,
+            UPDATED_AT,
         }
     },
 })
@@ -19,6 +21,7 @@ export default defineComponent({
     <BlogPost
         :title="TITLE"
         :created-at="CREATED_AT"
+        :updated-at="UPDATED_AT"
     >
         <p>
             I recently encountered an <a href="https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz/248988">interesting thread on CodeGolf</a> that asked for the fastest implementation of everybody's favorite interview question FizzBuzz.
@@ -101,7 +104,7 @@ export default defineComponent({
         </p>
 
         <TextHeading>
-            Remove <code>process.stdout.write</code>
+            Reduce <code>process.stdout.write</code>
         </TextHeading>
 
         <p>
