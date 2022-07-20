@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import hljs from 'highlight.js/lib/core'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
 import { getIconSvgRaw } from '@/web/utils/ResponsiveImage'
 import { escapeHtml } from '@/web/utils/escapeHtml'
@@ -60,6 +60,11 @@ const copyIcon = computed<string>(() => {
     }
 })
 
+const clipboardEnabled = ref(false)
+onMounted(() => {
+    clipboardEnabled.value = 'clipboard' in navigator
+})
+
 async function copyToClipboard() {
     await navigator.clipboard.writeText(props.code)
 
@@ -73,7 +78,7 @@ async function copyToClipboard() {
 <template>
     <div class="code-block">
         <!-- eslint-disable-next-line vue/no-v-html -->
-        <button title="Copy code to clipboard" @click="copyToClipboard" v-html="copyIcon" />
+        <button v-if="clipboardEnabled" title="Copy code to clipboard" @click="copyToClipboard" v-html="copyIcon" />
 
         <!-- eslint-disable-next-line vue/no-v-html -->
         <pre :class="`hljs ${language}`" :style="`white-space: ${props.preWhiteSpace};`"><code v-html="highlightedCode" /></pre>
