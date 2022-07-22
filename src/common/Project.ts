@@ -75,6 +75,13 @@ export const projects: Projects = {
                 Tech.Nginx,
             ],
         },
+        {
+            name: 'Quest Schedule Exporter',
+            repo: 'https://github.com/Trinovantes/Quest-Schedule-Exporter',
+            tech: [
+                Tech.Typescript,
+            ],
+        },
     ],
 
     [ProjectCategory.Userscript]: [
