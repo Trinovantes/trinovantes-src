@@ -79,16 +79,16 @@ export const projects: Projects = {
 
     [ProjectCategory.Userscript]: [
         {
-            name: 'Delete Workflow Runs',
-            repo: 'https://github.com/Trinovantes/userscript-delete-workflow-runs',
+            name: 'YouTube Playlist Organizer',
+            repo: 'https://github.com/Trinovantes/userscript-youtube-playlist-organizer',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
             ],
         },
         {
-            name: 'YouTube Playlist Organizer',
-            repo: 'https://github.com/Trinovantes/userscript-youtube-playlist-organizer',
+            name: 'Delete Workflow Runs',
+            repo: 'https://github.com/Trinovantes/userscript-delete-workflow-runs',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -110,9 +110,31 @@ export const projects: Projects = {
                 Tech.VueJs,
             ],
         },
+        {
+            name: 'Old Reddit Emotes',
+            repo: 'https://github.com/Trinovantes/userscript-old-reddit-emotes',
+            tech: [
+                Tech.Typescript,
+                Tech.VueJs,
+            ],
+        },
     ],
 
     [ProjectCategory.Misc]: [
+        {
+            name: 'BBCode Compiler',
+            repo: 'https://github.com/Trinovantes/bbcode-compiler',
+            tech: [
+                Tech.Typescript,
+            ],
+        },
+        {
+            name: 'Puppeteer Prerender Plugin',
+            repo: 'https://github.com/Trinovantes/puppeteer-prerender-plugin',
+            tech: [
+                Tech.Typescript,
+            ],
+        },
         {
             name: 'Vue SSR Assets Plugin',
             repo: 'https://github.com/Trinovantes/vue-ssr-assets-plugin',
@@ -123,13 +145,6 @@ export const projects: Projects = {
         {
             name: 'Quasar Unused Plugin',
             repo: 'https://github.com/Trinovantes/quasar-unused-plugin',
-            tech: [
-                Tech.Typescript,
-            ],
-        },
-        {
-            name: 'Puppeteer Prerender Plugin',
-            repo: 'https://github.com/Trinovantes/puppeteer-prerender-plugin',
             tech: [
                 Tech.Typescript,
             ],
