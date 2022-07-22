@@ -29,10 +29,6 @@ const props = defineProps({
         type: String,
         default: '100vw',
     },
-    roundImage: {
-        type: Boolean,
-        default: false,
-    },
     enableBackground: {
         type: Boolean,
         default: true,
@@ -161,9 +157,6 @@ onMounted(() => {
                     :title="title"
                     :alt="alt ?? title"
                     loading="lazy"
-                    :class="{
-                        round: roundImage,
-                    }"
                 >
             </picture>
 
@@ -202,10 +195,6 @@ div.simple-image{
                 width: 100%; height: auto;
                 max-width: 100%;
                 object-fit: cover;
-
-                &.round{
-                    border-radius: 50%;
-                }
             }
         }
 

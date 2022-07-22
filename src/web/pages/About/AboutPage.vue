@@ -71,13 +71,14 @@ onMounted(() => {
         </section>
 
         <aside>
-            <SimpleImage
-                :img="require('@/web/assets/img/profile.jpg?size=400')"
-                :enable-zoom="false"
-                :enable-background="false"
-                :round-image="true"
-                title="Stephen Li"
-            />
+            <div>
+                <img
+                    :src="require('@/web/assets/img/profile.jpg?size=400')"
+                    width="400"
+                    height="400"
+                    title="Stephen Li"
+                >
+            </div>
 
             <ContactLinks />
         </aside>
@@ -94,6 +95,15 @@ onMounted(() => {
 
     aside{
         gap: $column-gap;
+
+        img{
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto;
+
+            max-width: 100%; height: 100%;
+            object-fit: cover;
+        }
 
         .contact{
             margin: 0 auto;
