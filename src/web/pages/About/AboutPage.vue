@@ -8,10 +8,11 @@ import ContactLinks from './ContactLinks.vue'
 
 const title = 'About'
 const desc = `Hi, I'm Stephen. ${APP_DESC}`
+const image = getProfilePicture().src
 useMeta(createPageHeadOptions({
     title,
     desc,
-    image: getProfilePicture().src,
+    image,
     imageSize: TwitterCard.Summary,
 }))
 
@@ -73,7 +74,7 @@ onMounted(() => {
         <aside>
             <div>
                 <img
-                    :src="require('@/web/assets/img/profile.jpg?size=400')"
+                    :src="image"
                     width="400"
                     height="400"
                     title="Stephen Li"
