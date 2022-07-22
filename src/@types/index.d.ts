@@ -11,6 +11,7 @@ declare global {
         PUBLIC_PATH: string
         ENTRY_FILE: string
         MANIFEST_FILE: string
+        HTML_TEMPLATE: string
     }
 
     // eslint-disable-next-line @typescript-eslint/no-empty-interface

@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs'
 import { renderToString } from '@vue/server-renderer'
 import { SpaServer } from 'puppeteer-prerender-plugin'
 import { renderMetaToString } from 'vue-meta/ssr'
@@ -15,6 +16,7 @@ function createAsyncHandler(handler: (req: express.Request, res: express.Respons
 }
 
 const assetRenderer = new VueSsrAssetRenderer(DEFINE.MANIFEST_FILE)
+const htmlTemplate = readFileSync(DEFINE.HTML_TEMPLATE).toString('utf-8')
 
 const server = new SpaServer({
     entryFile: DEFINE.ENTRY_FILE,
@@ -40,38 +42,26 @@ const server = new SpaServer({
             const appHtml = await renderToString(app, appContext)
             await renderMetaToString(app, appContext)
             const { header, footer } = assetRenderer.renderAssets(appContext._matchedComponents)
+            const head = `
+                <script>
+                    ${saveStateToDom(HydrationKey.BlogPosts, appContext.blogPosts)};
+                    ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
+                </script>
+
+                ${header}
+                ${appContext.teleports?.head ?? ''}
+            `
 
             res.setHeader('Content-Type', 'text/html')
             res.status(200)
-            res.send(`
-                <!DOCTYPE html ${appContext.teleports?.htmlAttrs ?? ''}>
-                <html lang="en">
-                <head ${appContext.teleports?.headAttrs ?? ''}>
-                    <meta charset="utf-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                    <link rel="icon" type="image/png" href="/favicon.png">
-
-                    <link rel="preconnect" href="https://fonts.googleapis.com">
-                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
-
-                    <script>
-                        ${saveStateToDom(HydrationKey.BlogPosts, appContext.blogPosts)};
-                        ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
-                    </script>
-
-                    ${header}
-                    ${appContext.teleports?.head ?? ''}
-                </head>
-                <body ${appContext.teleports?.bodyAttrs ?? ''}>
-                    <noscript>This website requires JavaScript</noscript>
-                    <div id="app">${appHtml}</div>
-                    ${appContext.teleports?.body ?? ''}
-                    ${footer}
-                </body>
-                </html>
-            `)
+            let html = htmlTemplate
+            html = html.replace('<html', `<html ${appContext.teleports?.htmlAttrs ?? ''}`)
+            html = html.replace('</head>', `${head}</head>`)
+            html = html.replace('<body', `<body ${appContext.teleports?.bodyAttrs ?? ''}`)
+            html = html.replace('</body>', `${appContext.teleports?.body ?? ''}${footer}</body>`)
+            html = html.replace('<div id="app"></div>', `<div id="app">${appHtml}</div>`)
+            res.send(html)
         }),
     },
 })

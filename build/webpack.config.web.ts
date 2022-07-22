@@ -8,7 +8,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import 'webpack-dev-server'
 import { merge } from 'webpack-merge'
 import { prerenderRoutes } from './utils/prerenderRoutes'
-import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev } from './webpack.common'
+import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev, entryFilePath } from './webpack.common'
 import type { Configuration } from 'webpack'
 
 // ----------------------------------------------------------------------------
@@ -74,7 +74,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(srcWebDir, 'index.html'),
-            filename: path.resolve(distWebDir, 'app.html'),
+            filename: entryFilePath,
         }),
         new SitemapPlugin({
             base: 'https://www.stephenli.ca',
