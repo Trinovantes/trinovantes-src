@@ -1,9 +1,9 @@
-import BlogPost from '@/web/components/Global/BlogPost.vue'
-import ClientOnly from '@/web/components/Global/ClientOnly.vue'
-import CodeBlock from '@/web/components/Global/CodeBlock.vue'
-import SimpleImage from '@/web/components/Global/SimpleImage.vue'
-import SimpleTable from '@/web/components/Global/SimpleTable.vue'
-import TextHeading from '@/web/components/Global/TextHeading.vue'
+import ClientOnly from '@/web/components/ClientOnly.vue'
+import CodeBlock from '@/web/components/CodeBlock.vue'
+import SimpleImage from '@/web/components/SimpleImage.vue'
+import SimpleTable from '@/web/components/SimpleTable.vue'
+import TextHeading from '@/web/components/TextHeading.vue'
+import BlogPost from '@/web/pages/Blog/BlogPost.vue'
 
 declare module '@vue/runtime-core' {
     export interface GlobalComponents {

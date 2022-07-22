@@ -2,9 +2,9 @@
 import { onMounted, ref } from 'vue'
 import { useMeta } from 'vue-meta'
 import { APP_DESC } from '@/common/Constants'
-import ContactLinks from '@/web/components/ContactLinks/ContactLinks.vue'
 import { getProfilePicture } from '@/web/utils/ResponsiveImage'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/createPageHeadOptions'
+import ContactLinks from './ContactLinks.vue'
 
 const title = 'About'
 const desc = `Hi, I'm Stephen. ${APP_DESC}`

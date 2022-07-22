@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useMeta } from 'vue-meta'
+import ContactLinks from '../About/ContactLinks.vue'
 import { APP_NAME, APP_DESC } from '@/common/Constants'
-import ContactLinks from '@/web/components/ContactLinks/ContactLinks.vue'
 import { getProfilePicture } from '@/web/utils/ResponsiveImage'
 import { createPageHeadOptions, TwitterCard } from '@/web/utils/createPageHeadOptions'
 
