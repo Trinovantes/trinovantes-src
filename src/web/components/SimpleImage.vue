@@ -189,17 +189,18 @@ div.simple-image{
         position: relative;
 
         &.background{
-            background: #f6f6f6;
-            padding: $padding * 2;
+            border: 1px solid $dark;
         }
 
         picture{
+            border-bottom: 1px solid $dark;
             display: block;
 
             img{
                 display: block;
                 margin: 0 auto;
-                max-width: 100%; height: auto;
+                width: 100%; height: auto;
+                max-width: 100%;
                 object-fit: cover;
 
                 &.round{
@@ -211,7 +212,7 @@ div.simple-image{
         figcaption{
             font-size: 1rem;
             font-style: italic;
-            margin-top: $padding;
+            margin: math.div($padding, 2) $padding;
             text-align: center;
         }
 
