@@ -209,7 +209,7 @@ div.simple-image{
         }
 
         figcaption{
-            font-size: 90%;
+            font-size: 1rem;
             font-style: italic;
             margin-top: $padding;
             text-align: center;
