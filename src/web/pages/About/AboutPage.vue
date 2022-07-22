@@ -35,7 +35,7 @@ onMounted(() => {
             </p>
 
             <p>
-                I got interested in programming back in <em :title="yearsSinceStartedProgramming">grade 6</em> when I found a "How to build your own website" book from my local library.
+                I got interested in programming back in <em :title="yearsSinceStartedProgramming">grade six</em> when I found a "How to build your own website" book from my local library.
             </p>
 
             <p>
