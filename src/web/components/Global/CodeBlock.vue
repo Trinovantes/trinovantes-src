@@ -38,7 +38,7 @@ watch(() => props, async() => {
     } else {
         if (!hljs.getLanguage(props.language)) {
             const fileName = languageMap.get(props.language) ?? props.language
-            const { default: languageFn } = await import(`highlight.js/lib/languages/${fileName}`) as { default: LanguageFn }
+            const { default: languageFn } = await import(`highlight.js/lib/languages/${fileName}.js`) as { default: LanguageFn }
             hljs.registerLanguage(props.language, languageFn)
         }
 
