@@ -116,6 +116,7 @@ code{
     background: $light-on-light;
     border-radius: math.div($padding, 4);
     font-family: 'Courier New', Courier, monospace;
+    overflow-wrap: break-word;
     padding: math.div($padding, 4) math.div($padding, 2);
 }
 
