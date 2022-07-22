@@ -260,14 +260,12 @@ select{
     gap: $column-gap;
 
     &.with-sidebar{
-        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        @media (min-width: $breakpoint-lg-min) {
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 
-        &.reverse{
-            grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-        }
-
-        @media (max-width: $text-container-breakpoint) {
-            grid-template-columns: 100%;
+            &.reverse{
+                grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+            }
         }
     }
 
