@@ -8,11 +8,6 @@ export const CONTACTS = [
         url: 'mailto:hello@stephenli.ca',
     },
     {
-        service: 'Twitter',
-        label: 'trinovantes',
-        url: 'https://twitter.com/trinovantes',
-    },
-    {
         service: 'GitHub',
         label: 'github.com/trinovantes',
         url: 'https://github.com/Trinovantes',
