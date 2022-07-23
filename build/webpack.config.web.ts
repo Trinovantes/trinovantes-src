@@ -8,7 +8,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import 'webpack-dev-server'
 import { merge } from 'webpack-merge'
 import { prerenderRoutes } from './utils/prerenderRoutes'
-import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev, entryFilePath } from './webpack.common'
+import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev, entryFilePath, entryFileName } from './webpack.common'
 import type { Configuration } from 'webpack'
 
 // ----------------------------------------------------------------------------
@@ -32,7 +32,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
 
     devServer: {
         devMiddleware: {
-            index: 'app.html',
+            index: entryFileName,
             writeToDisk: (filePath) => {
                 // Since output.publicPath is '/public', app.html can only be accessed at /public/index.html
                 // Instead, we need to write it to disk and have webpack-dev-server serve it from '/' (contentBasePublicPath)
@@ -40,7 +40,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
             },
         },
         historyApiFallback: {
-            index: 'app.html',
+            index: entryFileName,
         },
         static: [
             {
