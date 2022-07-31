@@ -10,7 +10,7 @@ import type { Projects } from '@/common/Project'
 import { formatDate } from '@/common/utils/formatDate'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { slugify } from '@/common/utils/slugify'
-import { getBlogPosts } from '@/web/pages/Blog/getBlogPosts'
+import { getBlogPosts } from '@/web/client/pages/Blog/getBlogPosts'
 
 const IMG_WIDTH = 400
 

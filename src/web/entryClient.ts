@@ -1,8 +1,8 @@
-import { createApp } from './app'
-import './assets/css/main.scss'
+import './client/assets/css/main.scss'
+import { createVueApp } from './createVueApp'
 
 async function main() {
-    const { app } = await createApp()
+    const { app } = await createVueApp()
     app.mount('#app')
 }
 

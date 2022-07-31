@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
 import { onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
-import type { ResponsiveImage } from '@/web/utils/ResponsiveImage'
+import type { ResponsiveImage } from '@/web/client/utils/ResponsiveImage'
 import LoadingSpinner from './LoadingSpinner.vue'
 
 const props = defineProps({

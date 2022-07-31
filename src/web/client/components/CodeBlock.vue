@@ -2,8 +2,8 @@
 import hljs from 'highlight.js/lib/core'
 import { ref, computed, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
-import { getIconSvgRaw } from '@/web/utils/ResponsiveImage'
-import { escapeHtml } from '@/web/utils/escapeHtml'
+import { getIconSvgRaw } from '@/web/client/utils/ResponsiveImage'
+import { escapeHtml } from '@/web/client/utils/escapeHtml'
 import type { LanguageFn } from 'highlight.js'
 
 const props = defineProps({

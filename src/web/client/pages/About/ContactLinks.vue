@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { CONTACTS } from '@/common/Constants'
 import { slugify } from '@/common/utils/slugify'
-import { getIconSvgRaw } from '@/web/utils/ResponsiveImage'
+import { getIconSvgRaw } from '@/web/client/utils/ResponsiveImage'
 
 defineProps({
     isDark: {

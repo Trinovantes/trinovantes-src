@@ -4,9 +4,10 @@ import { SpaServer } from 'puppeteer-prerender-plugin'
 import { renderMetaToString } from 'vue-meta/ssr'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { AppContext, createApp } from './app'
-import { getBlogPosts } from './pages/Blog/getBlogPosts'
-import { HydrationKey, saveStateToDom } from './utils/hydration'
+import { getBlogPosts } from './client/pages/Blog/getBlogPosts'
+import { HydrationKey, saveStateToDom } from './client/utils/hydration'
+import { createVueApp } from './createVueApp'
+import type { AppContext } from './AppContext'
 import type express from 'express'
 
 function createAsyncHandler(handler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>): express.RequestHandler {
@@ -33,7 +34,7 @@ const server = new SpaServer({
                 projects: await fetchProjects(),
             }
 
-            const { app, router } = await createApp(appContext)
+            const { app, router } = await createVueApp(appContext)
             if (router.currentRoute.value.fullPath !== url) {
                 res.redirect(router.currentRoute.value.fullPath)
                 return

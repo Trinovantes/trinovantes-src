@@ -2,7 +2,7 @@
 import { computed, PropType } from 'vue'
 import { useMeta } from 'vue-meta'
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
-import { createPageHeadOptions } from '@/web/utils/createPageHeadOptions'
+import { createPageHeadOptions } from '@/web/client/utils/createPageHeadOptions'
 
 const props = defineProps({
     title: {

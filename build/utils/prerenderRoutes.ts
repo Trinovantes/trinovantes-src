@@ -3,14 +3,14 @@ import fs from 'fs/promises'
 import path from 'path'
 import { srcWebDir } from '../webpack.common'
 import { slugify } from '@/common/utils/slugify'
-import { blogEntries } from '@/web/pages/Blog/getBlogPosts'
+import { blogEntries } from '@/web/client/pages/Blog/getBlogPosts'
 
 // ----------------------------------------------------------------------------
 // Routes
 // ----------------------------------------------------------------------------
 
 export const prerenderRoutes: Promise<Array<string>> = (async() => {
-    const blogDir = path.resolve(srcWebDir, 'pages', 'Blog')
+    const blogDir = path.resolve(srcWebDir, 'client/pages/Blog')
     const postSlugs: Array<string> = []
 
     for (const entry of blogEntries) {
