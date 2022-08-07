@@ -6,6 +6,6 @@ async function main() {
     app.mount('#app')
 }
 
-main().catch((err) => {
-    console.warn(err)
-})
+window.addEventListener('error', console.warn)
+window.addEventListener('unhandledrejection', console.warn)
+void main()
