@@ -44,14 +44,22 @@ const render = () => {
             class: 'linked-heading',
         },
         [
-            childNodes,
             enableLink.value && h(
                 'a',
                 {
                     href: `${route.path}#${slug}`,
                     title: 'Link to this section',
-                    innerHTML: getIconSvgRaw('link'),
                 },
+                [
+                    childNodes,
+                    h(
+                        'div',
+                        {
+                            class: 'svg',
+                            innerHTML: getIconSvgRaw('link'),
+                        },
+                    ),
+                ],
             ),
         ],
     )
@@ -64,13 +72,24 @@ const render = () => {
 
 <style lang="scss" scoped>
 .linked-heading{
-    a{
-        opacity: 0;
-    }
+    :deep(a) {
+        color: $dark;
+        text-decoration: none;
 
-    &:hover{
-        a{
-            opacity: 1;
+        display: flex;
+        gap: math.div($padding, 2);
+
+        .svg{
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        &:hover{
+            .svg{
+                opacity: 1;
+            }
         }
     }
 }
