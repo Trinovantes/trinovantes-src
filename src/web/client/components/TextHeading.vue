@@ -30,6 +30,10 @@ const render = () => {
             text += node.children
         }
 
+        if (text.length === 0) {
+            throw new Error('Failed to compute slug for TextHeading')
+        }
+
         return slugify(text)
     })()
 
