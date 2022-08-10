@@ -55,9 +55,9 @@ async function loadProjects(): Promise<Projects> {
         :key="category"
         class="container project-category"
     >
-        <h1>
+        <TextHeading :size="1">
             {{ category }}
-        </h1>
+        </TextHeading>
 
         <section
             v-for="project of categoryProjects"
@@ -75,9 +75,9 @@ async function loadProjects(): Promise<Projects> {
             </div>
 
             <div class="desc">
-                <h2>
+                <TextHeading :size="2">
                     {{ project.name }}
-                </h2>
+                </TextHeading>
 
                 <div class="links">
                     <a
