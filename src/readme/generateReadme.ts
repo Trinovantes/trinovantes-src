@@ -6,6 +6,7 @@ import { writeFile } from 'fs/promises'
 import path from 'path'
 import axios from 'axios'
 import { fetchProjects } from '@/api/services/fetchProjects'
+import { CLIENT_SRC_WEB_URL } from '@/common/Constants'
 import type { Projects } from '@/common/Project'
 import { formatDate } from '@/common/utils/formatDate'
 import { formatUrl } from '@/common/utils/formatUrl'
@@ -84,7 +85,7 @@ class ReadmeGenerator {
                 {
                     const imgPath = project.img?.startsWith('http')
                         ? project.img
-                        : `https://github.com/Trinovantes/trinovantes/blob/dev/src/web/client/pages/Projects/img/${project.img}`
+                        : `${CLIENT_SRC_WEB_URL}/pages/Projects/img/${project.img}`
                     const imgTag = `<img src="${imgPath}" width="${IMG_WIDTH}" title="${project.name}">`
 
                     let previewUrl = ''
@@ -108,7 +109,7 @@ class ReadmeGenerator {
                         ? `<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank">${project.name}</a>`
                         : project.name
                     const projectRepoTag = (project.repo && !project.isPrivate)
-                        ? ` <a href="${project.repo}" title="${project.repo}" target="_blank"><img src="https://github.com/Trinovantes/trinovantes/blob/dev/src/web/client/assets/img/icons/github.svg" width="16" height="16"></a>`
+                        ? ` <a href="${project.repo}" title="${project.repo}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="16" height="16"></a>`
                         : ''
 
                     this.addLn(`## ${projectLabelTag}${projectRepoTag}`)
