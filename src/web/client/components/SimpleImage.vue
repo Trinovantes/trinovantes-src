@@ -33,10 +33,6 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    enableAnimation: {
-        type: Boolean,
-        default: false,
-    },
     enableZoom: {
         type: Boolean,
         default: true,
@@ -86,24 +82,6 @@ onMounted(() => {
         imageRef.value.onload = () => {
             showLoading.value = false
         }
-    }, {
-        immediate: true,
-    })
-})
-
-// Set up animation
-onMounted(() => {
-    watch(hasScrolledIntoView, () => {
-        if (!props.enableAnimation) {
-            return
-        }
-
-        if (!hasScrolledIntoView.value) {
-            return
-        }
-
-        containerRef.value?.classList.add('animate__animated')
-        containerRef.value?.classList.add('animate__fadeInUp')
     }, {
         immediate: true,
     })
