@@ -70,7 +70,7 @@ async function loadProjects(): Promise<Projects> {
                     :img="getImage(project.img)"
                     :title="project.name"
                     :enable-zoom="false"
-                    :enable-background="false"
+                    :enable-border="false"
                 />
             </div>
 
@@ -144,7 +144,6 @@ article.project-category{
 
         .preview{
             .simple-image{
-                background: $dark;
                 border: math.div($padding, 2) solid $dark;
             }
         }

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
-import { onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue'
+import { onBeforeUnmount, onMounted, PropType, ref } from 'vue'
+import { sleep } from '@/common/utils/sleep'
 import type { ResponsiveImage } from '@/web/client/utils/ResponsiveImage'
 import LoadingSpinner from './LoadingSpinner.vue'
 
@@ -29,7 +30,7 @@ const props = defineProps({
         type: String,
         default: '100vw',
     },
-    enableBackground: {
+    enableBorder: {
         type: Boolean,
         default: true,
     },
@@ -39,10 +40,9 @@ const props = defineProps({
     },
 })
 
+// Set up lazy loading with intersection observer
 const containerRef = ref<HTMLDivElement | null>(null)
-const hasScrolledIntoView = ref(false || DEFINE.IS_SSR)
-
-// Set up intersection observer
+const hasScrolledIntoView = ref(false)
 let observer: IntersectionObserver | null = null
 onMounted(() => {
     if (!containerRef.value) {
@@ -63,46 +63,39 @@ onBeforeUnmount(() => {
     observer?.disconnect()
 })
 
-// Set up image loading
+// Set up plugins on <img> after it loads
 const imageRef = ref<HTMLImageElement | null>(null)
-const showLoading = ref(true && !DEFINE.IS_SSR)
-onMounted(() => {
-    watch(imageRef, () => {
-        if (!imageRef.value) {
-            return
-        }
+const isLoading = ref(true)
+const onImageLoadSuccess = () => {
+    if (!imageRef.value) {
+        throw new Error('Missing imageRef')
+    }
 
-        // Don't set onload hook more than once
-        if (imageRef.value.onload) {
-            return
-        }
+    isLoading.value = false
 
-        showLoading.value = !imageRef.value.complete
-
-        imageRef.value.onload = () => {
-            showLoading.value = false
-        }
-    }, {
-        immediate: true,
-    })
-})
-
-// Set up medium zoom
-onMounted(() => {
-    watch(imageRef, () => {
-        if (!props.enableZoom) {
-            return
-        }
-
-        if (!imageRef.value) {
-            return
-        }
-
+    if (props.enableZoom) {
         mediumZoom(imageRef.value)
-    }, {
-        immediate: true,
-    })
-})
+    }
+}
+
+// Try to reload errored image once
+let hasRetried = false
+const onImageLoadError = async() => {
+    if (!imageRef.value) {
+        throw new Error('Missing imageRef')
+    }
+
+    if (hasRetried) {
+        return
+    }
+
+    // Avoid rate limits
+    await sleep(1000)
+
+    imageRef.value.src = ''
+    imageRef.value.src = props.img.src
+    hasRetried = true
+}
 </script>
 
 <template>
@@ -113,13 +106,14 @@ onMounted(() => {
         <figure
             v-if="hasScrolledIntoView"
             :class="{
-                background: enableBackground,
+                border: enableBorder,
+                loading: isLoading,
             }"
         >
             <picture
                 :style="{
                     backgroundSize: 'cover',
-                    backgroundImage: (showLoading && img.placeholder) ? `url('${img.placeholder}')` : 'none'
+                    backgroundImage: (isLoading && img.placeholder) ? `url('${img.placeholder}')` : 'none'
                 }"
             >
                 <source
@@ -135,6 +129,8 @@ onMounted(() => {
                     :title="title"
                     :alt="alt ?? title"
                     loading="lazy"
+                    @load="onImageLoadSuccess"
+                    @error="onImageLoadError"
                 >
             </picture>
 
@@ -143,7 +139,7 @@ onMounted(() => {
             </figcaption>
 
             <LoadingSpinner
-                v-if="showLoading"
+                v-if="isLoading"
             />
         </figure>
     </div>
@@ -154,17 +150,22 @@ div.simple-image{
     display: flex;
     flex-direction: column;
     justify-content: start;
+    position: relative;
 
     figure{
-        margin: 0;
-        position: relative;
-
-        &.background{
+        &.border{
             border: 1px solid $dark;
+
+            figcaption{
+                border-top: 1px solid $dark;
+            }
+        }
+
+        &.loading{
+            min-height: 120px + ($padding * 2);
         }
 
         picture{
-            border-bottom: 1px solid $dark;
             display: block;
 
             img{
@@ -179,7 +180,7 @@ div.simple-image{
         figcaption{
             font-size: 1rem;
             font-style: italic;
-            margin: math.div($padding, 2) $padding;
+            padding: $padding;
             text-align: center;
         }
 
