@@ -32,7 +32,7 @@ const languageMap = new Map<string, string>([
 ])
 
 const highlightedCode = ref<string>()
-watch(() => props, async() => {
+watch(props, async() => {
     if (props.language === 'txt') {
         highlightedCode.value = escapeHtml(props.code)
     } else {
