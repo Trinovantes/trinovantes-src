@@ -17,7 +17,7 @@ export enum Tech {
     Nginx = 'Nginx',
 }
 
-export interface Project {
+export type Project = {
     name: string
     repo: string
     isPrivate?: boolean // Do not show repo url on frontend if private

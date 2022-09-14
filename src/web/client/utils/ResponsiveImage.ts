@@ -1,4 +1,4 @@
-export interface ResponsiveImage {
+export type ResponsiveImage = {
     src: string
     width: number
     height: number

@@ -6,6 +6,7 @@ import TextHeading from '@/web/client/components/TextHeading.vue'
 import BlogPost from '@/web/client/pages/Blog/BlogPost.vue'
 
 declare module '@vue/runtime-core' {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
     export interface GlobalComponents {
         ClientOnly: typeof ClientOnly
         SimpleImage: typeof SimpleImage

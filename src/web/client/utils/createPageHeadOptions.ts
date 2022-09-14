@@ -7,7 +7,7 @@ export enum TwitterCard {
     Large = 'summary_large_image',
 }
 
-export interface PageHeadOptions {
+export type PageHeadOptions = {
     title: string
     desc?: string | null
     image?: string | null

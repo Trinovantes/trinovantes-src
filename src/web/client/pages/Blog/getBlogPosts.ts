@@ -12,7 +12,7 @@ export const blogEntries = [
     '2014-os',
 ]
 
-export interface BlogPostSourceFile {
+export type BlogPostSourceFile = {
     TITLE?: string
     SLUG?: string
     CREATED_AT?: number
@@ -21,7 +21,7 @@ export interface BlogPostSourceFile {
     default: ComponentOptions
 }
 
-export interface BlogPost {
+export type BlogPost = {
     title: string
     slug: string
     createdAt: number

@@ -1,4 +1,4 @@
-export interface Profession {
+export type Profession = {
     name: string
     actionVerbPresentProgressive: string
     actionVerbPastSimple: string

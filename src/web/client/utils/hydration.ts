@@ -7,7 +7,7 @@ export enum HydrationKey {
     Projects = '__PROJECTS__',
 }
 
-export interface HydrationMap {
+export type HydrationMap = {
     [HydrationKey.BlogPosts]: BlogPosts
     [HydrationKey.Projects]: Projects
 }

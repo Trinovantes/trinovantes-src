@@ -15,7 +15,7 @@ import { createAppRouter } from './client/router'
 import type { AppContext } from './AppContext'
 import type { Router } from 'vue-router'
 
-interface VueApp {
+type VueApp = {
     app: ReturnType<typeof createSSRApp>
     router: Router
 }

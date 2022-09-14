@@ -34,7 +34,7 @@ useMeta(computed(() => {
     })
 }))
 
-interface DateInfo {
+type DateInfo = {
     date: string
     label: string
 }
