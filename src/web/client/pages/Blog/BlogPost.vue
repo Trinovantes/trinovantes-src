@@ -111,7 +111,7 @@ $blog-width: 80ch;
         text-shadow: 0 math.div($padding, 8) math.div($padding, 4) rgba($dark, 0.8);
 
         background: rgba($dark, 0.6);
-        margin: 0 -($padding * 2);
+        margin: 0 (-$padding * 2);
         padding: $padding * 2;
     }
 
