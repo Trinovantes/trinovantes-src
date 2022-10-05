@@ -4,7 +4,7 @@ import { defineComponent } from 'vue'
 
 export const TITLE = 'Fastest Node.js Fizzbuzz'
 export const CREATED_AT = dayjs.utc('2022-06-24').unix()
-export const UPDATED_AT = dayjs.utc('2022-07-12').unix()
+export const UPDATED_AT = dayjs.utc('2022-10-05').unix()
 
 export default defineComponent({
     setup() {
@@ -25,11 +25,12 @@ export default defineComponent({
     >
         <p>
             I recently encountered an <a href="https://codegolf.stackexchange.com/questions/215216/high-throughput-fizz-buzz/248988">interesting thread on CodeGolf</a> that asked for the fastest implementation of everybody's favorite interview question FizzBuzz.
-            Unsurprisingly, the fastest were written in Assembly and C that optimized their use of cache lines and syscalls.
+            Unsurprisingly, the fastest solutions were written in Assembly and C that optimized their use of cache lines and syscalls.
         </p>
 
         <p>
-            In that thread, there were also some people who were curious on how fast other languages can be when pushed to their limits. Surprisingly nobody has attempted with JavaScript yet, at least not one with a valid solution.
+            In that thread, there were also some people who were curious on how fast other languages can be when pushed to their limits.
+            Surprisingly nobody has attempted with JavaScript yet, at least not one with a valid solution.
         </p>
 
         <TextHeading>
@@ -104,7 +105,7 @@ export default defineComponent({
         </p>
 
         <TextHeading>
-            Reduce <code>process.stdout.write</code>
+            Reduce <code>process.stdout.write</code> Calls
         </TextHeading>
 
         <p>
@@ -135,9 +136,9 @@ export default defineComponent({
         />
 
         <p>
-            Since we clearly do not have any dangling references or memory leaks, we can only conclude that V8's garbage collector fails to free up all the temporary strings.
-            The error log states that the garbage collector executes every 4 seconds but fails to free up more than 5 MB each time.
-            Since these implementations generate upwards of 100 MiB/s worth of strings, it's possible that the garbage collector simply does not have enough time budgeted to free up all the unused strings.
+            For whatever reason, the garbage collector was not able to free up all the temporary strings.
+            The error log indicates that the garbage collector executes every 4 seconds but fails to free up more than 5 MB each time.
+            As we generate upwards of 100 MiB/s worth of strings, I speculate that the garbage collector simply did not have enough time budgeted to free up all the unused strings.
         </p>
 
         <TextHeading>
@@ -145,13 +146,14 @@ export default defineComponent({
         </TextHeading>
 
         <p>
-            Since the challenge is to implement something that can, in theory, execute on all <code>2^63-1</code> integers given enough time, we need a solution that doesn't run out of memory after only a few minutes.
+            Since this challenge is to implement something that can, in theory, execute on all <code>2^63-1</code> integers given enough time, we need a solution that doesn't run out of memory after only a few minutes.
         </p>
 
         <p>
             Since strings are too problematic, I decided to use a fixed binary buffer and avoid as much non-stack allocations as possible.
-            This buffer is explicitly allocated once and is simply reused by resetting the offset counter.
-            The only heap object allocated is where I called <code>subarray</code> which returns a new <code>Buffer</code> object. Since this new buffer object internally points to the same memory location as the original buffer, the overall the heap impact should be marginal and is unlikely to exceed our hypothesized 5 MB per 4 second garbage collector time budget.
+            This buffer is explicitly allocated once and is reused by resetting the offset counter.
+            The only heap object allocated is where I called <code>Buffer.subarray</code> which returns a new <code>Buffer</code> object.
+            Since this new buffer object internally points to the same memory location as the original buffer, the overall the heap impact should be marginal and is unlikely to exceed our hypothesized 5 MB per 4 second garbage collector time budget.
         </p>
 
         <CodeBlock
@@ -160,7 +162,7 @@ export default defineComponent({
         />
 
         <p>
-            This implementation runs at an astounding <strong>8 MiB/s</strong>.
+            This implementation yields an astounding <strong>8 MiB/s</strong>.
             Yes, this is not a typo.
             We went from 100 back down to 8!
         </p>
@@ -195,8 +197,8 @@ export default defineComponent({
         />
 
         <p>
-            Putting everything that we have learned together, we have arrived at this implementation that runs at around <strong>370 MiB/s</strong>.
-            Not bad considering our starting base implementation runs at <strong>1 MiB/s</strong>!
+            Putting everything that we have learned together, we have arrived at this implementation that yields around <strong>370 MiB/s</strong>.
+            Not bad considering our base implementation started at <strong>1 MiB/s</strong>!
         </p>
 
         <TextHeading>
@@ -205,7 +207,7 @@ export default defineComponent({
 
         <ul>
             <li>
-                Node.js' garbage collector sucks.
+                <del>Node.js' garbage collector sucks.</del>
             </li>
             <li>
                 Buffer system calls in memory as long as possible.
@@ -217,5 +219,28 @@ export default defineComponent({
                 Otherwise, every language's fastest implementation will just be a thin wrapper around C modules.
             </li>
         </ul>
+
+        <TextHeading>
+            Oct 2022 Update: Fixed the Garbage Collector Issue
+        </TextHeading>
+
+        <p>
+            I recently revisited this problem and realized that our garbage collector problems were actually caused by backpressure in the <a href="https://nodejs.org/en/docs/guides/backpressuring-in-streams/">write buffer</a>.
+            The functions were not waiting for the <code>stdout</code> stream to fully flush its write buffer when it was full.
+            As a result, the buffer had to queue up the data from subsequent write calls faster than it can consume which in turn overloaded the garbage collector.
+        </p>
+
+        <p>
+            To fix this issue, we can simply pass a callback to the <code>stdout.write</code> calls to know when we can safely continue.
+        </p>
+
+        <CodeBlock
+            :code="require('./raw/5-string-buffer-fix.js')"
+            language="js"
+        />
+
+        <p>
+            Surprisingly this change did not affect the performance and this solution still yields an impressive <strong>100 MiB/s</strong>.
+        </p>
     </BlogPost>
 </template>
