@@ -1,17 +1,6 @@
 import { slugify } from '@/common/utils/slugify'
 import type { ComponentOptions } from 'vue'
 
-// These are blog post locations on disk; has no relation to their final slug
-export const blogEntries = [
-    '2022-fastest-nodejs-fizzbuzz',
-    '2021-google-blocklist',
-    '2021-vue3-ssr-critical-resources',
-    '2021-vuex4-generator',
-    '2015-if-x',
-    '2015-ray-tracer',
-    '2014-os',
-]
-
 export type BlogPostSourceFile = {
     TITLE?: string
     SLUG?: string
@@ -32,8 +21,13 @@ export type BlogPost = {
 export type BlogPosts = Array<BlogPost>
 
 export async function getBlogPosts(): Promise<BlogPosts> {
-    const posts: BlogPosts = []
+    const blogPostMatches = require.context('./', true, /.\/([\w-]+)\/BlogPost.vue/)
+    const blogEntries = blogPostMatches.keys()
+        .filter((path) => !path.startsWith('./template'))
+        .map((path) => path.replace('/BlogPost.vue', ''))
+        .map((path) => path.replace('./', ''))
 
+    const posts: BlogPosts = []
     for (const entry of blogEntries) {
         const blogPostSrc = await import(`./${entry}/BlogPost.vue`) as BlogPostSourceFile
 

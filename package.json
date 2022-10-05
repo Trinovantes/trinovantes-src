@@ -34,6 +34,7 @@
         "@types/pluralize": "^0.0.29",
         "@types/webpack": "^5.28.0",
         "@types/webpack-bundle-analyzer": "^4.4.1",
+        "@types/webpack-env": "^1.18.0",
         "@types/webpack-node-externals": "^2.5.1",
         "@typescript-eslint/eslint-plugin": "^5.21.0",
         "@typescript-eslint/parser": "^5.21.0",
