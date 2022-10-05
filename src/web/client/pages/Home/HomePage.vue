@@ -16,16 +16,16 @@ useMeta(createPageHeadOptions({
 <template>
     <article class="home-page">
         <div class="container full-height-container">
-            <h1 class="animate__animated animate__fadeInUp">
+            <h1 class="animate__animated animate__fadeInLeft duration-1">
                 {{ APP_NAME }}
             </h1>
 
-            <h2 class="animate__animated animate__fadeInUp">
+            <h2 class="animate__animated animate__fadeInLeft duration-2">
                 {{ APP_DESC }}
             </h2>
 
             <ContactLinks
-                class="animate__animated animate__fadeInUp"
+                class="animate__animated animate__fadeInLeft duration-3"
                 :is-dark="true"
             />
         </div>
@@ -52,6 +52,12 @@ article.home-page{
 
         @media (max-width: $mobile-breakpoint) {
             gap: $padding * 2;
+        }
+    }
+
+    @for $i from 1 through 3{
+        .duration-#{$i}{
+            animation-duration: 0.5 + ($i * 0.25s);
         }
     }
 
