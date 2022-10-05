@@ -11,7 +11,7 @@ import SimpleImage from './client/components/SimpleImage.vue'
 import SimpleTable from './client/components/SimpleTable.vue'
 import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
-import { createAppRouter } from './client/router'
+import { createAppRouter } from './client/router/createAppRouter'
 import type { AppContext } from './AppContext'
 import type { Router } from 'vue-router'
 
