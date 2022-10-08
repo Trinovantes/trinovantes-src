@@ -2,6 +2,7 @@
 import { useMeta } from 'vue-meta'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
+import { useAppContext } from '@/web/AppContext'
 import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/client/utils/ResponsiveImage'
 import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 import { loadProjects } from './loadProjects'
@@ -27,7 +28,8 @@ const getImage = (fileName: string): ResponsiveImage => {
     return require(`./img/${fileName}`) as ResponsiveImage
 }
 
-const projects = await loadProjects()
+const ssrContext = useAppContext()
+const projects = await loadProjects(ssrContext)
 </script>
 
 <template>

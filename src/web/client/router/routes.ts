@@ -1,4 +1,5 @@
 import { loadBlogPosts } from '../pages/Blog/loadBlogPosts'
+import type { AppContext } from '@/web/AppContext'
 import type { RouteRecordRaw } from 'vue-router'
 
 export enum RouteName {
@@ -6,8 +7,8 @@ export enum RouteName {
     Error404 = 'Error404',
 }
 
-export async function getRoutes(): Promise<Array<RouteRecordRaw>> {
-    const blogPosts = await loadBlogPosts()
+export async function getRoutes(ssrContext?: AppContext): Promise<Array<RouteRecordRaw>> {
+    const blogPosts = await loadBlogPosts(ssrContext)
     const blogPostRoutes: Array<RouteRecordRaw> = blogPosts.map((post) => ({
         path: post.slug,
         component: () => import(`@/web/client/pages/Blog/${post.dir}/BlogPost.vue`),

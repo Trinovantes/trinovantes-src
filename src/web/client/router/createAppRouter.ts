@@ -7,7 +7,7 @@ import type { AppContext } from '../../AppContext'
 // ----------------------------------------------------------------------------
 
 export async function createAppRouter(ssrContext?: AppContext): Promise<Router> {
-    const routes = await getRoutes()
+    const routes = await getRoutes(ssrContext)
     const router = createRouter({
         history: ssrContext !== undefined
             ? createMemoryHistory()
