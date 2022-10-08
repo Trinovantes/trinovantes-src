@@ -1,12 +1,10 @@
 <script lang="ts" setup>
-import axios from 'axios'
 import { useMeta } from 'vue-meta'
-import { Projects, projects as unhydratedProjects } from '@/common/Project'
+import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
-import { useAppContext } from '@/web/AppContext'
 import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/client/utils/ResponsiveImage'
 import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
-import { HydrationKey, loadStateFromDom } from '@/web/client/utils/hydration'
+import { loadProjects } from './loadProjects'
 
 const title = 'Projects'
 useMeta(createPageHeadOptions({
@@ -30,23 +28,6 @@ const getImage = (fileName: string): ResponsiveImage => {
 }
 
 const projects = await loadProjects()
-async function loadProjects(): Promise<Projects> {
-    let projects: Projects | undefined
-
-    if (DEFINE.IS_SSR) {
-        const ssrContext = useAppContext()
-        projects = ssrContext?.projects
-    } else {
-        projects = loadStateFromDom(HydrationKey.Projects)
-
-        if (DEFINE.IS_DEV && projects === undefined) {
-            const res = await axios.get<Projects>('/api/projects')
-            projects = res.data
-        }
-    }
-
-    return projects ?? {}
-}
 </script>
 
 <template>

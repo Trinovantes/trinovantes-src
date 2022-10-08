@@ -10,14 +10,18 @@ import { slugify } from '@/common/utils/slugify'
 
 export const prerenderRoutes: Promise<Array<string>> = (async() => {
     const blogDir = path.resolve(srcWebDir, 'client/pages/Blog')
-    const blogEntries = (await fs.readdir(blogDir, { withFileTypes: true }))
-        .filter((item) => item.isDirectory())
-        .filter((item) => item.name !== 'template')
-        .map((item) => item.name)
+    const blogDirItems = await fs.readdir(blogDir, { withFileTypes: true })
+    const blogPostRoutes: Array<string> = []
 
-    const postSlugs: Array<string> = []
-    for (const blogEntry of blogEntries) {
-        const blogPostVueFile = path.resolve(blogDir, blogEntry, 'BlogPost.vue')
+    for (const subDir of blogDirItems) {
+        if (!subDir.isDirectory()) {
+            continue
+        }
+        if (subDir.name === 'template') {
+            continue
+        }
+
+        const blogPostVueFile = path.resolve(blogDir, subDir.name, 'BlogPost.vue')
         if (!existsSync(blogPostVueFile)) {
             throw new Error(`${blogPostVueFile} does not exist`)
         }
@@ -32,11 +36,11 @@ export const prerenderRoutes: Promise<Array<string>> = (async() => {
 
         const title = matches[1]
         const slug = slugify(title)
-        postSlugs.push(slug)
+        blogPostRoutes.push(`/${slug}`)
     }
 
     return [
-        ...postSlugs.map((slug) => `/${slug}`),
+        ...blogPostRoutes,
         '/about',
         '/blog',
         '/projects',
