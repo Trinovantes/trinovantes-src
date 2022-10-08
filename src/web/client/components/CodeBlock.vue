@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import hljs from 'highlight.js/lib/core'
 import { ref, computed, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
 import { getIconSvgRaw } from '@/web/client/utils/ResponsiveImage'
@@ -36,6 +35,8 @@ watch(props, async() => {
     if (props.language === 'txt') {
         highlightedCode.value = escapeHtml(props.code)
     } else {
+        const { default: hljs } = await import('highlight.js/lib/core')
+
         if (!hljs.getLanguage(props.language)) {
             const fileName = languageMap.get(props.language) ?? props.language
             const { default: languageFn } = await import(`highlight.js/lib/languages/${fileName}.js`) as { default: LanguageFn }
