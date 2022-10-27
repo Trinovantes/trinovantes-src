@@ -11,12 +11,12 @@ useLiveMeta({
 </script>
 
 <template>
-    <article class="container text-container">
+    <article class="container padding content">
         <h1>
             {{ title }}
         </h1>
 
-        <section>
+        <section class="flex-vgap">
             <BlogPageList />
         </section>
     </article>

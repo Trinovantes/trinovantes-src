@@ -11,7 +11,7 @@ useLiveMeta({
 
 <template>
     <article class="home-page">
-        <div class="container full-height-container">
+        <div class="container padding full-height-container">
             <h1 class="animate__animated animate__fadeInLeft duration-1">
                 {{ APP_NAME }}
             </h1>

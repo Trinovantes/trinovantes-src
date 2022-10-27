@@ -20,12 +20,12 @@ onMounted(() => {
 </script>
 
 <template>
-    <article class="container text-container with-sidebar">
+    <article class="container padding content">
         <h1 class="all-cols">
             {{ title }}
         </h1>
 
-        <section>
+        <section class="flex-vgap">
             <p>
                 {{ desc }}
             </p>
@@ -67,13 +67,12 @@ onMounted(() => {
             </ul>
         </section>
 
-        <aside>
+        <aside class="flex-vgap">
             <div>
                 <img
                     :src="getProfilePicture()"
                     width="400"
                     height="400"
-                    title="Stephen Li"
                 >
             </div>
 
@@ -83,16 +82,18 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.text-container{
-    @media (max-width: $text-container-breakpoint) {
+.container{
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+    @media (max-width: $large-mobile-breakpoint) {
+        grid-template-columns: auto;
+
         aside {
             grid-row-start: 2;
         }
     }
 
     aside{
-        gap: $column-gap;
-
         img{
             border-radius: 50%;
             display: block;

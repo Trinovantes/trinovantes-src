@@ -20,10 +20,6 @@ const props = defineProps({
         type: Number as PropType<number | null>,
         default: null,
     },
-    withSidebar: {
-        type: Boolean,
-        default: false,
-    },
 })
 
 useLiveMeta({
@@ -63,82 +59,112 @@ const dateInfos = computed<Array<DateInfo>>(() => {
                 'background-image': image ? `url('${image}')` : undefined
             }"
         >
-            <div class="container text-container">
-                <h1>
-                    {{ title }}
-                </h1>
+            <div class="title">
+                <div class="post-container">
+                    <h1>
+                        {{ title }}
+                    </h1>
+                </div>
             </div>
 
             <div class="meta">
-                <div class="container text-container">
-                    <time
-                        v-for="dateInfo of dateInfos"
-                        :key="dateInfo.date"
-                        :datetime="dateInfo.date"
-                    >
-                        {{ dateInfo.label }}
-                    </time>
+                <div class="post-container">
+                    <aside class="flex-hgap">
+                        <time
+                            v-for="dateInfo of dateInfos"
+                            :key="dateInfo.date"
+                            :datetime="dateInfo.date"
+                        >
+                            {{ dateInfo.label }}
+                        </time>
+                    </aside>
                 </div>
             </div>
         </div>
 
-        <div
-            :class="{
-                'container': true,
-                'text-container': true,
-                'with-sidebar': withSidebar,
-            }"
-        >
+        <div class="post-container content">
             <slot />
         </div>
     </article>
 </template>
 
 <style lang="scss" scoped>
-$blog-width: 80ch;
-
 .hero-unit{
     background-color: lighten($dark, 10%);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 
-    h1{
-        color: white;
-        text-shadow: 0 math.div($padding, 8) math.div($padding, 4) rgba($dark, 0.8);
+    .title{
+        padding: $vspace 0;
 
-        background: rgba($dark, 0.6);
-        margin: 0 (-$padding * 2);
-        padding: $padding * 2;
+        h1{
+            color: white;
+            text-shadow: 0 math.div($padding, 8) math.div($padding, 4) rgba($dark, 0.8);
+
+            background: rgba($dark, 0.6);
+            margin: 0 (-$padding * 2);
+            padding: $padding * 2;
+        }
     }
 
     .meta{
         background: rgba($dark, 0.8);
-        display: flex;
-        gap: $padding;
         padding: $padding 0;
 
-        .container{
-            display: flex;
-            gap: $padding * 2;
-            padding-top: 0;
-            padding-bottom: 0;
-
-            @media (max-width: $mobile-breakpoint) {
-                flex-direction: column;
-                gap: math.div($padding, 2);
-            }
-
-            time{
-                color: white;
-                font-size: 1rem;
-            }
+        time{
+            color: white;
+            font-size: 1rem;
         }
     }
 }
 
-.text-container:not(.with-sidebar){
-    gap: $padding * 2;
-    max-width: $blog-width;
+.post-container{
+    &.content{
+        padding-top: $vspace;
+        padding-bottom: $vspace;
+    }
+
+    $gap: $padding * 2;
+    $gap-left-right: $gap * 2;
+
+    --full: minmax(#{$gap}, 1fr);
+    --popout: minmax(0, #{$vspace - $gap});
+    --content: min(80ch, calc(#{$container-width} - #{$gap-left-right}), calc(#{$max-page-width} - #{$gap-left-right}));
+
+    display: grid;
+    gap: $gap;
+    grid-template-columns:
+        [full-start]
+            var(--full)
+                [popout-start]
+                    var(--popout)
+                        [content-start]
+                            var(--content)
+                        [content-end]
+                    var(--popout)
+                [popout-end]
+            var(--full)
+        [full-end];
+
+    @media (max-width: $mobile-breakpoint) {
+        display: flex;
+        flex-direction: column;
+        padding-left: $padding * 2;
+        padding-right: $padding * 2;
+    }
+
+    > :deep(*){
+        grid-column: content;
+    }
+
+    > :deep(.grid),
+    > :deep(.popout){
+        grid-column: popout;
+    }
+
+    > :deep(.full){
+        grid-column: full;
+    }
 }
 </style>

@@ -37,7 +37,7 @@ header{
         padding-right: $padding;
 
         @media (max-width: $mobile-breakpoint) {
-            flex-direction: column;
+            display: block;
             padding: 0;
         }
     }
