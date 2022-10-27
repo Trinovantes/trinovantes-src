@@ -2,7 +2,7 @@
 import { useMeta } from 'vue-meta'
 import ContactLinks from '../About/ContactLinks.vue'
 import { APP_NAME, APP_DESC } from '@/common/Constants'
-import { getProfilePicture } from '@/web/client/utils/ResponsiveImage'
+import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 
 useMeta(createPageHeadOptions({

@@ -91,7 +91,7 @@ dl{
 }
 li{
     p,
-    .simple-image{
+    figure{
         &:not(:first-child) {
             margin-top: $padding * 2;
         }

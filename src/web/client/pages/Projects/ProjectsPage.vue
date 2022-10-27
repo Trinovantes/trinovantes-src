@@ -3,7 +3,7 @@ import { useMeta } from 'vue-meta'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
-import { getIconSvgRaw, getProfilePicture, ResponsiveImage } from '@/web/client/utils/ResponsiveImage'
+import { getIconSvgRaw, getProfilePicture, ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 import { loadProjects } from './loadProjects'
 
@@ -15,17 +15,15 @@ useMeta(createPageHeadOptions({
     imageSize: TwitterCard.Summary,
 }))
 
-const getImage = (fileName: string): ResponsiveImage => {
+const getImage = (fileName: string): ResponsiveLoaderAsset => {
     if (fileName.startsWith('https')) {
         return {
             src: fileName,
-            width: 0,
-            height: 0,
         }
     }
 
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(`./img/${fileName}`) as ResponsiveImage
+    return require(`./img/${fileName}`) as ResponsiveLoaderAsset
 }
 
 const ssrContext = useAppContext()
@@ -126,7 +124,7 @@ article.project-category{
         }
 
         .preview{
-            .simple-image{
+            figure{
                 border: math.div($padding, 2) solid $dark;
             }
         }

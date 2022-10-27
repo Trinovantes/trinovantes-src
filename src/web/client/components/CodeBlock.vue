@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
-import { getIconSvgRaw } from '@/web/client/utils/ResponsiveImage'
+import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { escapeHtml } from '@/web/client/utils/escapeHtml'
 import type { LanguageFn } from 'highlight.js'
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useMeta } from 'vue-meta'
-import { getProfilePicture } from '@/web/client/utils/ResponsiveImage'
+import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 import BlogPageList from './BlogPageList.vue'
 

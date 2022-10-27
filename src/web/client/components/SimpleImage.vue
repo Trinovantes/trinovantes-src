@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
-import { onBeforeUnmount, onMounted, PropType, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
 import { sleep } from '@/common/utils/sleep'
-import type { ResponsiveImage } from '@/web/client/utils/ResponsiveImage'
+import type { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 import LoadingSpinner from './LoadingSpinner.vue'
+import type { ObjectFitProperty, ObjectPositionProperty } from 'csstype'
 
 const props = defineProps({
     img: {
-        type: Object as PropType<ResponsiveImage>,
+        type: Object as PropType<ResponsiveLoaderAsset>,
         required: true,
     },
     title: {
@@ -26,11 +27,19 @@ const props = defineProps({
         type: Number as PropType<number | undefined>,
         default: undefined,
     },
-    sizes: {
-        type: String,
-        default: '100vw',
+    objectFit: {
+        type: String as PropType<ObjectFitProperty>,
+        default: 'cover',
     },
-    enableBorder: {
+    objectPosition: {
+        type: String as PropType<ObjectPositionProperty<`${number}px`>>,
+        default: 'center',
+    },
+    aspectRatio: {
+        type: Number,
+        default: 1 / 1.618,
+    },
+    keepAspectRatio: {
         type: Boolean,
         default: true,
     },
@@ -38,15 +47,22 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    enableBorder: {
+        type: Boolean,
+        default: true,
+    },
 })
 
-// Set up lazy loading with intersection observer
+// Set up intersection observer
 const containerRef = ref<HTMLDivElement | null>(null)
 const hasScrolledIntoView = ref(false)
 let observer: IntersectionObserver | null = null
 onMounted(() => {
     if (!containerRef.value) {
         throw new Error('Cannot find containerRef')
+    }
+    if (!(containerRef.value instanceof Element)) {
+        throw new Error(`containerRef is not an Element: ${typeof containerRef.value}`)
     }
 
     observer = new IntersectionObserver((entries) => {
@@ -63,132 +79,133 @@ onBeforeUnmount(() => {
     observer?.disconnect()
 })
 
-// Set up plugins on <img> after it loads
 const imageRef = ref<HTMLImageElement | null>(null)
-const isLoading = ref(true)
+const realImgWidth = ref(0)
+const realImgHeight = ref(0)
 const onImageLoadSuccess = () => {
     if (!imageRef.value) {
-        throw new Error('Missing imageRef')
+        throw new Error('Cannot find imageRef')
     }
 
-    isLoading.value = false
+    realImgWidth.value = imageRef.value.naturalWidth
+    realImgHeight.value = imageRef.value.naturalHeight
 
     if (props.enableZoom) {
         mediumZoom(imageRef.value)
     }
 }
 
-// Try to reload errored image once
-let hasRetried = false
-const onImageLoadError = async() => {
-    if (!imageRef.value) {
-        throw new Error('Missing imageRef')
+const paddingTop = computed<string>(() => {
+    if (props.height !== undefined) {
+        return `${props.height}px`
     }
 
-    if (hasRetried) {
-        return
+    if (props.keepAspectRatio) {
+        const aspectRatio = realImgWidth.value > 0
+            ? (realImgHeight.value / realImgWidth.value)
+            : props.aspectRatio
+
+        return props.width === undefined
+            ? `${aspectRatio * 100}%`
+            : `${aspectRatio * props.width}px`
+    }
+
+    return `${props.aspectRatio * 100}%`
+})
+
+let retryAttemps = 0
+const onImageLoadError = async() => {
+    if (!imageRef.value) {
+        throw new Error('Cannot find imageRef')
+    }
+
+    imageRef.value.src = ''
+
+    if (retryAttemps > 3) {
+        throw new Error('Failed to load image')
     }
 
     // Avoid rate limits
-    await sleep(1000)
-
-    imageRef.value.src = ''
+    await sleep(1000 * Math.exp(retryAttemps))
     imageRef.value.src = props.img.src
-    hasRetried = true
+    retryAttemps += 1
 }
 </script>
 
 <template>
-    <div
+    <figure
         ref="containerRef"
-        class="simple-image"
+        :class="{
+            border: enableBorder,
+        }"
     >
-        <figure
-            v-if="hasScrolledIntoView"
-            :class="{
-                border: enableBorder,
-                loading: isLoading,
-            }"
+        <picture
+            :style="{ paddingTop }"
         >
-            <picture
+            <img
+                v-if="hasScrolledIntoView"
+                ref="imageRef"
+                :src="img.src"
+                :width="width || undefined"
+                :height="height || undefined"
+                :title="title"
+                :alt="alt ?? title"
                 :style="{
-                    backgroundSize: 'cover',
-                    backgroundImage: (isLoading && img.placeholder) ? `url('${img.placeholder}')` : 'none'
+                    objectFit,
+                    objectPosition,
                 }"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                @load="onImageLoadSuccess"
+                @error="onImageLoadError"
             >
-                <source
-                    :srcset="img.srcSet"
-                    :sizes="sizes"
-                >
-                <img
-                    ref="imageRef"
-                    :src="img.src"
-                    :width="(width ?? img.width) || undefined"
-                    :height="(height ?? img.height) || undefined"
-                    :sizes="sizes"
-                    :title="title"
-                    :alt="alt ?? title"
-                    loading="lazy"
-                    @load="onImageLoadSuccess"
-                    @error="onImageLoadError"
-                >
-            </picture>
-
-            <figcaption v-if="$slots.default">
-                <slot />
-            </figcaption>
-
             <LoadingSpinner
-                v-if="isLoading"
+                v-else
+                class="loading-spinner"
             />
-        </figure>
-    </div>
+        </picture>
+
+        <figcaption v-if="$slots.default">
+            <slot />
+        </figcaption>
+    </figure>
 </template>
 
 <style lang="scss" scoped>
-div.simple-image{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    position: relative;
-
-    figure{
-        &.border{
-            border: 1px solid $dark;
-
-            figcaption{
-                border-top: 1px solid $dark;
-            }
-        }
-
-        &.loading{
-            min-height: 120px + ($padding * 2);
-        }
-
+figure{
+    &.border{
         picture{
-            display: block;
-
-            img{
-                display: block;
-                margin: 0 auto;
-                width: 100%; height: auto;
-                max-width: 100%;
-                object-fit: cover;
-            }
+            border: 1px solid $dark;
         }
 
         figcaption{
-            font-size: 1rem;
-            font-style: italic;
-            padding: $padding;
-            text-align: center;
+            border: 1px solid $dark;
+            border-top: none;
+        }
+    }
+
+    picture{
+        display: block;
+        position: relative;
+        width: 100%;
+
+        img{
+            display: block;
         }
 
-        .spinner-wrapper{
+        img,
+        .loading-spinner{
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0; left: 0;
+            width: 100%; height: 100%;
         }
+    }
+
+    figcaption{
+        font-size: 1rem;
+        line-height: 1.5;
+        padding: $padding;
+        text-align: center;
     }
 }
 </style>

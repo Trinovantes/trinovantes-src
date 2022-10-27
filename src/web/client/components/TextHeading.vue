@@ -2,7 +2,7 @@
 import { computed, h, useSlots } from 'vue'
 import { useRoute } from 'vue-router'
 import { slugify } from '@/common/utils/slugify'
-import { getIconSvgRaw } from '@/web/client/utils/ResponsiveImage'
+import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 
 const slots = useSlots()
 const props = defineProps({
