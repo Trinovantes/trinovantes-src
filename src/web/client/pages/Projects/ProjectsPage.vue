@@ -1,19 +1,16 @@
 <script lang="ts" setup>
-import { useMeta } from 'vue-meta'
+import { useLiveMeta } from '../../utils/useLiveMeta'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
-import { getIconSvgRaw, getProfilePicture, ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
+import { getIconSvgRaw, ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { loadProjects } from './loadProjects'
 
 const title = 'Projects'
-useMeta(createPageHeadOptions({
+useLiveMeta({
     title,
     desc: Object.values(unhydratedProjects).flatMap((projects) => projects.map((project) => project.name)).join(', '),
-    image: getProfilePicture().src,
-    imageSize: TwitterCard.Summary,
-}))
+})
 
 const getImage = (fileName: string): ResponsiveLoaderAsset => {
     if (fileName.startsWith('https')) {

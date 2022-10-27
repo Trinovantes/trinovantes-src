@@ -1,16 +1,12 @@
 <script lang="ts" setup>
-import { useMeta } from 'vue-meta'
+import { useLiveMeta } from '../../utils/useLiveMeta'
 import ContactLinks from '../About/ContactLinks.vue'
 import { APP_NAME, APP_DESC } from '@/common/Constants'
-import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 
-useMeta(createPageHeadOptions({
+useLiveMeta({
     title: APP_NAME,
     desc: APP_DESC,
-    image: getProfilePicture().src,
-    imageSize: TwitterCard.Summary,
-}))
+})
 </script>
 
 <template>

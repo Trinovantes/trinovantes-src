@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
-import { useMeta } from 'vue-meta'
+import { useLiveMeta } from '../../utils/useLiveMeta'
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
-import { createPageHeadOptions } from '@/web/client/utils/createPageHeadOptions'
 
 const props = defineProps({
     title: {
@@ -10,8 +9,8 @@ const props = defineProps({
         required: true,
     },
     image: {
-        type: String as PropType<string | null>,
-        default: null,
+        type: String as PropType<string | undefined>,
+        default: undefined,
     },
     createdAt: {
         type: Number,
@@ -27,12 +26,10 @@ const props = defineProps({
     },
 })
 
-useMeta(computed(() => {
-    return createPageHeadOptions({
-        title: props.title,
-        image: props.image,
-    })
-}))
+useLiveMeta({
+    title: props.title,
+    image: props.image,
+})
 
 type DateInfo = {
     date: string

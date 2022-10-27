@@ -1,20 +1,16 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
-import { useMeta } from 'vue-meta'
+import { getProfilePicture } from '../../utils/ResponsiveLoaderAsset'
+import { useLiveMeta } from '../../utils/useLiveMeta'
 import { APP_DESC } from '@/common/Constants'
-import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 import ContactLinks from './ContactLinks.vue'
 
 const title = 'About'
 const desc = `Hi, I'm Stephen. ${APP_DESC}`
-const image = getProfilePicture().src
-useMeta(createPageHeadOptions({
+useLiveMeta({
     title,
     desc,
-    image,
-    imageSize: TwitterCard.Summary,
-}))
+})
 
 const startedProgramming = 2004 // Grade 6
 const yearsSinceStartedProgramming = ref<string | undefined>(undefined)
@@ -74,7 +70,7 @@ onMounted(() => {
         <aside>
             <div>
                 <img
-                    :src="image"
+                    :src="getProfilePicture()"
                     width="400"
                     height="400"
                     title="Stephen Li"

@@ -1,15 +1,11 @@
 <script lang="ts" setup>
-import { useMeta } from 'vue-meta'
+import { useLiveMeta } from '../../utils/useLiveMeta'
 import BlogList from '../Blog/BlogPageList.vue'
-import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
 
 const title = '404: Page Not Found'
-useMeta(createPageHeadOptions({
+useLiveMeta({
     title,
-    image: getProfilePicture().src,
-    imageSize: TwitterCard.Summary,
-}))
+})
 </script>
 
 <template>

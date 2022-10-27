@@ -1,17 +1,13 @@
 <script lang="ts" setup>
-import { useMeta } from 'vue-meta'
-import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { createPageHeadOptions, TwitterCard } from '@/web/client/utils/createPageHeadOptions'
+import { useLiveMeta } from '../../utils/useLiveMeta'
 import BlogPageList from './BlogPageList.vue'
 
 const title = 'Blog'
 const desc = "I sometimes write about interesting stuff I've encountered in life"
-useMeta(createPageHeadOptions({
+useLiveMeta({
     title,
     desc,
-    image: getProfilePicture().src,
-    imageSize: TwitterCard.Summary,
-}))
+})
 </script>
 
 <template>
