@@ -1,42 +1,43 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue'
+import { computed, PropType } from 'vue'
 
-defineProps({
+const props = defineProps({
     data: {
         type: Object as PropType<Array<Array<unknown>>>,
         required: true,
     },
 })
+
+const theadRow = computed(() => props.data[0])
+const tbodyRows = computed(() => [...props.data].splice(1))
 </script>
 
 <template>
     <figure class="simple-table">
         <table>
-            <template
-                v-for="[rowIdx, row] of data.entries()"
-                :key="rowIdx"
-            >
-                <thead v-if="rowIdx === 0">
-                    <tr>
-                        <td
-                            v-for="[colIdx, col] of row.entries()"
-                            :key="colIdx"
-                        >
-                            {{ col }}
-                        </td>
-                    </tr>
-                </thead>
-                <tbody v-else>
-                    <tr>
-                        <td
-                            v-for="[colIdx, col] of row.entries()"
-                            :key="colIdx"
-                        >
-                            {{ col }}
-                        </td>
-                    </tr>
-                </tbody>
-            </template>
+            <thead>
+                <tr>
+                    <td
+                        v-for="[colIdx, col] of theadRow.entries()"
+                        :key="colIdx"
+                    >
+                        {{ col }}
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="[rowIdx, row] of tbodyRows.entries()"
+                    :key="rowIdx"
+                >
+                    <td
+                        v-for="[colIdx, col] of row.entries()"
+                        :key="colIdx"
+                    >
+                        {{ col }}
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </figure>
 </template>
