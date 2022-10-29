@@ -74,6 +74,10 @@ const commonConfig: Configuration = {
                 type: 'asset/source',
             },
             {
+                test: /\.(frag|vert)$/,
+                type: 'asset/source',
+            },
+            {
                 test: /\.tsx?$/,
                 exclude: [
                     /node_modules/,

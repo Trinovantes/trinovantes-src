@@ -288,4 +288,13 @@ select{
             margin-top: 0;
         }
     }
+
+    .stage{
+        &:not(:first-child) {
+            margin-top: ($padding * 2);
+        }
+        &:not(:last-child) {
+            margin-bottom: ($padding * 2);
+        }
+    }
 }
