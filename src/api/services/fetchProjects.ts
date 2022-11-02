@@ -1,8 +1,8 @@
 import { Octokit } from '@octokit/rest'
-import axios from 'axios'
-import { JSDOM } from 'jsdom'
 import { getRuntimeSecret, RuntimeSecret } from '@/api/utils/RuntimeSecret'
-import { Project, Projects, projects } from '@/common/Project'
+import { Projects, projects } from '@/common/Project'
+import { S3Cache } from './S3Cache'
+import { getRepoInfo } from './getRepoInfo'
 
 let hydratedProjects: Projects | null = null
 
@@ -15,70 +15,29 @@ export async function fetchProjects(): Promise<Projects> {
 }
 
 async function hydrateProjects(projects: Projects): Promise<Projects> {
-    const hydratedProjects: Projects = {}
+    const githubToken = getRuntimeSecret(RuntimeSecret.GITHUB_PAT)
+    const octokit = new Octokit({ auth: githubToken })
 
+    const s3Cache = new S3Cache()
+    await s3Cache.init()
+
+    const hydratedProjects: Projects = {}
     for (const [category, categoryProjects] of Object.entries(projects)) {
         hydratedProjects[category] = []
 
         for (const project of categoryProjects) {
-            hydratedProjects[category].push(await hydrateProject(project))
+            const repoInfo = getRepoInfo(project.repoUrl)
+            const repoResponse = await octokit.rest.repos.get(repoInfo)
+            const ogImage = await s3Cache.fetchOgImage(project)
+
+            hydratedProjects[category].push({
+                ...project,
+                desc: project.desc ?? repoResponse.data.description ?? undefined,
+                url: project.url ?? repoResponse.data.homepage ?? undefined,
+                img: ogImage ?? undefined,
+            })
         }
     }
 
     return hydratedProjects
-}
-
-async function hydrateProject(project: Project): Promise<Project> {
-    const octokit = new Octokit({
-        auth: getRuntimeSecret(RuntimeSecret.GITHUB_PAT),
-    })
-
-    const repoInfo = getRepoInfo(project.repo)
-    const res = await octokit.rest.repos.get(repoInfo)
-
-    return {
-        ...project,
-        desc: project.desc ?? res.data.description ?? undefined,
-        url: project.url ?? res.data.homepage ?? undefined,
-        img: project.img ?? await getOpenGraphImage(project) ?? undefined,
-    }
-}
-
-function getRepoInfo(githubUrl: string): { owner: string; repo: string } {
-    const matches = /github\.com\/([\w-_.]+)\/([\w-_.]+)/.exec(githubUrl)
-    if (!matches) {
-        throw new Error(`Failed to match GitHub url ${githubUrl}`)
-    }
-
-    return {
-        owner: matches[1],
-        repo: matches[2],
-    }
-}
-
-async function getOpenGraphImage(project: Project): Promise<string | null> {
-    if (project.isPrivate) {
-        return null
-    }
-
-    try {
-        console.info(`Fetching og:image of ${project.repo}`)
-        const res = await axios.get<string>(project.repo)
-
-        const html = res.data
-        const jsdom = new JSDOM(html)
-        const ogImageTag = jsdom.window.document.querySelector('meta[property="og:image"]')
-        if (!ogImageTag) {
-            throw new Error(`Failed to get og:image for repo:${project.repo}`)
-        }
-
-        return ogImageTag.getAttribute('content')
-    } catch (err) {
-        console.warn('getOpenGraphImage Failed')
-        if (axios.isAxiosError(err)) {
-            console.warn(err.message)
-        }
-    }
-
-    return null
 }

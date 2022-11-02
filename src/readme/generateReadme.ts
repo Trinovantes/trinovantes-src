@@ -83,10 +83,8 @@ class ReadmeGenerator {
                 this.startTag('tr')
 
                 {
-                    const imgPath = project.img?.startsWith('http')
-                        ? project.img
-                        : `${CLIENT_SRC_WEB_URL}/pages/Projects/img/${project.img}`
-                    const imgTag = `<img src="${imgPath}" width="${IMG_WIDTH}" title="${project.name}">`
+                    const imgUrl = project.img
+                    assert(imgUrl)
 
                     let previewUrl = ''
                     let previewTooltip = ''
@@ -94,12 +92,21 @@ class ReadmeGenerator {
                     if (project.url) {
                         previewUrl = project.url
                         previewTooltip = project.url
-                    } else if (project.repo && !project.isPrivate) {
-                        previewUrl = project.repo
-                        previewUrl = project.repo
+                    } else if (project.repoUrl && !project.isPrivate) {
+                        previewUrl = project.repoUrl
+                        previewTooltip = project.repoUrl
+                    } else {
+                        previewUrl = imgUrl
+                        previewTooltip = imgUrl
                     }
 
-                    this.addLn(`<td width="${IMG_WIDTH}px" valign="middle"><a href="${previewUrl}" title="${previewTooltip}" target="_blank">${imgTag}</a></td>`)
+                    this.addLn(`
+                        <td width="${IMG_WIDTH}px" valign="middle">
+                            <a href="${previewUrl}" title="${previewTooltip}" target="_blank">
+                                <img src="${imgUrl}" width="${IMG_WIDTH}">
+                            </a>
+                        </td>
+                    `)
                 }
 
                 {
@@ -108,8 +115,8 @@ class ReadmeGenerator {
                     const projectLabelTag = project.url
                         ? `<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank">${project.name}</a>`
                         : project.name
-                    const projectRepoTag = (project.repo && !project.isPrivate)
-                        ? ` <a href="${project.repo}" title="${project.repo}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="16" height="16"></a>`
+                    const projectRepoTag = (project.repoUrl && !project.isPrivate)
+                        ? ` <a href="${project.repoUrl}" title="${project.repoUrl}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="16" height="16"></a>`
                         : ''
 
                     this.addLn(`## ${projectLabelTag}${projectRepoTag}`)

@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
 import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
-import { sleep } from '@/common/utils/sleep'
 import type { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 import LoadingSpinner from './LoadingSpinner.vue'
 import type { ObjectFitProperty, ObjectPositionProperty } from 'csstype'
@@ -112,24 +111,6 @@ const paddingTop = computed<string>(() => {
 
     return `${props.aspectRatio * 100}%`
 })
-
-let retryAttemps = 0
-const onImageLoadError = async() => {
-    if (!imageRef.value) {
-        throw new Error('Cannot find imageRef')
-    }
-
-    imageRef.value.src = ''
-
-    if (retryAttemps > 3) {
-        throw new Error('Failed to load image')
-    }
-
-    // Avoid rate limits
-    await sleep(1000 * Math.exp(retryAttemps))
-    imageRef.value.src = props.img.src
-    retryAttemps += 1
-}
 </script>
 
 <template>
@@ -157,7 +138,6 @@ const onImageLoadError = async() => {
                 loading="lazy"
                 referrerpolicy="no-referrer"
                 @load="onImageLoadSuccess"
-                @error="onImageLoadError"
             >
             <LoadingSpinner
                 v-else

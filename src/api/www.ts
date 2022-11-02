@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/order
+import '@/common/utils/setupDayjs'
+
 import http from 'http'
 import axios from 'axios'
 import express, { ErrorRequestHandler } from 'express'

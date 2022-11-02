@@ -3,7 +3,7 @@ import { useLiveMeta } from '../../utils/useLiveMeta'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
-import { getIconSvgRaw, ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
+import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { loadProjects } from './loadProjects'
 
 const title = 'Projects'
@@ -11,17 +11,6 @@ useLiveMeta({
     title,
     desc: Object.values(unhydratedProjects).flatMap((projects) => projects.map((project) => project.name)).join(', '),
 })
-
-const getImage = (fileName: string): ResponsiveLoaderAsset => {
-    if (fileName.startsWith('https')) {
-        return {
-            src: fileName,
-        }
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    return require(`./img/${fileName}`) as ResponsiveLoaderAsset
-}
 
 const ssrContext = useAppContext()
 const projects = await loadProjects(ssrContext)
@@ -46,7 +35,7 @@ const projects = await loadProjects(ssrContext)
                 <div class="preview">
                     <SimpleImage
                         v-if="project.img"
-                        :img="getImage(project.img)"
+                        :img="{ src: project.img }"
                         :title="project.name"
                         :enable-zoom="false"
                         :enable-border="false"
@@ -73,9 +62,9 @@ const projects = await loadProjects(ssrContext)
                         </a>
 
                         <a
-                            v-if="project.repo && !project.isPrivate"
-                            :href="project.repo"
-                            :title="project.repo"
+                            v-if="project.repoUrl && !project.isPrivate"
+                            :href="project.repoUrl"
+                            :title="project.repoUrl"
                             target="_blank"
                             rel="noopener"
                         >

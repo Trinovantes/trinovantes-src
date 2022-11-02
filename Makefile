@@ -26,6 +26,9 @@ build:
 		--progress=plain \
 		--secret id=GIT_HASH \
 		--secret id=GITHUB_PAT \
+		--secret id=AWS_ENDPOINT_URL \
+		--secret id=AWS_ACCESS_KEY_ID \
+		--secret id=AWS_SECRET_ACCESS_KEY \
 		.
 
 stop:
