@@ -36,9 +36,10 @@ header{
         padding-left: $padding;
         padding-right: $padding;
 
-        @media (max-width: $mobile-breakpoint) {
+        @media (max-width: $large-mobile-breakpoint) {
             display: block;
             padding: 0;
+            width: auto;
         }
     }
 }
@@ -62,7 +63,7 @@ a.home-btn{
         color: $primary-on-dark;
     }
 
-    @media (max-width: $mobile-breakpoint) {
+    @media (max-width: $large-mobile-breakpoint) {
         border-bottom: 1px solid $light-on-dark;
         justify-content: center;
         padding: $padding * 2;
