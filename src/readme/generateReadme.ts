@@ -33,7 +33,7 @@ class ReadmeGenerator {
             this._output += '\n'
         }
 
-        this._output += `${line}\n`
+        this._output += `${line.trim()}\n`
     }
 
     private startTag(tag: string, attrs?: string): void {
