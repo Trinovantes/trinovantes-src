@@ -9,9 +9,7 @@ const uiCanvasRef = ref<HTMLCanvasElement | null>(null)
 let controller: GameController | null = null
 
 const onResize = () => {
-    const w = containerRef.value?.offsetWidth ?? 0
-    const h = containerRef.value?.offsetHeight ?? 0
-    controller?.resizeCanvas(w, h)
+    controller?.resizeCanvas()
 }
 
 const onKeyPress = (event: KeyboardEvent) => {

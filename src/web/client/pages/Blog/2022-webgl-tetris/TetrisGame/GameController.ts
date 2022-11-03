@@ -36,6 +36,7 @@ export class GameController {
     #isFocused = false
     #idleTransform = mat4.create()
 
+    #container: HTMLElement | null
     #glCanvas: HTMLCanvasElement | null
     #uiCanvas: HTMLCanvasElement | null
 
@@ -50,15 +51,17 @@ export class GameController {
         this.#isDestroyed = false
         this.#gameState = new GameState(NUM_ROWS, NUM_COLS)
 
+        this.#container = container
         this.#glCanvas = glCanvas
         this.#uiCanvas = uiCanvas
-        this.resizeCanvas(container.offsetWidth, container.offsetHeight)
+        this.resizeCanvas()
     }
 
     destroy() {
         console.info('GameController', 'destroy')
         this.#isDestroyed = true
 
+        this.#container = null
         this.#glCanvas = null
         this.#uiCanvas = null
 
@@ -70,9 +73,9 @@ export class GameController {
         this.#uniforms.clear()
     }
 
-    resizeCanvas(width: number, height: number) {
-        const w = width * devicePixelRatio
-        const h = height * devicePixelRatio
+    resizeCanvas() {
+        const w = this.#container?.offsetWidth ?? 0
+        const h = this.#container?.offsetHeight ?? 0
 
         if (w < 1 || h < 1) {
             return
