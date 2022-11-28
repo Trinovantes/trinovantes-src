@@ -27,7 +27,7 @@
         "@nuxt/devalue": "^2.0.0",
         "@octokit/rest": "^19.0.3",
         "@types/express": "^4.17.12",
-        "@types/http-errors": "^1.8.0",
+        "@types/http-errors": "^2.0.1",
         "@types/jsdom": "^20.0.0",
         "@types/lodash-es": "^4.17.6",
         "@types/morgan": "^1.9.2",
@@ -90,7 +90,7 @@
         "vue-tsc": "^1.0.9",
         "webpack": "^5.28.2",
         "webpack-bundle-analyzer": "^4.5.0",
-        "webpack-cli": "^4.6.0",
+        "webpack-cli": "^5.0.0",
         "webpack-dev-server": "^4.8.1",
         "webpack-node-externals": "^3.0.0"
     }
