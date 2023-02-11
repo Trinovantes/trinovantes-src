@@ -70,8 +70,9 @@ export class S3Cache {
 
     async #syncToCache(repoSlug: string, imageUrl: string): Promise<string> {
         const res = await axios.get<Buffer>(imageUrl, { responseType: 'arraybuffer' })
-        const contentType = res.headers['content-type']
-        const extension = (contentType === 'image/jpeg') ? 'jpg' : 'png'
+        const rawContentType = res.headers['Content-Type']
+        const contentType = (rawContentType === 'image/jpeg') ? rawContentType : 'image/png'
+        const extension = (rawContentType === 'image/jpeg') ? 'jpg' : 'png'
         const fileName = `${repoSlug}.${extension}`
 
         const putObjectCmd = new PutObjectCommand({
