@@ -8,7 +8,7 @@ export async function loadBlogPosts(ssrContext?: AppContext): Promise<BlogPosts>
     }
 
     if (DEFINE.IS_DEV) {
-        const { getBlogPosts } = await import('@/web/client/pages/Blog/getBlogPosts')
+        const { getBlogPosts } = await import('@/web/client/pages/Blog/getBlogPosts.js')
         return await getBlogPosts()
     }
 

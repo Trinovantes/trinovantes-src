@@ -1,4 +1,3 @@
-import { merge } from 'lodash-es'
 import { computed, ComputedRef, unref } from 'vue'
 import { useMeta } from 'vue-meta'
 import { APP_NAME } from '@/common/Constants'
@@ -16,13 +15,28 @@ export type LiveMetaOptions = {
     imageSize?: ComputedRef<TwitterCard | undefined> | TwitterCard
 }
 
+export type LiveMeta = {
+    title: string
+    og: {
+        title: string
+        description?: string
+        image?: string
+    }
+    twitter: {
+        title: string
+        description?: string
+        image?: string
+        card?: TwitterCard
+    }
+}
+
 export function useLiveMeta(options: LiveMetaOptions): LiveMetaOptions {
     useMeta(computed(() => {
         const title = unref(options.title) === APP_NAME
             ? APP_NAME
             : `${unref(options.title)} | ${APP_NAME}`
 
-        const headOptions = {
+        const headOptions: LiveMeta = {
             title,
             og: {
                 title: title.replace(/"/g, '&quot;'),
@@ -34,27 +48,15 @@ export function useLiveMeta(options: LiveMetaOptions): LiveMetaOptions {
 
         const description = unref(options.desc)?.replace(/"/g, '&quot;')
         if (description) {
-            merge(headOptions, {
-                description,
-                og: {
-                    description,
-                },
-                twitter: {
-                    description,
-                },
-            })
+            headOptions.og.description = description
+            headOptions.twitter.description = description
         }
 
         const image = unref(options.image) ?? getProfilePicture()
-        merge(headOptions, {
-            og: {
-                image,
-            },
-            twitter: {
-                card: options.imageSize ?? TwitterCard.Summary,
-                image,
-            },
-        })
+        const imageSize = unref(options.imageSize) ?? TwitterCard.Large
+        headOptions.og.image = image
+        headOptions.twitter.image = image
+        headOptions.twitter.card = imageSize
 
         return headOptions
     }))

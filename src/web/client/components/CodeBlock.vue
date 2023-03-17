@@ -35,7 +35,7 @@ watch(props, async() => {
     if (props.language === 'txt') {
         highlightedCode.value = escapeHtml(props.code)
     } else {
-        const { default: hljs } = await import('highlight.js/lib/core')
+        const { default: hljs } = await import('highlight.js')
 
         if (!hljs.getLanguage(props.language)) {
             const fileName = languageMap.get(props.language) ?? props.language
