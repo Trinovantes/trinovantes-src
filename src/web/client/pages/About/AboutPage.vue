@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
 import { getProfilePicture } from '../../utils/ResponsiveLoaderAsset'
 import { useLiveMeta } from '../../utils/useLiveMeta'
 import { APP_DESC } from '@/common/Constants'
@@ -10,12 +9,6 @@ const desc = `Hi, I'm Stephen. ${APP_DESC}`
 useLiveMeta({
     title,
     desc,
-})
-
-const startedProgramming = 2004 // Grade 6
-const yearsSinceStartedProgramming = ref<string | undefined>(undefined)
-onMounted(() => {
-    yearsSinceStartedProgramming.value = `${new Date().getFullYear() - startedProgramming} years ago!`
 })
 </script>
 
@@ -28,10 +21,6 @@ onMounted(() => {
         <section class="flex-vgap">
             <p>
                 {{ desc }}
-            </p>
-
-            <p>
-                I got interested in programming back in <em :title="yearsSinceStartedProgramming">grade six</em> when I found a "How to build your own website" book from my local library.
             </p>
 
             <p>
