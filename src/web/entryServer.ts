@@ -20,8 +20,8 @@ const assetRenderer = new VueSsrAssetRenderer(DEFINE.MANIFEST_FILE)
 const htmlTemplate = readFileSync(DEFINE.HTML_TEMPLATE).toString('utf-8')
 
 const server = new SpaServer({
-    entryFile: DEFINE.ENTRY_FILE,
-    staticDir: DEFINE.PUBLIC_DIR,
+    entryFilePath: DEFINE.ENTRY_FILE,
+    publicDir: DEFINE.PUBLIC_DIR,
     publicPath: DEFINE.PUBLIC_PATH,
 
     handlers: {

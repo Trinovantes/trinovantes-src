@@ -3,7 +3,7 @@ import mediumZoom from 'medium-zoom'
 import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
 import type { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 import LoadingSpinner from './LoadingSpinner.vue'
-import type { ObjectFitProperty, ObjectPositionProperty } from 'csstype'
+import type { Property } from 'csstype'
 
 const props = defineProps({
     img: {
@@ -27,11 +27,11 @@ const props = defineProps({
         default: undefined,
     },
     objectFit: {
-        type: String as PropType<ObjectFitProperty>,
+        type: String as PropType<Property.ObjectFit>,
         default: 'cover',
     },
     objectPosition: {
-        type: String as PropType<ObjectPositionProperty<`${number}px`>>,
+        type: String as PropType<Property.ObjectPosition<`${number}px`>>,
         default: 'center',
     },
     aspectRatio: {

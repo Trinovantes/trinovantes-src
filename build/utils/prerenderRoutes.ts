@@ -1,8 +1,8 @@
 import { existsSync } from 'fs'
 import fs from 'fs/promises'
 import path from 'path'
+import { slugify } from '../../src/common/utils/slugify'
 import { srcWebDir } from '../webpack.common'
-import { slugify } from '@/common/utils/slugify'
 
 // ----------------------------------------------------------------------------
 // Routes

@@ -1,5 +1,4 @@
 import { S3Client, ListObjectsCommand, PutObjectCommand } from '@aws-sdk/client-s3'
-import axios from 'axios'
 import { JSDOM } from 'jsdom'
 import { getRuntimeSecret, RuntimeSecret } from '../utils/RuntimeSecret'
 import type { Project } from '@/common/Project'
@@ -69,16 +68,21 @@ export class S3Cache {
     }
 
     async #syncToCache(repoSlug: string, imageUrl: string): Promise<string> {
-        const res = await axios.get<Buffer>(imageUrl, { responseType: 'arraybuffer' })
-        const rawContentType = res.headers['Content-Type']
+        const res = await fetch(imageUrl)
+        if (!res.body) {
+            throw new Error(`Failed to fetch ${imageUrl}`)
+        }
+
+        const rawContentType = res.headers.get('Content-Type')
         const contentType = (rawContentType === 'image/jpeg') ? rawContentType : 'image/png'
         const extension = (rawContentType === 'image/jpeg') ? 'jpg' : 'png'
         const fileName = `${repoSlug}.${extension}`
 
+        const rawData = await (await res.blob()).arrayBuffer() as Buffer
         const putObjectCmd = new PutObjectCommand({
             Key: fileName,
             Bucket: BUCKET_NAME,
-            Body: res.data,
+            Body: rawData,
             ContentType: contentType,
         })
         await this.#client.send(putObjectCmd)
@@ -99,8 +103,9 @@ async function scrapeOgImage(project: Project): Promise<string> {
         throw new Error(`${project.repoUrl} is private`)
     }
 
-    const res = await axios.get<string>(project.repoUrl)
-    const jsdom = new JSDOM(res.data)
+    const res = await fetch(project.repoUrl)
+    const html = await res.text()
+    const jsdom = new JSDOM(html)
 
     const ogImageTag = jsdom.window.document.querySelector('meta[property="og:image"]')
     if (!ogImageTag) {

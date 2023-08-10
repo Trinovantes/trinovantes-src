@@ -21,7 +21,7 @@ export type BlogPost = {
 export type BlogPosts = Array<BlogPost>
 
 export async function getBlogPosts(): Promise<BlogPosts> {
-    // This function must be preprocessed by webpack since we are using a webpack-specific directive "require.context"
+    // This function must be processed by webpack since we are using a webpack-specific directive "require.context"
     const blogPostMatches = require.context('./', true, /.\/([\w-]+)\/BlogPost.vue/)
     const blogEntries = blogPostMatches.keys()
         .filter((path) => !path.startsWith('./template'))

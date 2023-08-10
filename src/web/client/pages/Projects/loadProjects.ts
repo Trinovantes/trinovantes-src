@@ -8,9 +8,8 @@ export async function loadProjects(ssrContext?: AppContext): Promise<Projects> {
     }
 
     if (DEFINE.IS_DEV) {
-        const { default: axios } = await import('axios')
-        const res = await axios.get<Projects>('/api/projects')
-        return res.data
+        const res = await fetch('/api/projects')
+        return await res.json() as Projects
     }
 
     return loadStateFromDom(HydrationKey.Projects) ?? {}

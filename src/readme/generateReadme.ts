@@ -4,7 +4,6 @@ import '@/common/utils/setupDayjs'
 import assert from 'assert'
 import { writeFile } from 'fs/promises'
 import path from 'path'
-import axios from 'axios'
 import { fetchProjects } from '@/api/services/fetchProjects'
 import { CLIENT_SRC_WEB_URL } from '@/common/Constants'
 import type { Projects } from '@/common/Project'
@@ -17,8 +16,8 @@ const IMG_WIDTH = 400
 
 async function getProjects(): Promise<Projects> {
     if (DEFINE.IS_DEV) {
-        const res = await axios.get<Projects>('http://localhost:3000/api/projects')
-        return res.data
+        const res = await fetch('http://localhost:3000/api/projects')
+        return await res.json() as Projects
     } else {
         return await fetchProjects()
     }

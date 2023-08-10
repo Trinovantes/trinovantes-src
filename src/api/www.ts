@@ -2,7 +2,6 @@
 import '@/common/utils/setupDayjs'
 
 import http from 'http'
-import axios from 'axios'
 import express, { ErrorRequestHandler } from 'express'
 import createHttpError, { HttpError } from 'http-errors'
 import morgan from 'morgan'
@@ -39,12 +38,9 @@ app.use('/api', (req, res, next) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHander: ErrorRequestHandler = (err, req, res, next) => {
-    if (axios.isAxiosError(err)) {
-        // Don't log entire Axios err object since it includes req, res
-        console.info(err.name, err.message)
-    } else if (!(err instanceof HttpError)) {
-        // Log unexpected non-HttpErrors
-        console.info(err)
+    // Log unexpected non-HttpErrors
+    if (!(err instanceof HttpError)) {
+        console.warn(err)
     }
 
     // Set locals, only providing error in development
