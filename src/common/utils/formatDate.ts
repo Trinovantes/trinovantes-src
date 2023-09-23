@@ -1,11 +1,14 @@
-import dayjs from 'dayjs'
-
 export function formatDate(timestamp?: number): string {
     if (typeof timestamp !== 'number') {
         return ''
     }
 
-    return dayjs.unix(timestamp).utc().format('YYYY/MM/DD')
+    const date = new Date(timestamp)
+    const yyyy = date.getFullYear()
+    const mm = (date.getMonth() + 1).toString().padStart(2, '0')
+    const dd = (date.getDate()).toString().padStart(2, '0')
+
+    return `${yyyy}/${mm}/${dd}`
 }
 
 export function formatDateDisplay(timestamp?: number): string {
@@ -16,7 +19,7 @@ export function formatDateDisplay(timestamp?: number): string {
     const formatter = new Intl.DateTimeFormat('en', {
         dateStyle: 'medium',
         timeZone: 'UTC',
-    } as unknown as Intl.DateTimeFormatOptions)
+    })
 
-    return formatter.format(dayjs.unix(timestamp).toDate())
+    return formatter.format(new Date(timestamp))
 }

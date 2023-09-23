@@ -1,11 +1,10 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import pluralize from 'pluralize'
 import { computed, defineComponent, ref } from 'vue'
 import { professions } from './professions'
 
 export const TITLE = 'If X Were Hired Like Programmers'
-export const CREATED_AT = dayjs.utc('2015-02-14').unix()
+export const CREATED_AT = new Date('2015-02-14').getTime()
 
 export default defineComponent({
     setup() {

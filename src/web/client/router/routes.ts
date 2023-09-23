@@ -1,6 +1,6 @@
 import { loadBlogPosts } from '../pages/Blog/loadBlogPosts'
-import type { AppContext } from '@/web/AppContext'
-import type { RouteRecordRaw } from 'vue-router'
+import { AppContext } from '@/web/AppContext'
+import { RouteRecordRaw } from 'vue-router'
 
 export enum RouteName {
     Home = 'Home',

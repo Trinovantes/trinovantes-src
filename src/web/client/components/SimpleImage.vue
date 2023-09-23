@@ -1,55 +1,21 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
-import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
-import type { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
-import LoadingSpinner from './LoadingSpinner.vue'
-import type { Property } from 'csstype'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 
-const props = defineProps({
-    img: {
-        type: Object as PropType<ResponsiveLoaderAsset>,
-        required: true,
-    },
-    title: {
-        type: String as PropType<string | undefined>,
-        default: undefined,
-    },
-    alt: {
-        type: String as PropType<string | undefined>,
-        default: undefined,
-    },
-    width: {
-        type: Number as PropType<number | undefined>,
-        default: undefined,
-    },
-    height: {
-        type: Number as PropType<number | undefined>,
-        default: undefined,
-    },
-    objectFit: {
-        type: String as PropType<Property.ObjectFit>,
-        default: 'cover',
-    },
-    objectPosition: {
-        type: String as PropType<Property.ObjectPosition<`${number}px`>>,
-        default: 'center',
-    },
-    aspectRatio: {
-        type: Number,
-        default: 1 / 1.618,
-    },
-    keepAspectRatio: {
-        type: Boolean,
-        default: true,
-    },
-    enableZoom: {
-        type: Boolean,
-        default: true,
-    },
-    enableBorder: {
-        type: Boolean,
-        default: true,
-    },
+const props = withDefaults(defineProps<{
+    img: ResponsiveLoaderAsset
+    title?: string
+    alt?: string
+    aspectRatio?: number
+    enableZoom?: boolean
+    enableBorder?: boolean
+}>(), {
+    title: '',
+    alt: '',
+    aspectRatio: 1 / 1.618,
+    enableZoom: true,
+    enableBorder: true,
 })
 
 // Set up intersection observer
@@ -79,15 +45,10 @@ onBeforeUnmount(() => {
 })
 
 const imageRef = ref<HTMLImageElement | null>(null)
-const realImgWidth = ref(0)
-const realImgHeight = ref(0)
 const onImageLoadSuccess = () => {
     if (!imageRef.value) {
         throw new Error('Cannot find imageRef')
     }
-
-    realImgWidth.value = imageRef.value.naturalWidth
-    realImgHeight.value = imageRef.value.naturalHeight
 
     if (props.enableZoom) {
         mediumZoom(imageRef.value)
@@ -95,20 +56,6 @@ const onImageLoadSuccess = () => {
 }
 
 const paddingTop = computed<string>(() => {
-    if (props.height !== undefined) {
-        return `${props.height}px`
-    }
-
-    if (props.keepAspectRatio) {
-        const aspectRatio = realImgWidth.value > 0
-            ? (realImgHeight.value / realImgWidth.value)
-            : props.aspectRatio
-
-        return props.width === undefined
-            ? `${aspectRatio * 100}%`
-            : `${aspectRatio * props.width}px`
-    }
-
     return `${props.aspectRatio * 100}%`
 })
 </script>
@@ -127,25 +74,16 @@ const paddingTop = computed<string>(() => {
                 v-if="hasScrolledIntoView"
                 ref="imageRef"
                 :src="img.src"
-                :width="width || undefined"
-                :height="height || undefined"
                 :title="title"
                 :alt="alt ?? title"
-                :style="{
-                    objectFit,
-                    objectPosition,
-                }"
                 loading="lazy"
                 referrerpolicy="no-referrer"
                 @load="onImageLoadSuccess"
             >
-            <LoadingSpinner
-                v-else
-                class="loading-spinner"
-            />
         </picture>
 
         <figcaption v-if="$slots.default">
+            {{ hasScrolledIntoView }}
             <slot />
         </figcaption>
     </figure>
@@ -171,6 +109,8 @@ figure{
 
         img{
             display: block;
+            object-fit: cover;
+            object-position: center;
         }
 
         img,

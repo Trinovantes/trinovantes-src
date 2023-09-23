@@ -1,19 +1,14 @@
-// Must be imported first so it can extend the dayjs global
-// eslint-disable-next-line import/order
-import '@/common/utils/setupDayjs'
-
 import { createSSRApp } from 'vue'
 import { createMetaManager } from 'vue-meta'
 import AppLoader from './client/AppLoader.vue'
-import ClientOnly from './client/components/ClientOnly.vue'
 import CodeBlock from './client/components/CodeBlock.vue'
 import SimpleImage from './client/components/SimpleImage.vue'
 import SimpleTable from './client/components/SimpleTable.vue'
 import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
-import { createAppRouter } from './client/router/createAppRouter'
-import type { AppContext } from './AppContext'
-import type { Router } from 'vue-router'
+import { createVueRouter } from './client/router/createVueRouter'
+import { AppContext } from './AppContext'
+import { Router } from 'vue-router'
 
 type VueApp = {
     app: ReturnType<typeof createSSRApp>
@@ -25,7 +20,6 @@ export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
 
     // Vue
     const app = createSSRApp(AppLoader)
-    app.component('ClientOnly', ClientOnly)
     app.component('CodeBlock', CodeBlock)
     app.component('SimpleImage', SimpleImage)
     app.component('SimpleTable', SimpleTable)
@@ -33,7 +27,7 @@ export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
     app.component('BlogPost', BlogPost)
 
     // Vue Router
-    const router = await createAppRouter(ssrContext)
+    const router = await createVueRouter(ssrContext)
     app.use(router)
     await router.isReady()
 

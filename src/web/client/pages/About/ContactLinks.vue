@@ -1,14 +1,11 @@
 <script lang="ts" setup>
 import { CONTACTS } from '@/common/Constants'
 import { slugify } from '@/common/utils/slugify'
-import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
+import SvgIcon from '@/web/client/components/SvgIcon.vue'
 
-defineProps({
-    isDark: {
-        type: Boolean,
-        default: false,
-    },
-})
+defineProps<{
+    isDark?: boolean
+}>()
 </script>
 
 <template>
@@ -23,8 +20,10 @@ defineProps({
             :key="contact.label"
             class="link"
         >
-            <!-- eslint-disable-next-line vue/no-v-html -->
-            <div :class="`svg-wrapper ${slugify(contact.service)}`" v-html="getIconSvgRaw(slugify(contact.service))" />
+            <SvgIcon
+                :name="slugify(contact.service)"
+                :is-dark="isDark"
+            />
 
             <a
                 :href="contact.url"
@@ -51,19 +50,10 @@ defineProps({
     }
 
     .link{
-        $icon-size: $padding * 1.5;
-
         align-items: center;
         display: flex;
         gap: $padding;
         line-height: $icon-size;
-
-        .svg-wrapper{
-            svg{
-                width: $icon-size;
-                height: $icon-size;
-            }
-        }
     }
 }
 </style>

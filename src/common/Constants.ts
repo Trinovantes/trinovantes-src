@@ -1,5 +1,5 @@
 export const APP_NAME = 'Stephen Li'
-export const APP_DESC = 'I am a Canadian software developer specializing in Fullstack Web Dev, 3D Graphics, and C++.'
+export const APP_DESC = "I'm a Canadian indie game developer. I also build random websites."
 
 export const CONTACTS = [
     {
@@ -15,3 +15,5 @@ export const CONTACTS = [
 ]
 
 export const CLIENT_SRC_WEB_URL = 'https://github.com/Trinovantes/trinovantes/blob/dev/src/web/client'
+
+export const IMG_WIDTH = 400

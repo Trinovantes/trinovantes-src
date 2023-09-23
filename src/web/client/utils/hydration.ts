@@ -1,6 +1,6 @@
 import devalue from '@nuxt/devalue'
-import type { Projects } from '@/common/Project'
-import type { BlogPosts } from '../pages/Blog/getBlogPosts'
+import { Projects } from '@/common/Project'
+import { BlogPosts } from '@/api/services/fetchBlogPosts'
 
 export enum HydrationKey {
     BlogPosts = '__BLOG_POSTS__',

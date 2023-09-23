@@ -1,10 +1,13 @@
 import { useSSRContext } from 'vue'
-import type { Projects } from '@/common/Project'
-import type { BlogPosts } from './client/pages/Blog/getBlogPosts'
-import type { SSRContext } from '@vue/server-renderer'
+import { Projects } from '@/common/Project'
+import { SSRContext } from '@vue/server-renderer'
+import { BlogPosts } from '@/api/services/fetchBlogPosts'
 
-export type AppContext = SSRContext & {
+type VueSsrAssetsPluginContext = {
     _matchedComponents: Set<string>
+}
+
+export type AppContext = SSRContext & VueSsrAssetsPluginContext & {
     url: string
     blogPosts: BlogPosts
     projects: Projects

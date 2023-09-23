@@ -1,6 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import { getRuntimeSecret, RuntimeSecret } from '@/api/utils/RuntimeSecret'
-import { Projects, projects } from '@/common/Project'
+import { Project, ProjectCategory, Projects, projects } from '@/common/Project'
 import { S3Cache } from './S3Cache'
 import { getRepoInfo } from './getRepoInfo'
 
@@ -22,21 +22,24 @@ async function hydrateProjects(projects: Projects): Promise<Projects> {
     await s3Cache.init()
 
     const hydratedProjects: Projects = {}
+
     for (const [category, categoryProjects] of Object.entries(projects)) {
-        hydratedProjects[category] = []
+        const projects = new Array<Project>()
 
         for (const project of categoryProjects) {
             const repoInfo = getRepoInfo(project.repoUrl)
             const repoResponse = await octokit.rest.repos.get(repoInfo)
             const ogImage = await s3Cache.fetchOgImage(project)
 
-            hydratedProjects[category].push({
+            projects.push({
                 ...project,
                 desc: project.desc ?? repoResponse.data.description ?? undefined,
                 url: project.url ?? repoResponse.data.homepage ?? undefined,
                 img: ogImage ?? undefined,
             })
         }
+
+        hydratedProjects[category as ProjectCategory] = projects
     }
 
     return hydratedProjects

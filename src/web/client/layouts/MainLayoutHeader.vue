@@ -9,7 +9,7 @@ import { APP_NAME } from '@/common/Constants'
                 {{ APP_NAME }}
             </router-link>
 
-            <div class="space" />
+            <div class="flex-1" />
 
             <nav>
                 <router-link to="/about">
@@ -36,7 +36,7 @@ header{
         padding-left: $padding;
         padding-right: $padding;
 
-        @media (max-width: $large-mobile-breakpoint) {
+        @media (max-width: $mobile-breakpoint) {
             display: block;
             padding: 0;
             width: auto;
@@ -63,7 +63,7 @@ a.home-btn{
         color: $primary-on-dark;
     }
 
-    @media (max-width: $large-mobile-breakpoint) {
+    @media (max-width: $mobile-breakpoint) {
         border-bottom: 1px solid $light-on-dark;
         justify-content: center;
         padding: $padding * 2;

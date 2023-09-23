@@ -5,15 +5,11 @@ import { slugify } from '@/common/utils/slugify'
 import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 
 const slots = useSlots()
-const props = defineProps({
-    size: {
-        type: Number,
-        default: 2,
-    },
-    disableLink: {
-        type: Boolean,
-        default: false,
-    },
+const props = withDefaults(defineProps<{
+    size?: number
+    disableLink?: boolean
+}>(), {
+    size: 2,
 })
 
 const route = useRoute()

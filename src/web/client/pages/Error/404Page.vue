@@ -1,15 +1,13 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '../../utils/useLiveMeta'
+import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import BlogList from '../Blog/BlogPageList.vue'
 
 const title = '404: Page Not Found'
-useLiveMeta({
-    title,
-})
+useLiveMeta({ title })
 </script>
 
 <template>
-    <article class="container padding content">
+    <article class="container text-container full">
         <h1>
             {{ title }}
         </h1>

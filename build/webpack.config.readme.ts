@@ -1,5 +1,6 @@
 import { merge } from 'webpack-merge'
-import { commonNodeConfig, distReadmeDir, srcReadmeDir } from './webpack.common'
+import { srcReadmeDir, distReadmeDir } from './BuildConstants'
+import { commonNodeConfig } from './webpack.common'
 
 // ----------------------------------------------------------------------------
 // Api
@@ -7,7 +8,7 @@ import { commonNodeConfig, distReadmeDir, srcReadmeDir } from './webpack.common'
 
 export default merge(commonNodeConfig, {
     entry: {
-        generateReadme: `${srcReadmeDir}/generateReadme.ts`,
+        generateReadme: `${srcReadmeDir}/run.ts`,
     },
 
     output: {

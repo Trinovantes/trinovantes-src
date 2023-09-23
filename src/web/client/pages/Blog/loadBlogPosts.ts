@@ -1,6 +1,6 @@
-import { loadStateFromDom, HydrationKey } from '../../utils/hydration'
-import type { AppContext } from '@/web/AppContext'
-import { getBlogPosts, type BlogPosts } from './getBlogPosts'
+import { loadStateFromDom, HydrationKey } from '@/web/client/utils/hydration'
+import { AppContext } from '@/web/AppContext'
+import { BlogPosts } from '@/api/services/fetchBlogPosts'
 
 export async function loadBlogPosts(ssrContext?: AppContext): Promise<BlogPosts> {
     if (DEFINE.IS_SSR) {
@@ -8,7 +8,8 @@ export async function loadBlogPosts(ssrContext?: AppContext): Promise<BlogPosts>
     }
 
     if (DEFINE.IS_DEV) {
-        return await getBlogPosts()
+        const res = await fetch('/api/blog-posts')
+        return await res.json() as BlogPosts
     }
 
     return loadStateFromDom(HydrationKey.BlogPosts) ?? []

@@ -1,6 +1,6 @@
-import { HydrationKey, loadStateFromDom } from '../../utils/hydration'
-import type { Projects } from '@/common/Project'
-import type { AppContext } from '@/web/AppContext'
+import { loadStateFromDom, HydrationKey } from '@/web/client/utils/hydration'
+import { Projects } from '@/common/Project'
+import { AppContext } from '@/web/AppContext'
 
 export async function loadProjects(ssrContext?: AppContext): Promise<Projects> {
     if (DEFINE.IS_SSR) {

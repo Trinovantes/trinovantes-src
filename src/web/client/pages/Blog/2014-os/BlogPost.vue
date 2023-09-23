@@ -1,9 +1,8 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { defineComponent } from 'vue'
 
 export const TITLE = 'Adventures of Writing an OS Kernel from Scratch on a Cortex M3 Board'
-export const CREATED_AT = dayjs.utc('2014-02-18').unix()
+export const CREATED_AT = new Date('2014-02-18').getTime()
 
 export default defineComponent({
     setup() {

@@ -1,5 +1,5 @@
 import { SSRContext } from '@vue/server-renderer'
-import { readFileSync } from 'fs'
+import { readFileSync } from 'node:fs'
 import { App } from 'vue'
 import { getFileName } from './getFileName'
 import { MatchedComponent } from './getMatchedComponents'

@@ -1,6 +1,4 @@
 @import './reset.scss';
-@import 'highlight.js/styles/stackoverflow-light.css';
-@import './svg.scss';
 
 // ----------------------------------------------------------------------------
 // General Elements
@@ -18,11 +16,6 @@ body{
     font-size: 1.25rem;
     font-family: 'Roboto', sans-serif;
     line-height: 2;
-
-    > iframe{
-        // Hide cloudflare's injected iframe
-        position: fixed;
-    }
 }
 
 a{
@@ -162,7 +155,7 @@ select{
 .flex-hgap{
     display: flex;
     flex-direction: row;
-    gap: $padding * 2;
+    gap: $padding;
 }
 
 .flex-vgap{
@@ -171,34 +164,19 @@ select{
     gap: $padding * 2;
 }
 
-.space{
+.flex-1{
     flex: 1;
-
-    @media (max-width: $mobile-breakpoint) {
-        display: none;
-    }
-}
-
-.grid{
-    display: grid;
-    gap: $padding * 2;
-
-    @media (max-width: $large-mobile-breakpoint) {
-        grid-template-columns: auto !important;
-    }
-
-    > *{
-        margin: 0 !important;
-    }
 }
 
 @for $i from 2 through 6{
     .grid-#{$i}{
+        display: grid;
         grid-template-columns: repeat(#{$i}, 1fr);
+        gap: $padding;
     }
 }
 
-.all-cols{
+.grid-full{
     grid-column-start: 1;
     grid-column-end: -1;
 }
@@ -221,53 +199,51 @@ select{
     }
 }
 
-.full-height-container{
-    min-height: calc(100vh - #{$header-height} - #{$footer-height});
-
-    @media (max-width: $mobile-breakpoint) {
-        min-height: calc(100vh - #{$header-height-mobile} - #{$footer-height});
-    }
-}
-
-.border-box{
-    border: 1px solid $dark;
-    padding: $padding * 2;
-}
-
 .container{
     margin-left: auto;
     margin-right: auto;
-    max-width: $max-page-width;
+    padding-left: $hspace;
+    padding-right: $hspace;
+
+    max-width: 80ch;
     width: $container-width;
 
-    @media (max-width: $large-mobile-breakpoint) {
-        width: 80%;
-    }
     @media (max-width: $mobile-breakpoint) {
         width: 100%;
     }
+}
 
-    display: grid;
-    gap: $column-gap;
-    grid-template-columns: 100%;
+.full-height-container{
+    min-height: calc(100vh - #{$header-height});
 
-    &.padding{
-        padding: $vspace ($padding * 2);
+    @media (max-width: $mobile-breakpoint) {
+        min-height: 0;
     }
 }
 
-.content{
-    h2{
-        position: relative;
+.text-container{
+    display: grid;
+    grid-template-columns: 100%;
+    gap: $hspace * 2;
 
-        &:before{
-            background: $dark;
-            content: '';
-            display: block;
-            width: math.div($padding, 2); height: 100%;
-            position: absolute;
-            top: 0; left: -($padding * 2);
+    padding-top: $vspace;
+    padding-bottom: $vspace;
+
+    &:not(.full){
+        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+
+        &.reverse{
+            grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
         }
+
+        @media (max-width: $mobile-breakpoint) {
+            grid-template-columns: 100%;
+        }
+    }
+
+    h1{
+        grid-column-start: 1;
+        grid-column-end: -1;
     }
 
     h2,
@@ -276,7 +252,7 @@ select{
     h5,
     h6{
         &:not(:first-child) {
-            margin-top: ($padding * 2);
+            margin-top: $hspace;
         }
 
         & + h2,
@@ -288,12 +264,8 @@ select{
         }
     }
 
-    .stage{
-        &:not(:first-child) {
-            margin-top: ($padding * 2);
-        }
-        &:not(:last-child) {
-            margin-bottom: ($padding * 2);
-        }
+    > section,
+    > aside{
+        @extend .flex-vgap;
     }
 }

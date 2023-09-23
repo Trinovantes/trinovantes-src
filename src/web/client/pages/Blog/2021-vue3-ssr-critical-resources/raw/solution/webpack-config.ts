@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import SitemapPlugin from 'sitemap-webpack-plugin'
 import { WebpackManifestPlugin } from 'webpack-manifest-plugin'

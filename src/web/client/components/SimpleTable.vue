@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-import { computed, PropType } from 'vue'
+import { computed } from 'vue'
 
-const props = defineProps({
-    data: {
-        type: Object as PropType<Array<Array<unknown>>>,
-        required: true,
-    },
-})
+const props = defineProps<{
+    data: Array<Array<string | number>>
+}>()
 
 const theadRow = computed(() => props.data[0])
 const tbodyRows = computed(() => [...props.data].splice(1))

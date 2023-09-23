@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, PropType } from 'vue'
-import { useLiveMeta } from '../../utils/useLiveMeta'
+import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
 
 const props = defineProps({
@@ -130,7 +130,7 @@ const dateInfos = computed<Array<DateInfo>>(() => {
 
     --full: minmax(#{$gap}, 1fr);
     --popout: minmax(0, #{$vspace - $gap});
-    --content: min(80ch, calc(#{$container-width} - #{$gap-left-right}), calc(#{$max-page-width} - #{$gap-left-right}));
+    --content: min(80ch, calc(#{$container-width} - #{$gap-left-right}), calc(#{$max-container-width} - #{$gap-left-right}));
 
     display: grid;
     gap: $gap;

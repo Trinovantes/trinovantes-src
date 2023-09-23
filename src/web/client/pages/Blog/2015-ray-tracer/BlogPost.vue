@@ -1,9 +1,8 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { defineComponent } from 'vue'
 
 export const TITLE = 'Finally, A Ray Tracer!'
-export const CREATED_AT = dayjs.utc('2015-07-22').unix()
+export const CREATED_AT = new Date('2015-07-22').getTime()
 
 export default defineComponent({
     setup() {

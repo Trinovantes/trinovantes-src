@@ -1,0 +1,19 @@
+:80 {
+    encode gzip
+
+	root * /app/dist/web
+	try_files {path} {path}/index.html /404/index.html
+	file_server
+
+    # Remove trailing slash and index.html
+    @ssgPath path_regexp static "(.+)/(index\.html)?$"
+    redir @ssgPath {re.static.1}
+
+    # Set CSP (since this site is all static and does not have user-generated content, unsafe values are fine)
+    vars CSP_SCRIPT "script-src 'self' 'unsafe-inline' 'unsafe-eval' static.cloudflareinsights.com"
+    vars CSP_STYLE "style-src 'self' 'unsafe-inline' fonts.googleapis.com"
+    vars CSP_FONT "font-src fonts.gstatic.com"
+    vars CSP_IMG "img-src 'self' data: cdn.stephenli.ca"
+    vars CSP_CONNECT "connect-src 'self' cloudflareinsights.com *.ingest.sentry.io"
+    header Content-Security-Policy "default-src 'self'; object-src 'none'; base-uri 'self'; {vars.CSP_SCRIPT}; {vars.CSP_STYLE}; {vars.CSP_FONT}; {vars.CSP_IMG}; {vars.CSP_CONNECT};"
+}

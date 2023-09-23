@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '../../utils/useLiveMeta'
+import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import BlogPageList from './BlogPageList.vue'
 
 const title = 'Blog'
@@ -11,7 +11,7 @@ useLiveMeta({
 </script>
 
 <template>
-    <article class="container padding content">
+    <article class="container text-container full">
         <h1>
             {{ title }}
         </h1>

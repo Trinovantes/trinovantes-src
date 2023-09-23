@@ -1,10 +1,9 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { defineComponent } from 'vue'
 import TetrisGame from './TetrisGame.vue'
 
 export const TITLE = 'Tetris in WebGL'
-export const CREATED_AT = dayjs.utc('2022-11-01').unix()
+export const CREATED_AT = new Date('2022-11-01').getTime()
 
 export default defineComponent({
     components: {

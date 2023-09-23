@@ -1,5 +1,6 @@
 import { merge } from 'webpack-merge'
-import { commonNodeConfig, distApiDir, srcApiDir } from './webpack.common'
+import { srcApiDir, distApiDir } from './BuildConstants'
+import { commonNodeConfig } from './webpack.common'
 
 // ----------------------------------------------------------------------------
 // Api

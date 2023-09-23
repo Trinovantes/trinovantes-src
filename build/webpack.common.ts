@@ -1,41 +1,10 @@
-import path from 'path'
+import path from 'node:path'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import { VueLoaderPlugin } from 'vue-loader'
 import { Configuration, DefinePlugin } from 'webpack'
 import { merge } from 'webpack-merge'
+import { buildConstants, isDev, publicPath, rawDirRegexp, srcDir } from './BuildConstants'
 import nodeExternals from 'webpack-node-externals'
-import { getGitHash } from './utils/BuildSecret'
-
-// ----------------------------------------------------------------------------
-// Constants
-// ----------------------------------------------------------------------------
-
-// Assume we are running webpack from the project root (../)
-const rootDir = path.resolve()
-
-export const isDev = (process.env.NODE_ENV === 'development')
-export const manifestFileName = 'ssr-manifest.json'
-export const entryFileName = 'app.html'
-export const gitHash = getGitHash(rootDir)
-export const publicPath = '/public/'
-
-export const distDir = path.resolve(rootDir, 'dist')
-export const distApiDir = path.resolve(distDir, 'api')
-export const distReadmeDir = path.resolve(distDir, 'readme')
-export const distWebDir = path.resolve(distDir, 'web')
-export const distWebPublicDir = path.resolve(distWebDir, 'public')
-export const entryFilePath = path.resolve(distWebDir, entryFileName)
-export const distSsgDir = path.resolve(distDir, 'ssg')
-export const manifestFilePath = path.resolve(distSsgDir, manifestFileName)
-export const htmlTemplatePath = path.resolve(distSsgDir, 'index.html')
-
-export const srcDir = path.resolve(rootDir, 'src')
-export const srcApiDir = path.resolve(srcDir, 'api')
-export const srcReadmeDir = path.resolve(srcDir, 'readme')
-export const srcWebDir = path.resolve(srcDir, 'web')
-export const staticDir = path.resolve(srcDir, 'web', 'static')
-
-export const rawDirRegexp = /\/raw\//
 
 // ----------------------------------------------------------------------------
 // Common
@@ -56,14 +25,7 @@ const commonConfig: Configuration = {
     },
 
     plugins: [
-        new DefinePlugin({
-            __VUE_OPTIONS_API__: JSON.stringify(false),
-            __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
-
-            'DEFINE.IS_DEV': JSON.stringify(isDev),
-            'DEFINE.IS_SSR': "(typeof window === 'undefined')",
-            'DEFINE.GIT_HASH': JSON.stringify(gitHash),
-        }),
+        new DefinePlugin(buildConstants),
         new VueLoaderPlugin(),
     ],
 
@@ -161,7 +123,6 @@ export const commonNodeConfig = merge(commonConfig, {
     target: 'node',
 
     output: {
-        // This tells the server bundle to use Node-style exports
         libraryTarget: 'commonjs2',
     },
 
@@ -203,8 +164,6 @@ export const commonNodeConfig = merge(commonConfig, {
     },
 
     externals: [
-        // Do not externalize dependencies that need to be processed by webpack.
-        // You should also whitelist deps that modify `global` (e.g. polyfills)
         nodeExternals({
             allowlist: [
                 /^vue*/,

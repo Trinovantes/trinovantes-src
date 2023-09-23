@@ -1,7 +1,7 @@
 import { S3Client, ListObjectsCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 import { JSDOM } from 'jsdom'
 import { getRuntimeSecret, RuntimeSecret } from '../utils/RuntimeSecret'
-import type { Project } from '@/common/Project'
+import { Project } from '@/common/Project'
 import { slugify } from '@/common/utils/slugify'
 import { getRepoInfo } from './getRepoInfo'
 

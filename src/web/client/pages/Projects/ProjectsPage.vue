@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '../../utils/useLiveMeta'
+import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
@@ -9,7 +9,9 @@ import { loadProjects } from './loadProjects'
 const title = 'Projects'
 useLiveMeta({
     title,
-    desc: Object.values(unhydratedProjects).flatMap((projects) => projects.map((project) => project.name)).join(', '),
+    desc: Object.values(unhydratedProjects)
+        .flatMap((projects) => projects.map((project) => project.name))
+        .join(', '),
 })
 
 const ssrContext = useAppContext()
@@ -17,7 +19,7 @@ const projects = await loadProjects(ssrContext)
 </script>
 
 <template>
-    <article class="container padding flex-vgap">
+    <article class="container text-container full">
         <section
             v-for="[category, categoryProjects] of Object.entries(projects)"
             :key="category"
@@ -39,6 +41,7 @@ const projects = await loadProjects(ssrContext)
                         :title="project.name"
                         :enable-zoom="false"
                         :enable-border="false"
+                        class="preview-img"
                     />
                 </div>
 
@@ -98,20 +101,20 @@ article{
     gap: $vspace;
 
     section.category{
-        gap: $column-gap;
+        gap: $hspace * 2;
 
         div.project{
             display: grid;
-            gap: $column-gap;
+            gap: $hspace;
             grid-template-columns: (100% - $container-width) 1fr;
 
-            @media (max-width: $large-mobile-breakpoint) {
+            @media (max-width: $mobile-breakpoint) {
                 gap: $padding * 2;
                 grid-template-columns: 1fr;
             }
 
             .preview{
-                figure{
+                .preview-img{
                     border: math.div($padding, 2) solid $dark;
                 }
             }
@@ -132,8 +135,6 @@ article{
                     gap: $padding;
 
                     a{
-                        $icon-size: $padding * 1.5;
-
                         align-items: center;
                         display: flex;
                         gap: math.div($padding, 2);

@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
@@ -7,9 +7,10 @@ import { VueSsrAssetsClientPlugin } from 'vue-ssr-assets-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import 'webpack-dev-server'
 import { merge } from 'webpack-merge'
-import { prerenderRoutes } from './utils/prerenderRoutes'
-import { staticDir, srcWebDir, distWebDir, distWebPublicDir, publicPath, manifestFilePath, commonWebConfig, isDev, entryFilePath, entryFileName } from './webpack.common'
-import type { Configuration } from 'webpack'
+import { Configuration } from 'webpack'
+import { srcWebDir, distWebPublicDir, publicPath, isDev, entryFile, distWebDir, prerenderRoutes, distSsgManifest, srcWebStaticDir, distWebEntryFile, distWebSitemap } from './BuildConstants'
+import { commonWebConfig } from './webpack.common'
+import { isAnalyze } from './BuildSecret'
 
 // ----------------------------------------------------------------------------
 // Web
@@ -31,8 +32,9 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
     },
 
     devServer: {
+        port: 9000,
         devMiddleware: {
-            index: entryFileName,
+            index: entryFile,
             writeToDisk: (filePath) => {
                 // Since output.publicPath is '/public', app.html can only be accessed at /public/index.html
                 // Instead, we need to write it to disk and have webpack-dev-server serve it from '/' (contentBasePublicPath)
@@ -40,7 +42,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
             },
         },
         historyApiFallback: {
-            index: entryFileName,
+            index: entryFile,
         },
         static: [
             {
@@ -48,7 +50,8 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
                 publicPath: '/',
             },
             {
-                directory: staticDir,
+                // CopyWebpackPlugin does not run during dev mode
+                directory: srcWebStaticDir,
                 publicPath: '/',
             },
         ],
@@ -58,12 +61,15 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
     },
 
     plugins: [
+        new HtmlWebpackPlugin({
+            template: path.resolve(srcWebDir, 'index.html'),
+            filename: distWebEntryFile,
+        }),
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: staticDir,
+                    from: srcWebStaticDir,
                     to: distWebDir,
-                    noErrorOnMissing: true,
                 },
             ],
         }),
@@ -72,23 +78,20 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
                 ? '[name].css'
                 : '[name].[contenthash].css',
         }),
-        new HtmlWebpackPlugin({
-            template: path.resolve(srcWebDir, 'index.html'),
-            filename: entryFilePath,
-        }),
         new SitemapPlugin({
             base: 'https://www.stephenli.ca',
             paths: await prerenderRoutes,
             options: {
-                filename: path.join(path.relative(distWebPublicDir, distWebDir), 'sitemap.xml'),
+                filename: distWebSitemap,
             },
         }),
         new VueSsrAssetsClientPlugin({
-            fileName: manifestFilePath,
+            fileName: distSsgManifest,
         }),
         new BundleAnalyzerPlugin({
-            analyzerMode: 'disabled',
-            generateStatsFile: false,
+            analyzerMode: isAnalyze()
+                ? 'server'
+                : 'disabled',
         }),
     ],
 }))()

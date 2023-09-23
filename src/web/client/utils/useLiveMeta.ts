@@ -1,22 +1,25 @@
-import { computed, ComputedRef, unref } from 'vue'
+import { ComputedRef, computed, unref } from 'vue'
 import { useMeta } from 'vue-meta'
 import { APP_NAME } from '@/common/Constants'
-import { getProfilePicture } from './ResponsiveLoaderAsset'
 
 export const enum TwitterCard {
     Summary = 'summary',
     Large = 'summary_large_image',
 }
 
+type LiveMetaField<T> = ComputedRef<T | null | undefined> | T | null | undefined
+
 export type LiveMetaOptions = {
     title: ComputedRef<string> | string
-    desc?: ComputedRef<string | undefined> | string
-    image?: ComputedRef<string | undefined> | string
-    imageSize?: ComputedRef<TwitterCard | undefined> | TwitterCard
+    desc?: LiveMetaField<string>
+    image?: LiveMetaField<string>
+    imageSize?: LiveMetaField<TwitterCard>
+    themeColor?: LiveMetaField<string>
 }
 
 export type LiveMeta = {
     title: string
+    description?: string
     og: {
         title: string
         description?: string
@@ -48,15 +51,18 @@ export function useLiveMeta(options: LiveMetaOptions): LiveMetaOptions {
 
         const description = unref(options.desc)?.replace(/"/g, '&quot;')
         if (description) {
+            headOptions.description = description
             headOptions.og.description = description
             headOptions.twitter.description = description
         }
 
-        const image = unref(options.image) ?? getProfilePicture()
-        const imageSize = unref(options.imageSize) ?? TwitterCard.Large
-        headOptions.og.image = image
-        headOptions.twitter.image = image
-        headOptions.twitter.card = imageSize
+        const image = unref(options.image)
+        const imageSize = unref(options.imageSize)
+        if (image) {
+            headOptions.og.image = image
+            headOptions.twitter.image = image
+            headOptions.twitter.card = imageSize ?? TwitterCard.Large
+        }
 
         return headOptions
     }))

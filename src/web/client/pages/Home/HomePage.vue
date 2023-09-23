@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '../../utils/useLiveMeta'
+import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import ContactLinks from '../About/ContactLinks.vue'
 import { APP_NAME, APP_DESC } from '@/common/Constants'
 
@@ -41,10 +41,6 @@ article.home-page{
         justify-content: center;
         gap: $padding * 4;
 
-        @media (max-width: $large-mobile-breakpoint) {
-            gap: $padding * 3;
-        }
-
         @media (max-width: $mobile-breakpoint) {
             gap: $padding * 2;
         }
@@ -55,7 +51,7 @@ article.home-page{
         font-size: 6rem;
         font-weight: 900;
 
-        @media (max-width: $large-mobile-breakpoint) {
+        @media (max-width: $mobile-breakpoint) {
             font-size: 4.2rem;
         }
 
@@ -69,7 +65,7 @@ article.home-page{
         font-weight: normal;
         font-size: 3rem;
 
-        @media (max-width: $large-mobile-breakpoint) {
+        @media (max-width: $mobile-breakpoint) {
             font-size: 2.4rem;
         }
 

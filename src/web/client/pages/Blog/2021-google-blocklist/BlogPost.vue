@@ -1,9 +1,8 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { computed, defineComponent, ref } from 'vue'
 
 export const TITLE = 'Blocking Spam Websites from Google Search in Firefox'
-export const CREATED_AT = dayjs.utc('2021-09-12').unix()
+export const CREATED_AT = new Date('2021-09-12').getTime()
 
 export default defineComponent({
     setup() {

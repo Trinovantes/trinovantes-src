@@ -1,4 +1,4 @@
-export enum Tech {
+export const enum Tech {
     // General
     CPP = 'C++',
 
@@ -17,6 +17,12 @@ export enum Tech {
     Nginx = 'Nginx',
 }
 
+export const enum ProjectCategory {
+    Web = 'Web Apps',
+    Userscript = 'Userscripts',
+    Misc = 'Misc. Projects',
+}
+
 export type Project = {
     name: string
     repoUrl: string
@@ -29,13 +35,7 @@ export type Project = {
     img?: string
 }
 
-export enum ProjectCategory {
-    Web = 'Web Apps',
-    Userscript = 'Userscripts',
-    Misc = 'Misc. Projects',
-}
-
-export type Projects = Record<string, Array<Project>>
+export type Projects = Partial<Record<ProjectCategory, Array<Project>>>
 
 export const projects: Projects = {
     [ProjectCategory.Web]: [
@@ -83,7 +83,6 @@ export const projects: Projects = {
             ],
         },
     ],
-
     [ProjectCategory.Userscript]: [
         {
             name: 'YouTube Playlist Organizer',
@@ -126,7 +125,6 @@ export const projects: Projects = {
             ],
         },
     ],
-
     [ProjectCategory.Misc]: [
         {
             name: 'BBCode Compiler',

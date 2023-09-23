@@ -1,29 +1,12 @@
-// eslint-disable-next-line import/order
-import '@/common/utils/setupDayjs'
-
 import assert from 'assert'
-import { writeFile } from 'fs/promises'
-import path from 'path'
-import { fetchProjects } from '@/api/services/fetchProjects'
-import { CLIENT_SRC_WEB_URL } from '@/common/Constants'
-import type { Projects } from '@/common/Project'
+import { CLIENT_SRC_WEB_URL, IMG_WIDTH } from '@/common/Constants'
 import { formatDate } from '@/common/utils/formatDate'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { slugify } from '@/common/utils/slugify'
-import { getBlogPosts } from '@/web/client/pages/Blog/getBlogPosts'
+import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
+import { fetchProjects } from '@/api/services/fetchProjects'
 
-const IMG_WIDTH = 400
-
-async function getProjects(): Promise<Projects> {
-    if (DEFINE.IS_DEV) {
-        const res = await fetch('http://localhost:3000/api/projects')
-        return await res.json() as Projects
-    } else {
-        return await fetchProjects()
-    }
-}
-
-class ReadmeGenerator {
+export class ReadmeGenerator {
     private _output = ''
     private _stack = 0
 
@@ -57,7 +40,7 @@ class ReadmeGenerator {
     }
 
     private async generateBlog(): Promise<void> {
-        const blogPosts = await getBlogPosts()
+        const blogPosts = await fetchBlogPosts()
 
         this.addLn('# Blog')
 
@@ -71,7 +54,7 @@ class ReadmeGenerator {
     }
 
     private async generateProjects(): Promise<void> {
-        const projects = await getProjects()
+        const projects = await fetchProjects()
 
         for (const [category, categoryProjects] of Object.entries(projects)) {
             this.addLn(`# ${category}`)
@@ -137,13 +120,3 @@ class ReadmeGenerator {
         }
     }
 }
-
-async function main() {
-    const generator = new ReadmeGenerator()
-    const output = await generator.generate()
-
-    const readmeFile = path.resolve('README.md')
-    await writeFile(readmeFile, output)
-}
-
-main().catch(console.warn)

@@ -1,10 +1,9 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { defineComponent } from 'vue'
 
 export const TITLE = 'Critical Webpack Resource Injection for Vue 3 SSR Applications'
-export const CREATED_AT = dayjs.utc('2021-09-03').unix()
-export const UPDATED_AT = dayjs.utc('2022-04-28').unix()
+export const CREATED_AT = new Date('2021-09-03').getTime()
+export const UPDATED_AT = new Date('2022-04-28').getTime()
 
 export default defineComponent({
     setup() {

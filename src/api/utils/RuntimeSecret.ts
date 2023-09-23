@@ -1,8 +1,9 @@
-import fs from 'fs'
+import fs from 'node:fs'
 import { config } from 'dotenv'
 
 // Loads .env into process.env
-config()
+const envFile = process.env.ENV_FILE ?? '.env'
+config({ path: envFile })
 
 export enum RuntimeSecret {
     GITHUB_PAT = 'GITHUB_PAT',

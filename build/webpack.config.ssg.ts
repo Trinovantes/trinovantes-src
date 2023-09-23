@@ -1,11 +1,10 @@
-import path from 'path'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
-import { PuppeteerPrerenderPlugin } from 'puppeteer-prerender-plugin'
 import { VueSsrAssetsServerPlugin } from 'vue-ssr-assets-plugin'
-import { Configuration, DefinePlugin } from 'webpack'
+import { Configuration } from 'webpack'
 import { merge } from 'webpack-merge'
-import { prerenderRoutes } from './utils/prerenderRoutes'
-import { srcWebDir, publicPath, manifestFilePath, distWebPublicDir, distSsgDir, commonNodeConfig, entryFilePath, distWebDir, htmlTemplatePath } from './webpack.common'
+import { srcWebDir, distSsgDir, distSsgTemplate, srcWebTemplate, distWebDir, prerenderRoutes } from './BuildConstants'
+import { commonNodeConfig } from './webpack.common'
+import { PuppeteerPrerenderPlugin } from 'puppeteer-prerender-plugin'
 
 // ----------------------------------------------------------------------------
 // Server
@@ -24,17 +23,10 @@ export default (async(): Promise<Configuration> => merge(commonNodeConfig, {
         new CopyWebpackPlugin({
             patterns: [
                 {
-                    from: path.resolve(srcWebDir, 'index.html'),
-                    to: htmlTemplatePath,
+                    from: srcWebTemplate,
+                    to: distSsgTemplate,
                 },
             ],
-        }),
-        new DefinePlugin({
-            'DEFINE.ENTRY_FILE': JSON.stringify(entryFilePath),
-            'DEFINE.PUBLIC_DIR': JSON.stringify(distWebPublicDir),
-            'DEFINE.PUBLIC_PATH': JSON.stringify(publicPath),
-            'DEFINE.MANIFEST_FILE': JSON.stringify(manifestFilePath),
-            'DEFINE.HTML_TEMPLATE': JSON.stringify(htmlTemplatePath),
         }),
         new VueSsrAssetsServerPlugin(),
         new PuppeteerPrerenderPlugin({

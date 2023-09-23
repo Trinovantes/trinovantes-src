@@ -1,10 +1,9 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { defineComponent } from 'vue'
 
 export const TITLE = 'Fastest Node.js Fizzbuzz'
-export const CREATED_AT = dayjs.utc('2022-06-24').unix()
-export const UPDATED_AT = dayjs.utc('2022-10-05').unix()
+export const CREATED_AT = new Date('2022-06-24').getTime()
+export const UPDATED_AT = new Date('2022-10-05').getTime()
 
 export default defineComponent({
     setup() {

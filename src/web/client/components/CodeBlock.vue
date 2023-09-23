@@ -1,27 +1,20 @@
 <script lang="ts" setup>
+import 'highlight.js/styles/stackoverflow-light.css'
 import { ref, computed, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
 import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { escapeHtml } from '@/web/client/utils/escapeHtml'
-import type { LanguageFn } from 'highlight.js'
+import { type LanguageFn } from 'highlight.js'
 
-const props = defineProps({
-    code: {
-        type: String,
-        required: true,
-    },
-    language: {
-        type: String,
-        default: 'txt',
-    },
-    ignoreIllegals: {
-        type: Boolean,
-        default: true,
-    },
-    preWhiteSpace: {
-        type: String,
-        default: 'pre',
-    },
+const props = withDefaults(defineProps<{
+    code: string
+    language?: string
+    ignoreIllegals?: boolean
+    preWhiteSpace?: string
+}>(), {
+    language: 'txt',
+    ignoreIllegals: true,
+    preWhiteSpace: 'pre',
 })
 
 const languageMap = new Map<string, string>([
@@ -31,7 +24,7 @@ const languageMap = new Map<string, string>([
 ])
 
 const highlightedCode = ref<string>()
-watch(props, async() => {
+watch(() => props, async() => {
     if (props.language === 'txt') {
         highlightedCode.value = escapeHtml(props.code)
     } else {
@@ -50,6 +43,7 @@ watch(props, async() => {
     }
 }, {
     immediate: true,
+    deep: true,
 })
 
 const showCheckmark = ref(false)

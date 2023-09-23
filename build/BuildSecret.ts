@@ -1,18 +1,18 @@
-import { execSync } from 'child_process'
-import fs from 'fs'
-import path from 'path'
+import { execSync } from 'node:child_process'
+import fs from 'node:fs'
+import path from 'node:path'
 import { config } from 'dotenv'
 
 // Loads .env into process.env
-config()
+const envFile = process.env.ENV_FILE ?? '.env'
+config({ path: envFile })
 
 export enum BuildSecret {
     GIT_HASH = 'GIT_HASH',
-    APP_URL = 'APP_URL',
-    APP_PORT = 'APP_PORT',
+    WEBPACK_ANALYZE = 'WEBPACK_ANALYZE',
 }
 
-export function getBuildSecret(key: string): string {
+export function getBuildSecret(key: string, defaultValue?: string): string {
     // Check if it's already defined in process.env
     const envValue = process.env[key]
     if (envValue) {
@@ -26,6 +26,10 @@ export function getBuildSecret(key: string): string {
         return secret.toString('utf-8')
     }
 
+    if (defaultValue) {
+        return defaultValue
+    }
+
     // Cannot find the secret anywhere
     throw new Error(`Cannot find ${key}`)
 }
@@ -37,4 +41,8 @@ export function getGitHash(rootDir: string): string {
     }
 
     return getBuildSecret(BuildSecret.GIT_HASH)
+}
+
+export function isAnalyze(): boolean {
+    return getBuildSecret(BuildSecret.WEBPACK_ANALYZE, 'false') === 'true'
 }

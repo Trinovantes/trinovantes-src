@@ -1,28 +1,22 @@
-import { readFileSync } from 'fs'
+import { readFileSync } from 'node:fs'
 import { renderToString } from '@vue/server-renderer'
 import { SpaServer } from 'puppeteer-prerender-plugin'
 import { renderMetaToString } from 'vue-meta/ssr'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { getBlogPosts } from './client/pages/Blog/getBlogPosts'
 import { HydrationKey, saveStateToDom } from './client/utils/hydration'
 import { createVueApp } from './createVueApp'
-import type { AppContext } from './AppContext'
-import type express from 'express'
+import { AppContext } from './AppContext'
+import { createAsyncHandler } from '@/api/utils/createAsyncHandler'
+import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
 
-function createAsyncHandler(handler: (req: express.Request, res: express.Response, next: express.NextFunction) => Promise<void>): express.RequestHandler {
-    return (req, res, next) => {
-        handler(req, res, next).catch(next)
-    }
-}
-
-const assetRenderer = new VueSsrAssetRenderer(DEFINE.MANIFEST_FILE)
-const htmlTemplate = readFileSync(DEFINE.HTML_TEMPLATE).toString('utf-8')
+const assetRenderer = new VueSsrAssetRenderer(DEFINE.SSG_MANIFEST_FILE)
+const htmlTemplate = readFileSync(DEFINE.SSG_HTML_TEMPLATE).toString('utf-8')
 
 const server = new SpaServer({
-    entryFilePath: DEFINE.ENTRY_FILE,
-    publicDir: DEFINE.PUBLIC_DIR,
-    publicPath: DEFINE.PUBLIC_PATH,
+    entryFilePath: DEFINE.SSG_ENTRY_FILE,
+    publicDir: DEFINE.SSG_PUBLIC_DIR,
+    publicPath: DEFINE.SSG_PUBLIC_PATH,
 
     handlers: {
         '*': createAsyncHandler(async(req, res) => {
@@ -30,7 +24,7 @@ const server = new SpaServer({
             const appContext: AppContext = {
                 _matchedComponents: new Set(),
                 url,
-                blogPosts: await getBlogPosts(),
+                blogPosts: await fetchBlogPosts(),
                 projects: await fetchProjects(),
             }
 

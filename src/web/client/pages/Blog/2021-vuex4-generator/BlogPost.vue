@@ -1,11 +1,10 @@
 <script lang="ts">
-import dayjs from 'dayjs'
 import { defineComponent } from 'vue'
 import VuexGenerator from './VuexGenerator.vue'
 
 export const TITLE = 'Vuex 4 Typescript Declarations Generator'
-export const CREATED_AT = dayjs.utc('2021-07-22').unix()
-export const UPDATED_AT = dayjs.utc('2022-04-28').unix()
+export const CREATED_AT = new Date('2021-07-22').getTime()
+export const UPDATED_AT = new Date('2022-04-28').getTime()
 
 export default defineComponent({
     components: {

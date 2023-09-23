@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getProfilePicture } from '../../utils/ResponsiveLoaderAsset'
-import { useLiveMeta } from '../../utils/useLiveMeta'
+import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
+import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import { APP_DESC } from '@/common/Constants'
 import ContactLinks from './ContactLinks.vue'
 
@@ -13,7 +13,7 @@ useLiveMeta({
 </script>
 
 <template>
-    <article class="container padding content">
+    <article class="container text-container">
         <h1 class="all-cols">
             {{ title }}
         </h1>
@@ -26,6 +26,9 @@ useLiveMeta({
             <p>
                 I completed my Bachelor of Software Engineering (<strong>B.SE</strong>) in 2016 from University of Waterloo.
                 I then studied under <a href="https://patricklam.ca">Patrick Lam</a> and received my Masters of Mathematics (<strong>MMath</strong>) in 2019.
+            </p>
+
+            <p>
                 My <a href="https://github.com/Trinovantes/masters">masters thesis</a> explores the process of automating student assignment grading through static analysis in LLVM.
             </p>
 
@@ -74,7 +77,7 @@ useLiveMeta({
 .container{
     grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 
-    @media (max-width: $large-mobile-breakpoint) {
+    @media (max-width: $mobile-breakpoint) {
         grid-template-columns: auto;
 
         aside {
