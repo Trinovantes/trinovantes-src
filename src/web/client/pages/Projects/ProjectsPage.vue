@@ -45,12 +45,12 @@ const projects = await loadProjects(ssrContext)
                     />
                 </div>
 
-                <div class="desc">
+                <div class="desc flex-vgap">
                     <TextHeading :size="2">
                         {{ project.name }}
                     </TextHeading>
 
-                    <div class="links">
+                    <div class="links flex-vgap">
                         <a
                             v-if="project.url"
                             :href="project.url"
@@ -106,7 +106,7 @@ article{
         div.project{
             display: grid;
             gap: $hspace;
-            grid-template-columns: (100% - $container-width) 1fr;
+            grid-template-columns: (100% - math.div(1, $ratio) * 100%) 1fr;
 
             @media (max-width: $mobile-breakpoint) {
                 gap: $padding * 2;
@@ -120,19 +120,20 @@ article{
             }
 
             .desc{
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
                 gap: $padding;
+
+                h2{
+                    font-size: 2rem;
+                    line-height: 1;
+                }
 
                 p{
                     line-height: $padding * 2;
                 }
 
                 .links{
-                    display: flex;
-                    flex-direction: column;
-                    gap: $padding;
+                    font-size: 1rem;
+                    gap: math.div($padding, 2);
 
                     a{
                         align-items: center;
