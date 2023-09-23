@@ -83,7 +83,6 @@ const paddingTop = computed<string>(() => {
         </picture>
 
         <figcaption v-if="$slots.default">
-            {{ hasScrolledIntoView }}
             <slot />
         </figcaption>
     </figure>
