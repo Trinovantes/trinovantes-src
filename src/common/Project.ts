@@ -13,7 +13,6 @@ export const enum Tech {
 
     // Devops
     Docker = 'Docker',
-    Nginx = 'Nginx',
 }
 
 export const enum ProjectCategory {
@@ -50,7 +49,6 @@ export const projects: Projects = {
                 Tech.ExpressJs,
                 Tech.VueJs,
                 Tech.Docker,
-                Tech.Nginx,
             ],
         },
         {
@@ -60,7 +58,6 @@ export const projects: Projects = {
                 Tech.Typescript,
                 Tech.VueJs,
                 Tech.Docker,
-                Tech.Nginx,
             ],
         },
         {
@@ -73,7 +70,6 @@ export const projects: Projects = {
                 Tech.ExpressJs,
                 Tech.VueJs,
                 Tech.Docker,
-                Tech.Nginx,
             ],
         },
         {
