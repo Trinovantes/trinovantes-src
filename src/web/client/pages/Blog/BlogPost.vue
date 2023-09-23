@@ -82,7 +82,7 @@ const dateInfos = computed<Array<DateInfo>>(() => {
             </div>
         </div>
 
-        <div class="post-container content">
+        <div class="post-container text-container">
             <slot />
         </div>
     </article>
