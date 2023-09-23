@@ -5,7 +5,6 @@ export const enum Tech {
     // Frontend
     Typescript = 'Typescript',
     VueJs = 'Vue.js',
-    Canvas = 'Canvas',
 
     // Backend
     NodeJs = 'Node.js',
@@ -46,8 +45,10 @@ export const projects: Projects = {
             isPrivate: true,
             tech: [
                 Tech.Typescript,
+                Tech.NodeJs,
+                Tech.Sqlite,
+                Tech.ExpressJs,
                 Tech.VueJs,
-                Tech.Canvas,
                 Tech.Docker,
                 Tech.Nginx,
             ],
