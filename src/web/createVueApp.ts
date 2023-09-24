@@ -16,8 +16,6 @@ type VueApp = {
 }
 
 export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
-    console.info('Release', DEFINE.GIT_HASH)
-
     // Vue
     const app = createSSRApp(AppLoader)
     app.component('CodeBlock', CodeBlock)
