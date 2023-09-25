@@ -59,7 +59,12 @@ const dateInfos = computed<Array<DateInfo>>(() => {
                 'background-image': image ? `url('${image}')` : undefined
             }"
         >
-            <div class="title">
+            <div
+                class="title"
+                :class="{
+                    'has-image': Boolean(image),
+                }"
+            >
                 <div class="post-container">
                     <h1>
                         {{ title }}
@@ -96,13 +101,22 @@ const dateInfos = computed<Array<DateInfo>>(() => {
     background-position: center;
 
     .title{
-        padding: $vspace 0;
+        &:not(.has-image){
+            padding: ($padding * 2) 0;
+        }
+
+        &.has-image{
+            padding: $vspace 0;
+
+            h1{
+                background: rgba($dark, 0.6);
+            }
+        }
 
         h1{
             color: white;
             text-shadow: 0 math.div($padding, 8) math.div($padding, 4) rgba($dark, 0.8);
 
-            background: rgba($dark, 0.6);
             margin: 0 (-$padding * 2);
             padding: $padding * 2;
         }
