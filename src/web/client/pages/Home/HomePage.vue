@@ -11,7 +11,7 @@ useLiveMeta({
 
 <template>
     <article class="home-page">
-        <div class="container padding full-height-container">
+        <div class="container">
             <h1>
                 {{ APP_NAME }}
             </h1>
@@ -31,14 +31,14 @@ useLiveMeta({
 article.home-page{
     background: lighten($dark, 10%);
     color: white;
+    display: grid;
+    align-items: center;
 
     .container{
         padding-top: $padding * 2;
         padding-bottom: $padding * 2;
 
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: grid;
         gap: $padding * 4;
 
         @media (max-width: $mobile-breakpoint) {
@@ -52,10 +52,6 @@ article.home-page{
         font-weight: 900;
 
         @media (max-width: $mobile-breakpoint) {
-            font-size: 4.2rem;
-        }
-
-        @media (max-width: $mobile-breakpoint) {
             font-size: 3rem;
         }
     }
@@ -64,10 +60,6 @@ article.home-page{
         color: $text-on-dark;
         font-weight: normal;
         font-size: 3rem;
-
-        @media (max-width: $mobile-breakpoint) {
-            font-size: 2.4rem;
-        }
 
         @media (max-width: $mobile-breakpoint) {
             font-size: 1.5rem;

@@ -39,7 +39,6 @@ header{
         @media (max-width: $mobile-breakpoint) {
             display: block;
             padding: 0;
-            width: auto;
         }
     }
 }

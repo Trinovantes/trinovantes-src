@@ -4,11 +4,18 @@ import MainLayoutHeader from './MainLayoutHeader.vue'
 </script>
 
 <template>
-    <MainLayoutHeader />
-
-    <main class="full-height-container">
+    <main>
+        <MainLayoutHeader />
         <router-view />
+        <MainLayoutFooter />
     </main>
-
-    <MainLayoutFooter />
 </template>
+
+<style lang="scss">
+main{
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+}
+</style>

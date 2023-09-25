@@ -209,15 +209,8 @@ select{
     width: $container-width;
 
     @media (max-width: $mobile-breakpoint) {
-        width: 100%;
-    }
-}
-
-.full-height-container{
-    min-height: calc(100vh - #{$header-height});
-
-    @media (max-width: $mobile-breakpoint) {
-        min-height: 0;
+        width: unset;
+        max-width: unset;
     }
 }
 
@@ -225,6 +218,7 @@ select{
     display: grid;
     grid-template-columns: 100%;
     gap: $hspace * 2;
+    align-content: start;
 
     padding-top: $vspace;
     padding-bottom: $vspace;
