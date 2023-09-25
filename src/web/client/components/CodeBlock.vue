@@ -90,8 +90,8 @@ async function copyToClipboard() {
     position: relative;
 
     button{
-        border: 1px solid #aaa;
-        border-radius: math.div($padding, 2);
+        border: 1px solid $dark;
+        border-radius: math.div($padding, 4);
         background: #eee;
         display: flex;
         align-items: center;
