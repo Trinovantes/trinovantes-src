@@ -45,10 +45,15 @@ onBeforeUnmount(() => {
 })
 
 const imageRef = ref<HTMLImageElement | null>(null)
+const naturalWidth = ref(0)
+const naturalHeight = ref(0)
 const onImageLoadSuccess = () => {
     if (!imageRef.value) {
         throw new Error('Cannot find imageRef')
     }
+
+    naturalWidth.value = imageRef.value.naturalWidth
+    naturalHeight.value = imageRef.value.naturalHeight
 
     if (props.enableZoom) {
         mediumZoom(imageRef.value)
@@ -56,7 +61,13 @@ const onImageLoadSuccess = () => {
 }
 
 const paddingTop = computed<string>(() => {
-    return `${props.aspectRatio * 100}%`
+    let aspectRatio = props.aspectRatio
+
+    if (naturalWidth.value > 0 && naturalHeight.value > 0) {
+        aspectRatio = naturalHeight.value / naturalWidth.value
+    }
+
+    return `${aspectRatio * 100}%`
 })
 </script>
 
