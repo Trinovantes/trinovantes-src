@@ -4,13 +4,17 @@ import { getRuntimeSecret, RuntimeSecret } from '../utils/RuntimeSecret'
 import { Project } from '@/common/Project'
 import { slugify } from '@/common/utils/slugify'
 import { getRepoInfo } from './getRepoInfo'
+import { isAfter, add } from 'date-fns'
 
-const BUCKET_NAME = 'stephenli'
-const PUBLIC_URL = 'https://cdn.stephenli.ca'
+const S3_BUCKET_NAME = 'stephenli'
+const S3_PUBLIC_URL = 'https://cdn.stephenli.ca'
 
 export class S3Cache {
     readonly #client: S3Client
-    readonly #cached: Map<string, string>
+    readonly #cached: Map<string, {
+        publicUrl: string
+        lastModified?: Date
+    }>
 
     constructor() {
         const endpoint = getRuntimeSecret(RuntimeSecret.AWS_ENDPOINT_URL)
@@ -30,7 +34,7 @@ export class S3Cache {
     }
 
     async init() {
-        const listObjectsCmd = new ListObjectsCommand({ Bucket: BUCKET_NAME })
+        const listObjectsCmd = new ListObjectsCommand({ Bucket: S3_BUCKET_NAME })
         const res = await this.#client.send(listObjectsCmd)
 
         for (const object of res.Contents ?? []) {
@@ -39,17 +43,18 @@ export class S3Cache {
                 continue
             }
 
-            const matches = /([\w-]+)\.(\w+)$/.exec(fileName)
-            if (!matches) {
+            const repoSlug = /([\w-]+)\.(\w+)$/.exec(fileName)?.[1]
+            if (!repoSlug) {
                 continue
             }
 
-            const repoSlug = matches[1]
-            const cachedImage = getPublicUrl(fileName)
-            this.#cached.set(repoSlug, cachedImage)
+            this.#cached.set(repoSlug, {
+                publicUrl: getS3PublicUrl(fileName),
+                lastModified: object.LastModified,
+            })
         }
 
-        console.info(this.#cached)
+        console.info('init', this.#cached)
     }
 
     async fetchOgImage(project: Project): Promise<string> {
@@ -57,20 +62,23 @@ export class S3Cache {
 
         const { repo } = getRepoInfo(project.repoUrl)
         const repoSlug = slugify(repo)
-
         const cachedImage = this.#cached.get(repoSlug)
-        if (cachedImage) {
-            return cachedImage
+        const lastMonth = add(new Date(), { months: -1 })
+
+        // Return cached image if it's less than 1 month old
+        if (cachedImage?.lastModified && isAfter(cachedImage.lastModified, lastMonth)) {
+            return cachedImage.publicUrl
         }
 
-        const ogImage = await scrapeOgImage(project)
-        return await this.#syncToCache(repoSlug, ogImage)
-    }
+        // Return stale cached image if it's for a private repo since we can't fetch it anyways
+        if (project.isPrivate && cachedImage?.publicUrl) {
+            return cachedImage.publicUrl
+        }
 
-    async #syncToCache(repoSlug: string, imageUrl: string): Promise<string> {
-        const res = await fetch(imageUrl)
+        const ogImage = await fetchOgImage(project)
+        const res = await fetch(ogImage)
         if (!res.body) {
-            throw new Error(`Failed to fetch ${imageUrl}`)
+            throw new Error(`Failed to fetch ${ogImage}`)
         }
 
         const rawContentType = res.headers.get('Content-Type')
@@ -78,27 +86,29 @@ export class S3Cache {
         const extension = (rawContentType === 'image/jpeg') ? 'jpg' : 'png'
         const fileName = `${repoSlug}.${extension}`
 
-        const rawData = await (await res.blob()).arrayBuffer() as Buffer
-        const putObjectCmd = new PutObjectCommand({
+        const rawData = await (await res.blob()).arrayBuffer()
+        await this.#client.send(new PutObjectCommand({
             Key: fileName,
-            Bucket: BUCKET_NAME,
-            Body: rawData,
+            Bucket: S3_BUCKET_NAME,
+            Body: rawData as Buffer,
             ContentType: contentType,
-        })
-        await this.#client.send(putObjectCmd)
+        }))
 
-        const publicUrl = getPublicUrl(fileName)
-        this.#cached.set(repoSlug, publicUrl)
+        const publicUrl = getS3PublicUrl(fileName)
+        this.#cached.set(repoSlug, {
+            publicUrl,
+            lastModified: new Date(),
+        })
 
         return publicUrl
     }
 }
 
-function getPublicUrl(fileName: string): string {
-    return `${PUBLIC_URL}/${fileName}`
+function getS3PublicUrl(fileName: string) {
+    return `${S3_PUBLIC_URL}/${fileName}`
 }
 
-async function scrapeOgImage(project: Project): Promise<string> {
+async function fetchOgImage(project: Project): Promise<string> {
     if (project.isPrivate) {
         throw new Error(`${project.repoUrl} is private`)
     }

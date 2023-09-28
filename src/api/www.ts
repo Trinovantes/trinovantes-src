@@ -1,8 +1,8 @@
 import http from 'node:http'
 import { createApiApp } from './createApiApp'
 
-function main() {
-    const app = createApiApp()
+async function main() {
+    const app = await createApiApp()
     const server = http.createServer(app)
     const port = 3000
 
@@ -12,4 +12,7 @@ function main() {
     })
 }
 
-main()
+main().catch((err) => {
+    console.error(err)
+    process.exit(1)
+})

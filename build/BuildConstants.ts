@@ -70,12 +70,11 @@ export const prerenderRoutes: Promise<Array<string>> = (async() => {
         const blogPostContentsBuffer = await fs.readFile(blogPostVueFile)
         const blogPostContents = blogPostContentsBuffer.toString()
 
-        const matches = /^export const TITLE = '(.+)'$/m.exec(blogPostContents)
-        if (!matches) {
+        const title = /^export const TITLE = '(.+)'$/m.exec(blogPostContents)?.[1]
+        if (!title) {
             throw new Error(`Failed to find TITLE in ${blogPostVueFile}`)
         }
 
-        const title = matches[1]
         const slug = slugify(title)
         blogPostRoutes.push(`/${slug}`)
     }
