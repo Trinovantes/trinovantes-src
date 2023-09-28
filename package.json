@@ -26,7 +26,7 @@
         "@types/http-errors": "^2.0.1",
         "@types/jsdom": "^21.1.0",
         "@types/node": "^20.4.9",
-        "@types/pluralize": "^0.0.30",
+        "@types/pluralize": "^0.0.31",
         "@types/webpack": "^5.28.0",
         "@types/webpack-bundle-analyzer": "^4.4.1",
         "@types/webpack-env": "^1.18.0",
