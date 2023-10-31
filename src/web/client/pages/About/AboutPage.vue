@@ -35,12 +35,12 @@ useLiveMeta({
             <h2>Interesting stuff I've done in school:</h2>
 
             <ul>
-                <li>Built the frontend for <a href="https://github.com/SanaMobile/sana.protocol_builder">Sana medical procedure editor</a> using Backbone.js and Marionette.js for my undergrad capstone project (2015-2016)</li>
+                <li>Built the frontend for <a href="https://github.com/SanaMobile/sana.protocol_builder">Sana medical procedure editor</a> using Backbone.js and Marionette.js for my undergrad capstone project (2015 - 2016)</li>
                 <li>Wrote a ray tracer with refractions, bounded volume hierarchy optimization, depth of field, soft shadows, texture and bump mapping, etc. (July 2015)</li>
                 <li>Wrote an OS kernel for a Cortex M3 board (Mar 2014)</li>
                 <li>Wrote a MIPS compiler and assembler for a subset of C (Nov 2012)</li>
                 <li>Built a <a href="https://github.com/Trinovantes/2D-Shooter">2D scrolling shooter game</a> with C# and XNA (June 2011)</li>
-                <li>Served as my high school yearbook's Editor-in-Chief (2010-2011)</li>
+                <li>Served as my high school yearbook's Editor-in-Chief (2010 - 2011)</li>
             </ul>
 
             <h2>Internships during my undergrad:</h2>
