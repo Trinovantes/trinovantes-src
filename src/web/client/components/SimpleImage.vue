@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
 }>(), {
     title: '',
     alt: '',
-    aspectRatio: 1 / 1.618,
+    aspectRatio: 1.618,
     enableZoom: true,
     enableBorder: true,
 })
@@ -64,10 +64,10 @@ const paddingTop = computed<string>(() => {
     let aspectRatio = props.aspectRatio
 
     if (naturalWidth.value > 0 && naturalHeight.value > 0) {
-        aspectRatio = naturalHeight.value / naturalWidth.value
+        aspectRatio = naturalWidth.value / naturalHeight.value
     }
 
-    return `${aspectRatio * 100}%`
+    return `${100 / aspectRatio}%`
 })
 </script>
 

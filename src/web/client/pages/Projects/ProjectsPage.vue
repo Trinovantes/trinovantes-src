@@ -41,6 +41,7 @@ const projects = await loadProjects(ssrContext)
                         :title="project.name"
                         :enable-zoom="false"
                         :enable-border="false"
+                        :aspect-ratio="2"
                         class="preview-img"
                     />
                 </div>
