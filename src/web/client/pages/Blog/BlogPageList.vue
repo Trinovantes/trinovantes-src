@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { formatDate } from '@/common/utils/formatDate'
 import { loadBlogPosts } from './loadBlogPosts'
+import { useAppContext } from '@/web/AppContext'
 
-const blogPosts = await loadBlogPosts()
+const appContext = useAppContext()
+const blogPosts = await loadBlogPosts(appContext)
 </script>
 
 <template>
