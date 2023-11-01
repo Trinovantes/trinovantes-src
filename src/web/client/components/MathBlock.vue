@@ -26,5 +26,11 @@ watch(() => props, () => {
 <style lang="scss" scoped>
 .math-block{
     border: 1px solid $dark;
+    overflow-x: auto;
+    padding: ($padding * 2) 0;
+
+    :deep(.katex-display){
+        margin: 0;
+    }
 }
 </style>
