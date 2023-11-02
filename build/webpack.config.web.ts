@@ -8,7 +8,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import 'webpack-dev-server'
 import { merge } from 'webpack-merge'
 import { Configuration } from 'webpack'
-import { srcWebDir, distWebPublicDir, publicPath, isDev, entryFile, distWebDir, prerenderRoutes, distSsgManifest, srcWebStaticDir, distWebEntryFile, distWebSitemap } from './BuildConstants'
+import { srcWebDir, distWebPublicDir, publicPath, isDev, entryFile, distWebDir, prerenderRoutes, distSsgManifest, srcWebStaticDir, distWebEntryFile } from './BuildConstants'
 import { commonWebConfig } from './webpack.common'
 import { isAnalyze } from './BuildSecret'
 
@@ -82,7 +82,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
             base: 'https://www.stephenli.ca',
             paths: await prerenderRoutes,
             options: {
-                filename: distWebSitemap,
+                filename: '../sitemap.xml',
             },
         }),
         new VueSsrAssetsClientPlugin({

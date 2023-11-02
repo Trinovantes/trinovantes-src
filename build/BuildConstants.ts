@@ -20,7 +20,6 @@ export const distReadmeDir = path.resolve(distDir, 'readme')
 
 export const distWebDir = path.resolve(distDir, 'web')
 export const distWebPublicDir = path.resolve(distWebDir, 'public')
-export const distWebSitemap = path.resolve(distWebDir, 'sitemap.xml')
 export const distWebEntryFile = path.resolve(distWebDir, entryFile)
 
 export const distSsgDir = path.resolve(distDir, 'ssg')
