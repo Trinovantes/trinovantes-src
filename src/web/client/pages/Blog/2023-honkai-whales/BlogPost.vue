@@ -3,6 +3,7 @@ import { defineComponent } from 'vue'
 
 export const TITLE = 'How Much Do Whales Spend in Honkai Impact?'
 export const CREATED_AT = new Date('2023-10-31').getTime()
+export const UPDATED_AT = new Date('2023-11-26').getTime()
 
 export default defineComponent({
     setup() {
@@ -20,6 +21,7 @@ export default defineComponent({
         return {
             TITLE,
             CREATED_AT,
+            UPDATED_AT,
 
             currency: (amount: number) => formatter.format(amount),
             rmbToUsd: (rmbWan: number) => `$${(rmbWan * 10000 * exchangeRate / 1e6).toFixed(0)}M`,
@@ -39,6 +41,7 @@ export default defineComponent({
         :title="TITLE"
         :image="require('./img/luna.png').src"
         :created-at="CREATED_AT"
+        :updated-at="UPDATED_AT"
     >
         <p>
             Honkai Impact is a hack-and-slash mobile game released back in 2016 &mdash; not to be confused with Honkai Star Rail created by the same company, miHoYo, released earlier this year.
@@ -67,7 +70,7 @@ export default defineComponent({
                 Diablo Immortal generated {{ rmbToUsd(2837) }}
             </li>
             <li>
-                Class of Clans generated {{ rmbToUsd(13400) }}
+                Clash of Clans generated {{ rmbToUsd(13400) }}
             </li>
             <li>
                 Genshin Impact generated {{ rmbToUsd(74000) }}
@@ -85,7 +88,7 @@ export default defineComponent({
 
         <p>
             To my surprise, although Honkai Impact's revenue is less than 2% of first place, it still hovers around the median.
-            Considering that most mobile games don't last more than a few years before shutting down whereas Honkai is celebrating its 7th anniversary this year, hovering around the median is actually pretty good news.
+            Considering that most <a href="https://www.gamesindustry.biz/report-83-of-mobile-games-fail-in-the-three-years-after-launch">mobile games don't last more than a few years</a> before shutting down whereas Honkai celebrated its 5th anniversary this year, hovering around the median is actually pretty good news.
         </p>
 
         <p>
