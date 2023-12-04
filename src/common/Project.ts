@@ -18,11 +18,12 @@ export const enum Tech {
 export const enum ProjectCategory {
     Web = 'Web Apps',
     Userscript = 'Userscripts',
-    Misc = 'Misc. Projects',
+    Node = 'Node Projects',
 }
 
 export type Project = {
     name: string
+    slug?: string
     repoUrl: string
     isPrivate?: boolean // Do not show repo url on frontend if private
     tech: Array<Tech>
@@ -122,9 +123,10 @@ export const projects: Projects = {
             ],
         },
     ],
-    [ProjectCategory.Misc]: [
+    [ProjectCategory.Node]: [
         {
             name: 'BBCode Compiler',
+            slug: 'bbcode-compiler',
             repoUrl: 'https://github.com/Trinovantes/bbcode-compiler',
             tech: [
                 Tech.Typescript,
@@ -132,6 +134,7 @@ export const projects: Projects = {
         },
         {
             name: 'Puppeteer Prerender Plugin',
+            slug: 'puppeteer-prerender-plugin',
             repoUrl: 'https://github.com/Trinovantes/puppeteer-prerender-plugin',
             tech: [
                 Tech.Typescript,
@@ -139,6 +142,7 @@ export const projects: Projects = {
         },
         {
             name: 'Vue SSR Assets Plugin',
+            slug: 'vue-ssr-assets-plugin',
             repoUrl: 'https://github.com/Trinovantes/vue-ssr-assets-plugin',
             tech: [
                 Tech.Typescript,
@@ -146,16 +150,10 @@ export const projects: Projects = {
         },
         {
             name: 'Quasar Unused Plugin',
+            slug: 'quasar-unused-plugin',
             repoUrl: 'https://github.com/Trinovantes/quasar-unused-plugin',
             tech: [
                 Tech.Typescript,
-            ],
-        },
-        {
-            name: 'capted',
-            repoUrl: 'https://github.com/Trinovantes/capted',
-            tech: [
-                Tech.CPP,
             ],
         },
     ],

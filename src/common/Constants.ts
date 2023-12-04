@@ -15,5 +15,3 @@ export const CONTACTS = [
 ]
 
 export const CLIENT_SRC_WEB_URL = 'https://github.com/Trinovantes/trinovantes/blob/dev/src/web/client'
-
-export const IMG_WIDTH = 400

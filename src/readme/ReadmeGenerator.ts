@@ -1,14 +1,18 @@
 import assert from 'assert'
-import { CLIENT_SRC_WEB_URL, IMG_WIDTH } from '@/common/Constants'
+import { CLIENT_SRC_WEB_URL } from '@/common/Constants'
 import { formatDate } from '@/common/utils/formatDate'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { slugify } from '@/common/utils/slugify'
 import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
 import { fetchProjects } from '@/api/services/fetchProjects'
+import { Project, ProjectCategory } from '@/common/Project'
+
+const IMG_WIDTH = 400
+const TABLE_ICON_SIZE = 48
+const INLINE_ICON_SIZE = 16
 
 export class ReadmeGenerator {
     private _output = ''
-    private _stack = 0
 
     private addLn(line: string, prefixLinebreak = true): void {
         if (prefixLinebreak) {
@@ -18,24 +22,16 @@ export class ReadmeGenerator {
         this._output += `${line.trim()}\n`
     }
 
-    private startTag(tag: string, attrs?: string): void {
+    private addTag(tag: string, attrs: string, generateContent: () => void) {
         this.addLn(`<${tag}${attrs ? ` ${attrs}` : ''}>`)
-        this._stack += 1
-    }
-
-    private endTag(tag: string): void {
-        this._stack -= 1
+        generateContent()
         this.addLn(`</${tag}>`)
     }
 
     async generate(): Promise<string> {
         this._output = ''
-        this._stack = 0
-
         await this.generateBlog()
         await this.generateProjects()
-
-        assert(this._stack === 0)
         return this._output
     }
 
@@ -56,67 +52,102 @@ export class ReadmeGenerator {
     private async generateProjects(): Promise<void> {
         const projects = await fetchProjects()
 
-        for (const [category, categoryProjects] of Object.entries(projects)) {
-            this.addLn(`# ${category}`)
+        this.addLn('# Node Projects')
+        this.generateProjectsCompactTable(projects[ProjectCategory.Node])
 
-            this.startTag('table')
+        this.addLn('# Web Apps')
+        this.generateProjectsTableWithPreview(projects[ProjectCategory.Web])
 
-            for (const project of categoryProjects) {
-                this.startTag('tr')
+        this.addLn('# UserScripts')
+        this.generateProjectsTableWithPreview(projects[ProjectCategory.Userscript])
+    }
 
-                {
-                    const imgUrl = project.img
-                    assert(imgUrl)
+    private generateProjectsCompactTable(projects: Array<Project> = []): void {
+        this.addTag('table', '', () => {
+            for (const project of projects) {
+                this.addTag('tr', '', () => {
+                    this.addTag('td', `valign="middle" width="${IMG_WIDTH - (TABLE_ICON_SIZE * 2)}px"`, () => {
+                        if (project.slug) {
+                            this.addLn(`<code>${project.slug}</code>`)
+                        } else {
+                            this.addLn(project.name)
+                        }
+                    })
 
-                    let previewUrl = ''
-                    let previewTooltip = ''
+                    this.addTag('td', `valign="middle" width="${TABLE_ICON_SIZE}px"`, () => {
+                        if (project.url) {
+                            if (project.url.includes('npmjs.com/package')) {
+                                this.addLn(`<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/npm.svg" width="${TABLE_ICON_SIZE}" height="${TABLE_ICON_SIZE}"></a>`)
+                            } else {
+                                this.addLn(`<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/open.svg" width="${TABLE_ICON_SIZE}" height="${TABLE_ICON_SIZE}"></a>`)
+                            }
+                        }
+                    })
 
-                    if (project.url) {
-                        previewUrl = project.url
-                        previewTooltip = project.url
-                    } else if (project.repoUrl && !project.isPrivate) {
-                        previewUrl = project.repoUrl
-                        previewTooltip = project.repoUrl
-                    } else {
-                        previewUrl = imgUrl
-                        previewTooltip = imgUrl
-                    }
+                    this.addTag('td', `valign="middle" width="${TABLE_ICON_SIZE}px"`, () => {
+                        if (project.repoUrl && !project.isPrivate) {
+                            this.addLn(`<a href="${project.repoUrl}" title="${project.repoUrl}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="${TABLE_ICON_SIZE}" height="${TABLE_ICON_SIZE}"></a>`)
+                        }
+                    })
 
-                    this.addLn(`
-                        <td width="${IMG_WIDTH}px" valign="middle">
+                    this.addTag('td', 'valign="middle"', () => {
+                        if (project.desc) {
+                            this.addLn(`${project.desc}`)
+                        }
+                    })
+                })
+            }
+        })
+    }
+
+    private generateProjectsTableWithPreview(projects: Array<Project> = []): void {
+        this.addTag('table', '', () => {
+            for (const project of projects) {
+                this.addTag('tr', '', () => {
+                    this.addTag('td', `width="${IMG_WIDTH}px" valign="middle"`, () => {
+                        const imgUrl = project.img
+                        assert(imgUrl)
+
+                        let previewUrl = ''
+                        let previewTooltip = ''
+
+                        if (project.url) {
+                            previewUrl = project.url
+                            previewTooltip = project.url
+                        } else if (project.repoUrl && !project.isPrivate) {
+                            previewUrl = project.repoUrl
+                            previewTooltip = project.repoUrl
+                        } else {
+                            previewUrl = imgUrl
+                            previewTooltip = imgUrl
+                        }
+
+                        this.addLn(`
                             <a href="${previewUrl}" title="${previewTooltip}" target="_blank">
                                 <img src="${imgUrl}" width="${IMG_WIDTH}">
                             </a>
-                        </td>
-                    `)
-                }
+                        `)
+                    })
 
-                {
-                    this.startTag('td', 'valign="middle"')
+                    this.addTag('td', 'valign="top"', () => {
+                        const projectLabelTag = project.url
+                            ? `<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank">${project.name}</a>`
+                            : project.name
+                        const projectRepoTag = (project.repoUrl && !project.isPrivate)
+                            ? `<a href="${project.repoUrl}" title="${project.repoUrl}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="${INLINE_ICON_SIZE}" height="${INLINE_ICON_SIZE}"></a>`
+                            : ''
 
-                    const projectLabelTag = project.url
-                        ? `<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank">${project.name}</a>`
-                        : project.name
-                    const projectRepoTag = (project.repoUrl && !project.isPrivate)
-                        ? ` <a href="${project.repoUrl}" title="${project.repoUrl}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="16" height="16"></a>`
-                        : ''
+                        this.addLn(`## ${projectLabelTag} ${projectRepoTag}`)
 
-                    this.addLn(`## ${projectLabelTag}${projectRepoTag}`)
-
-                    if (project.desc) {
-                        this.addLn(`${project.desc}`)
-                    }
-                    if (project.tech.length > 0) {
-                        this.addLn(project.tech.map((tech) => `<code>${tech}</code>`).join(' '))
-                    }
-
-                    this.endTag('td')
-                }
-
-                this.endTag('tr')
+                        if (project.desc) {
+                            this.addLn(`${project.desc}`)
+                        }
+                        if (project.tech.length > 0) {
+                            this.addLn(project.tech.map((tech) => `<code>${tech}</code>`).join(' '))
+                        }
+                    })
+                })
             }
-
-            this.endTag('table')
-        }
+        })
     }
 }
