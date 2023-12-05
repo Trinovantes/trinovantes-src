@@ -59,8 +59,14 @@ const projects = await loadProjects(ssrContext)
                             target="_blank"
                             rel="noopener"
                         >
-                            <!-- eslint-disable-next-line vue/no-v-html -->
-                            <span class="icon" v-html="getIconSvgRaw('open')" />
+                            <template v-if="project.url.includes('npmjs.com/package/')">
+                                <!-- eslint-disable-next-line vue/no-v-html -->
+                                <span class="icon" v-html="getIconSvgRaw('npm')" />
+                            </template>
+                            <template v-else>
+                                <!-- eslint-disable-next-line vue/no-v-html -->
+                                <span class="icon" v-html="getIconSvgRaw('open')" />
+                            </template>
 
                             {{ formatUrl(project.url) }}
                         </a>
@@ -146,7 +152,7 @@ article{
                             align-items: center;
                             display: flex;
 
-                            svg{
+                            :deep(svg){
                                 width: $icon-size;
                                 height: $icon-size;
                             }
