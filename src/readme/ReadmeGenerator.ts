@@ -55,8 +55,8 @@ export class ReadmeGenerator {
         this.addLn('# Node Projects')
         this.generateProjectsCompactTable(projects[ProjectCategory.Node])
 
-        this.addLn('# Web Apps')
-        this.generateProjectsTableWithPreview(projects[ProjectCategory.Web])
+        this.addLn('# Apps')
+        this.generateProjectsTableWithPreview(projects[ProjectCategory.Apps])
 
         this.addLn('# UserScripts')
         this.generateProjectsTableWithPreview(projects[ProjectCategory.Userscript])

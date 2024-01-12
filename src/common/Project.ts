@@ -10,13 +10,14 @@ export const enum Tech {
     NodeJs = 'Node.js',
     ExpressJs = 'Express.js',
     Sqlite = 'SQLite',
+    Electron = 'Electron',
 
     // Devops
     Docker = 'Docker',
 }
 
 export const enum ProjectCategory {
-    Web = 'Web Apps',
+    Apps = 'Apps',
     Userscript = 'Userscripts',
     Node = 'Node Projects',
 }
@@ -37,7 +38,17 @@ export type Project = {
 export type Projects = Partial<Record<ProjectCategory, Array<Project>>>
 
 export const projects: Projects = {
-    [ProjectCategory.Web]: [
+    [ProjectCategory.Apps]: [
+        {
+            name: 'StarRail Warp Tracker',
+            repoUrl: 'https://github.com/Trinovantes/StarRail-Warp-Tracker',
+            tech: [
+                Tech.Typescript,
+                Tech.Electron,
+                Tech.Sqlite,
+                Tech.VueJs,
+            ],
+        },
         {
             name: 'HoloMemes',
             repoUrl: 'https://github.com/Trinovantes/HoloMemes',
