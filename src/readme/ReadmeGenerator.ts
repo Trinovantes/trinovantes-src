@@ -92,7 +92,7 @@ export class ReadmeGenerator {
 
                     this.addTag('td', 'valign="middle"', () => {
                         if (project.desc) {
-                            this.addLn(`${project.desc}`)
+                            this.addLn(project.desc)
                         }
                     })
                 })
@@ -140,7 +140,7 @@ export class ReadmeGenerator {
                         this.addLn(`## ${projectLabelTag} ${projectRepoTag}`)
 
                         if (project.desc) {
-                            this.addLn(`${project.desc}`)
+                            this.addLn(project.desc)
                         }
                         if (project.tech.length > 0) {
                             this.addLn(project.tech.map((tech) => `<code>${tech}</code>`).join(' '))
