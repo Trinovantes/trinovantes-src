@@ -1,14 +1,17 @@
 <script lang="ts" setup>
 import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
 import { APP_DESC } from '@/common/Constants'
 import ContactLinks from './ContactLinks.vue'
+import { useSeoMeta } from '@unhead/vue'
 
 const title = 'About'
-const desc = `Hi, I'm Stephen. ${APP_DESC}`
-useLiveMeta({
+const description = `Hi, I'm Stephen. ${APP_DESC}`
+const profilePic = getProfilePicture()
+useSeoMeta({
     title,
-    desc,
+    description,
+    ogImage: profilePic,
+    twitterCard: 'summary',
 })
 </script>
 
@@ -20,7 +23,7 @@ useLiveMeta({
 
         <section class="flex-vgap">
             <p>
-                {{ desc }}
+                {{ description }}
             </p>
 
             <p>
@@ -62,7 +65,7 @@ useLiveMeta({
         <aside class="flex-vgap">
             <div>
                 <img
-                    :src="getProfilePicture()"
+                    :src="profilePic"
                     width="400"
                     height="400"
                 >

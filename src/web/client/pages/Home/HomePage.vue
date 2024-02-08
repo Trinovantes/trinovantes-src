@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
+import { useSeoMeta } from '@unhead/vue'
 import ContactLinks from '../About/ContactLinks.vue'
 import { APP_NAME, APP_DESC } from '@/common/Constants'
 
-useLiveMeta({
+useSeoMeta({
     title: APP_NAME,
-    desc: APP_DESC,
+    description: APP_DESC,
 })
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
-import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
+import { useSeoMeta } from '@unhead/vue'
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
 
 const props = defineProps({
@@ -22,9 +22,10 @@ const props = defineProps({
     },
 })
 
-useLiveMeta({
+useSeoMeta({
     title: props.title,
-    image: props.image,
+    ogImage: props.image,
+    twitterCard: 'summary_large_image',
 })
 
 type DateInfo = {

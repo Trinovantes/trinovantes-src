@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
+import { useSeoMeta } from '@unhead/vue'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
@@ -7,9 +7,9 @@ import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { loadProjects } from './loadProjects'
 
 const title = 'Projects'
-useLiveMeta({
+useSeoMeta({
     title,
-    desc: Object.values(unhydratedProjects)
+    description: Object.values(unhydratedProjects)
         .flatMap((projects) => projects.map((project) => project.name))
         .join(', '),
 })

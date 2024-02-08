@@ -1,5 +1,5 @@
 import { createSSRApp } from 'vue'
-import { createMetaManager } from 'vue-meta'
+import { createHead } from '@unhead/vue'
 import AppLoader from './client/AppLoader.vue'
 import MathBlock from './client/components/MathBlock.vue'
 import MathInline from './client/components/MathInline.vue'
@@ -10,11 +10,12 @@ import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
 import { createVueRouter } from './client/router/createVueRouter'
 import { AppContext } from './AppContext'
-import { Router } from 'vue-router'
+import { createRouter } from 'vue-router'
 
 type VueApp = {
     app: ReturnType<typeof createSSRApp>
-    router: Router
+    router: ReturnType<typeof createRouter>
+    head: ReturnType<typeof createHead>
 }
 
 export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
@@ -33,12 +34,13 @@ export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
     app.use(router)
     await router.isReady()
 
-    // Vue Meta
-    const metaManager = createMetaManager(DEFINE.IS_SSR)
-    app.use(metaManager)
+    // Unhead
+    const head = createHead()
+    app.use(head)
 
     return {
         app,
         router,
+        head,
     }
 }

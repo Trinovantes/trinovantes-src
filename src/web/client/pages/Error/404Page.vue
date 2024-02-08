@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
+import { useSeoMeta } from '@unhead/vue'
 import BlogList from '../Blog/BlogPageList.vue'
 
 const title = '404: Page Not Found'
-useLiveMeta({ title })
+useSeoMeta({ title })
 </script>
 
 <template>

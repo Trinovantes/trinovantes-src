@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import { useLiveMeta } from '@/web/client/utils/useLiveMeta'
+import { useSeoMeta } from '@unhead/vue'
 import BlogPageList from './BlogPageList.vue'
 
 const title = 'Blog'
-const desc = "I sometimes write about interesting stuff I've encountered in life"
-useLiveMeta({
+const description = "I sometimes write about interesting stuff I've encountered in life"
+useSeoMeta({
     title,
-    desc,
+    description,
 })
 </script>
 
