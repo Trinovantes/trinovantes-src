@@ -102,6 +102,8 @@ export class ReadmeGenerator {
 
     private generateProjectsTableWithPreview(projects: Array<Project> = []): void {
         this.addTag('table', '', () => {
+            const time = new Date().getTime()
+
             for (const project of projects) {
                 this.addTag('tr', '', () => {
                     this.addTag('td', `width="${IMG_WIDTH}px" valign="middle"`, () => {
@@ -124,7 +126,7 @@ export class ReadmeGenerator {
 
                         this.addLn(`
                             <a href="${previewUrl}" title="${previewTooltip}" target="_blank">
-                                <img src="${imgUrl}" width="${IMG_WIDTH}">
+                                <img src="${imgUrl}?t=${time}" width="${IMG_WIDTH}">
                             </a>
                         `)
                     })
