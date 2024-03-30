@@ -36,6 +36,7 @@ export const srcWebStaticDir = path.resolve(srcDir, 'web', 'static')
 export const buildConstants = {
     __VUE_OPTIONS_API__: JSON.stringify(false),
     __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false),
 
     'DEFINE.IS_DEV': JSON.stringify(isDev),
     'DEFINE.IS_SSR': "(typeof window === 'undefined')",
