@@ -3,7 +3,7 @@
     "scripts": {
         "generateReadme": "node    -r source-map-support/register ./dist/readme/generateReadme.js",
         "startApi": "      node    -r source-map-support/register ./dist/api/www.js",
-        "watchApi": "      nodemon -r source-map-support/register ./dist/api/www.js --watch ./dist/web/api",
+        "watchApi": "      nodemon -r source-map-support/register ./dist/api/www.js",
         "devApi": "     NODE_ENV=development webpack --watch --config build/webpack.config.api.ts",
         "devReadme": "  NODE_ENV=development webpack --watch --config build/webpack.config.readme.ts",
         "devWeb": "     NODE_ENV=development webpack serve   --config build/webpack.config.web.ts",
