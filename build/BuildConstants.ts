@@ -64,7 +64,8 @@ export const prerenderRoutes: Promise<Array<string>> = (async() => {
 
         const blogPostVueFile = path.resolve(blogDir, subDir.name, 'BlogPost.vue')
         if (!existsSync(blogPostVueFile)) {
-            throw new Error(`${blogPostVueFile} does not exist`)
+            console.warn(`${blogPostVueFile} does not exist`)
+            continue
         }
 
         const blogPostContentsBuffer = await fs.readFile(blogPostVueFile)
