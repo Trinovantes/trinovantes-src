@@ -1,4 +1,4 @@
-import assert from 'assert'
+import assert from 'node:assert'
 import { CLIENT_SRC_WEB_URL } from '@/common/Constants'
 import { formatDate } from '@/common/utils/formatDate'
 import { formatUrl } from '@/common/utils/formatUrl'

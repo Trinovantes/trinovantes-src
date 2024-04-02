@@ -45,6 +45,7 @@ module.exports = {
         'no-trailing-spaces': 'error',
         'space-before-blocks': ['error', 'always'],
         'space-before-function-paren': ['error', 'never'],
+        'n/prefer-node-protocol': ['error'],
         indent: ['error', 4, {
             SwitchCase: 1,
         }],

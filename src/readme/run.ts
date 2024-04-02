@@ -7,7 +7,7 @@ async function main() {
     await writeFile('./README.md', output)
 }
 
-main().catch((err) => {
+main().catch((err: unknown) => {
     console.error(err)
     process.exit(1)
 })

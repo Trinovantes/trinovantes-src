@@ -36,7 +36,7 @@ const server = new SpaServer({
 
             const appHtml = await renderToString(app, appContext)
             const payload = await renderSSRHead(head)
-            const { header, footer } = assetRenderer.renderAssets(appContext._matchedComponents, false, true)
+            const { header, footer } = assetRenderer.renderAssets(appContext._matchedComponents)
             const headerText = `
                 <script>
                     ${saveStateToDom(HydrationKey.BlogPosts, appContext.blogPosts)};
