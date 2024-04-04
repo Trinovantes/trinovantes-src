@@ -38,6 +38,7 @@ module.exports = {
     rules: {
         semi: 'off',
         'comma-dangle': 'off',
+        'no-undef': 'off',
 
         'arrow-parens': ['error', 'always'],
         'eol-last': ['error', 'always'],
@@ -131,8 +132,9 @@ module.exports = {
             },
             {
                 selector: 'parameter',
-                format: ['strictCamelCase'],
-                leadingUnderscore: 'allow',
+                format: ['strictCamelCase', 'UPPER_CASE'],
+                leadingUnderscore: 'allowSingleOrDouble',
+                trailingUnderscore: 'allowDouble',
             },
             {
                 selector: 'memberLike',
@@ -150,7 +152,12 @@ module.exports = {
                     match: false,
                 },
                 format: ['strictCamelCase', 'UPPER_CASE'],
+                leadingUnderscore: 'allowDouble',
+                trailingUnderscore: 'allowDouble',
             },
         ],
+        '@typescript-eslint/no-unused-vars': ['error', {
+            argsIgnorePattern: '^_',
+        }],
     },
 }
