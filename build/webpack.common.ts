@@ -59,6 +59,14 @@ const commonConfig: Configuration = {
                     loader: 'vue-loader',
                 }],
             },
+            {
+                test: /\.(svg)$/i,
+                type: 'asset/source',
+            },
+            {
+                test: /\.(csv)$/i,
+                type: 'asset/source',
+            },
         ],
     },
 }
@@ -97,10 +105,6 @@ export const commonWebConfig = merge(commonConfig, {
                 type: 'asset',
             },
             {
-                test: /\.(svg)$/i,
-                type: 'asset/source',
-            },
-            {
                 test: /\.(jpe?g|png|gif|webp)$/i,
                 use: [
                     {
@@ -137,10 +141,6 @@ export const commonNodeConfig = merge(commonConfig, {
                 // Do not emit fonts in the server bundle
                 test: /\.(ttf|eot|woff(2)?)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
                 use: 'null-loader',
-            },
-            {
-                test: /\.(svg)$/i,
-                type: 'asset/source',
             },
             {
                 test: /\.(jpe?g|png|gif|webp)$/i,
