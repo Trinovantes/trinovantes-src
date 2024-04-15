@@ -104,6 +104,11 @@ td{
 
     &.clickable{
         cursor: pointer;
+        transition: $transition;
+
+        &:hover{
+            background: $dark;
+        }
     }
 
     &.center{

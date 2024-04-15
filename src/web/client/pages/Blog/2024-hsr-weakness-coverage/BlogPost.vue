@@ -120,5 +120,10 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: $transition;
+
+    &:hover{
+        border-color: $dark;
+    }
 }
 </style>
