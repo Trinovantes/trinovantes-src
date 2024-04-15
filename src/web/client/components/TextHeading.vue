@@ -79,7 +79,7 @@ const render = () => {
             display: flex;
             align-items: center;
             opacity: 0;
-            transition: 0.5s;
+            transition: $transition;
         }
 
         &:hover{

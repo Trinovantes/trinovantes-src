@@ -156,7 +156,7 @@ export default defineComponent({
         display: block;
         line-height: 1;
         padding: math.div($padding, 2) $padding;
-        transition: 0.5s;
+        transition: $transition;
 
         &:hover{
             background: $text-on-dark;

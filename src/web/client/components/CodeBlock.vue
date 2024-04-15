@@ -103,7 +103,7 @@ async function copyToClipboard() {
 
         cursor: pointer;
         opacity: 0;
-        transition: 1s;
+        transition: $transition;
 
         &:hover{
             background: #ccc;

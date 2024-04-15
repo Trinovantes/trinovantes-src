@@ -45,7 +45,7 @@ header{
 
 a{
     text-decoration: none;
-    transition: 0.5s;
+    transition: $transition;
 }
 
 a.home-btn{
