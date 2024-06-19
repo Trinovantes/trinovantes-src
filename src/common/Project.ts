@@ -136,6 +136,14 @@ export const projects: Projects = {
     ],
     [ProjectCategory.Node]: [
         {
+            name: 'RST Compiler',
+            slug: 'rst-compiler',
+            repoUrl: 'https://github.com/Trinovantes/rst-compiler',
+            tech: [
+                Tech.Typescript,
+            ],
+        },
+        {
             name: 'BBCode Compiler',
             slug: 'bbcode-compiler',
             repoUrl: 'https://github.com/Trinovantes/bbcode-compiler',
