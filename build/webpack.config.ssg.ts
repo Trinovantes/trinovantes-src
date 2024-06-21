@@ -41,7 +41,7 @@ export default (async(): Promise<Configuration> => merge(commonNodeConfig, {
             ],
             renderFirstRouteAlone: true,
             puppeteerOptions: {
-                headless: 'new',
+                headless: true,
                 args: [
                     '--no-sandbox',
                     '--disable-setuid-sandbox',

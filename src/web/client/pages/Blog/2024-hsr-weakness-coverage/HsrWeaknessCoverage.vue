@@ -10,16 +10,6 @@ defineEmits<{
     toggleElement: [idx: number]
 }>()
 
-const enemyCovered = computed<Array<boolean>>(() => {
-    const covered = new Array<boolean>(hsrElements.length)
-
-    for (let i = 0; i < hsrEnemies.length; i++) {
-        covered[i] = hasWeaknessCovered(hsrEnemies[i])
-    }
-
-    return covered
-})
-
 const hasWeaknessCovered = (enemy: HsrEnemy): boolean => {
     for (let i = 0; i < hsrElements.length; i++) {
         if (enemy.weaknesses[i] && props.teamElements[i]) {
@@ -29,6 +19,16 @@ const hasWeaknessCovered = (enemy: HsrEnemy): boolean => {
 
     return false
 }
+
+const enemyCovered = computed<Array<boolean>>(() => {
+    const covered = new Array<boolean>(hsrElements.length)
+
+    for (let i = 0; i < hsrEnemies.length; i++) {
+        covered[i] = hasWeaknessCovered(hsrEnemies[i])
+    }
+
+    return covered
+})
 </script>
 
 <template>

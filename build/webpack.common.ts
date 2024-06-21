@@ -4,7 +4,6 @@ import { VueLoaderPlugin } from 'vue-loader'
 import { Configuration, DefinePlugin } from 'webpack'
 import { merge } from 'webpack-merge'
 import { buildConstants, isDev, publicPath, rawDirRegexp, srcDir } from './BuildConstants'
-import nodeExternals from 'webpack-node-externals'
 
 // ----------------------------------------------------------------------------
 // Common
@@ -110,8 +109,6 @@ export const commonWebConfig = merge(commonConfig, {
                     {
                         loader: 'responsive-loader',
                         options: {
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                            adapter: require('responsive-loader/sharp'),
                             format: 'webp',
                             placeholder: true,
                             publicPath,
@@ -148,8 +145,6 @@ export const commonNodeConfig = merge(commonConfig, {
                     {
                         loader: 'responsive-loader',
                         options: {
-                            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-                            adapter: require('responsive-loader/sharp'),
                             format: 'webp',
                             placeholder: true,
                             publicPath,
@@ -164,13 +159,9 @@ export const commonNodeConfig = merge(commonConfig, {
     },
 
     externals: [
-        nodeExternals({
-            allowlist: [
-                /^vue*/,
-                /\.(css|sass|scss)$/,
-                /\.(vue)$/,
-                /\.(html)$/,
-            ],
-        }),
+        'express',
+        'vue-ssr-assets-plugin',
+        'puppeteer-prerender-plugin',
+        'jsdom',
     ],
 })

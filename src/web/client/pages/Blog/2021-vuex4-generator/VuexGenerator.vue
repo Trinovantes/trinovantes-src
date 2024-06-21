@@ -4,25 +4,25 @@ import { computed, ref } from 'vue'
 const stateName = ref<string>('Example')
 
 const index = computed(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require('./raw/store/index') as string
     return raw.replace(/Example/g, stateName.value)
 })
 
 const mutations = computed(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require('./raw/store/mutations') as string
     return raw.replace(/Example/g, stateName.value)
 })
 
 const actions = computed(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require('./raw/store/actions') as string
     return raw.replace(/Example/g, stateName.value)
 })
 
 const getters = computed(() => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const raw = require('./raw/store/getters') as string
     return raw.replace(/Example/g, stateName.value)
 })

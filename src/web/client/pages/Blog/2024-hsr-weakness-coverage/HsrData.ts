@@ -15,7 +15,7 @@ export const hsrElements = [
 ] as Array<HsrElement>
 
 export function getHsrElementIcon(elementName: HsrElement): ResponsiveLoaderAsset {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     return require(`./icons/${elementName}.png?size=48`) as ResponsiveLoaderAsset
 }
 
