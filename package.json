@@ -16,7 +16,7 @@
         "build": "concurrently 'yarn buildApi' 'yarn buildReadme' 'yarn buildWeb'",
         "lint": "vue-tsc --noemit && eslint",
         "analyze": "WEBPACK_ANALYZE=true NODE_ENV=production webpack --config build/webpack.config.web.ts",
-        "postinstall": "patch-package"
+        "prepare": "patch-package"
     },
     "devDependencies": {
         "@aws-sdk/client-s3": "^3.201.0",
@@ -59,7 +59,6 @@
         "null-loader": "^4.0.1",
         "patch-package": "^8.0.0",
         "pluralize": "^8.0.0",
-        "postinstall-postinstall": "^2.1.0",
         "puppeteer-prerender-plugin": "^3.0.10",
         "responsive-loader": "^3.0.4",
         "sass": "^1.32.8",
