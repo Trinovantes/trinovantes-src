@@ -14,4 +14,4 @@ export const CONTACTS = [
     },
 ]
 
-export const CLIENT_SRC_WEB_URL = 'https://github.com/Trinovantes/trinovantes/blob/dev/src/web/client'
+export const CLIENT_SRC_WEB_URL = 'https://github.com/Trinovantes/trinovantes-src/blob/master/src/web/client'

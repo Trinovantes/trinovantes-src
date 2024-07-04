@@ -4,12 +4,19 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev
+      - master
     paths-ignore:
       - README.md
       - .vscode
       - .editorconfig
       - .gitignore
+
+permissions:
+  packages: write # Allow workflow to create docker package
+
+concurrency:
+  group: continuous-deployment
+  cancel-in-progress: true
 
 jobs:
   build:

@@ -4,24 +4,34 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - dev
+      - master
     paths-ignore:
       - README.md
       - .vscode
       - .editorconfig
       - .gitignore
 
+concurrency:
+  group: generate-readme
+  cancel-in-progress: true
+
 env:
-  BUILD_DIR: dist
-  WORKTREE_DIR: master
+  README_DIR: trinovantes
 
 jobs:
   generate-readme:
     name: Generate README
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout trinovantes-src repo
         uses: actions/checkout@v4
+
+      - name: Checkout trinovantes repo
+        uses: actions/checkout@v4
+        with:
+          repository: Trinovantes/trinovantes
+          token: ${{ secrets.GH_PAT }}
+          path: ${{ env.README_DIR }}
 
       - name: Create .env file
         run: echo "${{ secrets.ENV_FILE }}" > .env
@@ -41,15 +51,12 @@ jobs:
       - name: Run
         run: yarn generateReadme
 
-      - name: Set up worktree
+      - name: Move readme to dir
         run: |
-          git fetch
-          git worktree add $WORKTREE_DIR master
-          find $WORKTREE_DIR -not -path $WORKTREE_DIR -not -path '*/\.*' | xargs -t rm -rf
-          mv README.md $WORKTREE_DIR
+          mv README.md ${{ env.README_DIR }}
 
       - name: Commit worktree branch
-        working-directory: ${{ env.WORKTREE_DIR }}
+        working-directory: ${{ env.README_DIR }}
         run: |
           git config --global user.name 'Generate README Workflow'
           git config --global user.email '<>'
