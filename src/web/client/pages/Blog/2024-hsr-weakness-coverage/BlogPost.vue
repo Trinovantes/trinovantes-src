@@ -6,6 +6,7 @@ import { getHsrElementIcon, hsrElements, hsrEnemies } from './HsrData'
 
 export const TITLE = 'Optimal Honkai Star Rail Enemy Weakness Coverage'
 export const CREATED_AT = new Date('2024-03-30').getTime()
+export const UPDATED_AT = new Date('2024-07-04').getTime()
 
 const hasFullCoverage = (elementIdxs: Array<number>) => {
     for (const enemy of hsrEnemies) {
@@ -44,6 +45,7 @@ export default defineComponent({
         return {
             TITLE,
             CREATED_AT,
+            UPDATED_AT,
 
             hsrElements,
             getHsrElementIcon,
@@ -62,6 +64,7 @@ export default defineComponent({
     <BlogPost
         :title="TITLE"
         :created-at="CREATED_AT"
+        :updated-at="UPDATED_AT"
     >
         <p>
             I recently started playing Honkai Star Rail (HSR), a popular turn-based RPG by Mihoyo.
@@ -86,7 +89,7 @@ export default defineComponent({
         </p>
 
         <p>
-            Finally, we can use simple brute force to answer our original question: <strong>We would need at least four different elements to cover every enemy</strong> (as of patch 2.1).
+            Finally, we can use simple brute force to answer our original question: <strong>We would need at least four different elements to cover every enemy</strong> (as of patch 2.3).
         </p>
 
         <div class="grid-3 popout">
