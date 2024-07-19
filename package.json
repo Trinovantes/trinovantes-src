@@ -1,6 +1,7 @@
 {
     "private": true,
     "scripts": {
+        "updateS3": "bun run ./src/s3/updateS3.ts",
         "generateReadme": "node    -r source-map-support/register ./dist/readme/generateReadme.js",
         "startApi": "      node    -r source-map-support/register ./dist/api/www.js",
         "watchApi": "      nodemon -r source-map-support/register ./dist/api/www.js",

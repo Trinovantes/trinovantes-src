@@ -5,6 +5,7 @@ import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
 import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { loadProjects } from './loadProjects'
+import { getRepoUrl } from '@/common/utils/getRepoUrl'
 
 const title = 'Projects'
 useSeoMeta({
@@ -35,15 +36,21 @@ const projects = await loadProjects(ssrContext)
                 class="project"
             >
                 <div class="preview">
-                    <SimpleImage
+                    <img
                         v-if="project.img"
-                        :img="{ src: project.img }"
+                        :srcset="`
+                            ${project.img.small} 320w,
+                            ${project.img.medium} 640w,
+                            ${project.img.original} 1280w`"
+                        :sizes="`
+                            (max-width: 640px) 640px,
+                            (max-width: 1280px) 1280px,
+                            320px
+                        `"
+                        :src="project.img.original"
                         :title="project.name"
-                        :enable-zoom="false"
-                        :enable-border="false"
-                        :aspect-ratio="2"
-                        class="preview-img"
-                    />
+                        loading="lazy"
+                    >
                 </div>
 
                 <div class="desc flex-vgap">
@@ -72,9 +79,9 @@ const projects = await loadProjects(ssrContext)
                         </a>
 
                         <a
-                            v-if="project.repoUrl && !project.isPrivate"
-                            :href="project.repoUrl"
-                            :title="project.repoUrl"
+                            v-if="project.slug && !project.isPrivate"
+                            :href="getRepoUrl(project.slug)"
+                            :title="project.slug"
                             target="_blank"
                             rel="noopener"
                         >
@@ -121,8 +128,12 @@ article{
             }
 
             .preview{
-                .preview-img{
+                img{
                     border: math.div($padding, 2) solid $dark;
+                    display: block;
+                    width: 100%;
+                    object-fit: cover;
+                    object-position: center;
                 }
             }
 

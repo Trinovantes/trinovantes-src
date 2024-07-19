@@ -10,11 +10,13 @@ export async function createApiApp() {
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
 
+    console.info('fetchProjects')
     const projects = await fetchProjects()
     app.use('/api/projects', (req, res) => {
         res.json(projects)
     })
 
+    console.info('fetchBlogPosts')
     const blogPosts = await fetchBlogPosts()
     app.use('/api/blog-posts', (req, res) => {
         res.json(blogPosts)

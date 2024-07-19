@@ -15,3 +15,6 @@ export const CONTACTS = [
 ]
 
 export const CLIENT_SRC_WEB_URL = 'https://github.com/Trinovantes/trinovantes-src/blob/master/src/web/client'
+
+export const S3_BUCKET_NAME = 'stephenli'
+export const S3_PUBLIC_URL = 'https://cdn.stephenli.ca'

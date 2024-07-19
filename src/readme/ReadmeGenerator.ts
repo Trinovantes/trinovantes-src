@@ -6,8 +6,10 @@ import { slugify } from '@/common/utils/slugify'
 import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
 import { fetchProjects } from '@/api/services/fetchProjects'
 import { Project, ProjectCategory } from '@/common/Project'
+import { CacheSize } from '@/s3/CacheSize'
+import { getRepoUrl } from '@/common/utils/getRepoUrl'
 
-const IMG_WIDTH = 400
+const IMG_WIDTH = CacheSize.SMALL
 const TABLE_ICON_SIZE = 48
 const INLINE_ICON_SIZE = 16
 
@@ -53,7 +55,7 @@ export class ReadmeGenerator {
         const projects = await fetchProjects()
 
         this.addLn('# Node Projects')
-        this.generateProjectsCompactTable(projects[ProjectCategory.Node])
+        this.generateProjectsTable(projects[ProjectCategory.Node])
 
         this.addLn('# Apps')
         this.generateProjectsTableWithPreview(projects[ProjectCategory.Apps])
@@ -62,16 +64,12 @@ export class ReadmeGenerator {
         this.generateProjectsTableWithPreview(projects[ProjectCategory.Userscript])
     }
 
-    private generateProjectsCompactTable(projects: Array<Project> = []): void {
+    private generateProjectsTable(projects: Array<Project> = []): void {
         this.addTag('table', '', () => {
             for (const project of projects) {
                 this.addTag('tr', '', () => {
                     this.addTag('td', `valign="middle" width="${IMG_WIDTH - (TABLE_ICON_SIZE * 2)}px"`, () => {
-                        if (project.slug) {
-                            this.addLn(`<code>${project.slug}</code>`)
-                        } else {
-                            this.addLn(project.name)
-                        }
+                        this.addLn(`<code>${project.name}</code>`)
                     })
 
                     this.addTag('td', `valign="middle" width="${TABLE_ICON_SIZE}px"`, () => {
@@ -85,8 +83,8 @@ export class ReadmeGenerator {
                     })
 
                     this.addTag('td', `valign="middle" width="${TABLE_ICON_SIZE}px"`, () => {
-                        if (project.repoUrl && !project.isPrivate) {
-                            this.addLn(`<a href="${project.repoUrl}" title="${project.repoUrl}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="${TABLE_ICON_SIZE}" height="${TABLE_ICON_SIZE}"></a>`)
+                        if (!project.isPrivate) {
+                            this.addLn(`<a href="${getRepoUrl(project.slug)}" title="${formatUrl(getRepoUrl(project.slug))}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="${TABLE_ICON_SIZE}" height="${TABLE_ICON_SIZE}"></a>`)
                         }
                     })
 
@@ -111,32 +109,25 @@ export class ReadmeGenerator {
                         assert(imgUrl)
 
                         let previewUrl = ''
-                        let previewTooltip = ''
-
                         if (project.url) {
                             previewUrl = project.url
-                            previewTooltip = project.url
-                        } else if (project.repoUrl && !project.isPrivate) {
-                            previewUrl = project.repoUrl
-                            previewTooltip = project.repoUrl
-                        } else {
-                            previewUrl = imgUrl
-                            previewTooltip = imgUrl
+                        } else if (!project.isPrivate) {
+                            previewUrl = getRepoUrl(project.slug)
                         }
 
-                        this.addLn(`
-                            <a href="${previewUrl}" title="${previewTooltip}" target="_blank">
-                                <img src="${imgUrl}?t=${time}" width="${IMG_WIDTH}">
-                            </a>
-                        `)
+                        if (previewUrl) {
+                            this.addLn(`<a href="${previewUrl}" title="${formatUrl(previewUrl)}" target="_blank"><img src="${imgUrl.small}?t=${time}" width="${IMG_WIDTH}"></a>`)
+                        } else {
+                            this.addLn(`<img src="${imgUrl.small}?t=${time}" width="${IMG_WIDTH}">`)
+                        }
                     })
 
                     this.addTag('td', 'valign="top"', () => {
                         const projectLabelTag = project.url
                             ? `<a href="${project.url}" title="${formatUrl(project.url)}" target="_blank">${project.name}</a>`
                             : project.name
-                        const projectRepoTag = (project.repoUrl && !project.isPrivate)
-                            ? `<a href="${project.repoUrl}" title="${project.repoUrl}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="${INLINE_ICON_SIZE}" height="${INLINE_ICON_SIZE}"></a>`
+                        const projectRepoTag = (!project.isPrivate)
+                            ? `<a href="${getRepoUrl(project.slug)}" title="${formatUrl(getRepoUrl(project.slug))}" target="_blank"><img src="${CLIENT_SRC_WEB_URL}/assets/img/icons/github.svg" width="${INLINE_ICON_SIZE}" height="${INLINE_ICON_SIZE}"></a>`
                             : ''
 
                         this.addLn(`## ${projectLabelTag} ${projectRepoTag}`)

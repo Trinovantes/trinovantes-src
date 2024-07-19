@@ -22,17 +22,22 @@ export const enum ProjectCategory {
     Node = 'Node Projects',
 }
 
+export type ProjectImgUrl = {
+    original: string
+    small: string
+    medium: string
+}
+
 export type Project = {
     name: string
-    slug?: string
-    repoUrl: string
+    slug: string
     isPrivate?: boolean // Do not show repo url on frontend if private
     tech: Array<Tech>
 
     // Populated from GitHub
     desc?: string
     url?: string
-    img?: string
+    img?: ProjectImgUrl
 }
 
 export type Projects = Partial<Record<ProjectCategory, Array<Project>>>
@@ -41,7 +46,7 @@ export const projects: Projects = {
     [ProjectCategory.Apps]: [
         {
             name: 'StarRail Warp Tracker',
-            repoUrl: 'https://github.com/Trinovantes/StarRail-Warp-Tracker',
+            slug: 'starrail-warp-tracker',
             tech: [
                 Tech.Typescript,
                 Tech.Electron,
@@ -51,8 +56,7 @@ export const projects: Projects = {
         },
         {
             name: 'HoloMemes',
-            repoUrl: 'https://github.com/Trinovantes/HoloMemes',
-            img: 'holomemes.jpg',
+            slug: 'holomemes',
             isPrivate: true,
             tech: [
                 Tech.Typescript,
@@ -65,7 +69,7 @@ export const projects: Projects = {
         },
         {
             name: 'WoWPay2Win',
-            repoUrl: 'https://github.com/Trinovantes/WoWPay2Win',
+            slug: 'wowpay2win',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -74,7 +78,7 @@ export const projects: Projects = {
         },
         {
             name: 'MAL Cover CSS',
-            repoUrl: 'https://github.com/Trinovantes/MAL-Cover-CSS',
+            slug: 'mal-cover-css',
             tech: [
                 Tech.Typescript,
                 Tech.NodeJs,
@@ -86,7 +90,7 @@ export const projects: Projects = {
         },
         {
             name: 'Quest Schedule Exporter',
-            repoUrl: 'https://github.com/Trinovantes/Quest-Schedule-Exporter',
+            slug: 'quest-schedule-exporter',
             tech: [
                 Tech.Typescript,
             ],
@@ -95,7 +99,7 @@ export const projects: Projects = {
     [ProjectCategory.Userscript]: [
         {
             name: 'YouTube Playlist Organizer',
-            repoUrl: 'https://github.com/Trinovantes/userscript-youtube-playlist-organizer',
+            slug: 'userscript-youtube-playlist-organizer',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -103,7 +107,7 @@ export const projects: Projects = {
         },
         {
             name: 'Delete Workflow Runs',
-            repoUrl: 'https://github.com/Trinovantes/userscript-delete-workflow-runs',
+            slug: 'userscript-delete-workflow-runs',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -111,7 +115,7 @@ export const projects: Projects = {
         },
         {
             name: 'GitHub Repository Categories',
-            repoUrl: 'https://github.com/Trinovantes/userscript-github-repository-categories',
+            slug: 'userscript-github-repository-categories',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -119,7 +123,7 @@ export const projects: Projects = {
         },
         {
             name: 'WoWProgress Character Page',
-            repoUrl: 'https://github.com/Trinovantes/userscript-wowprogress-character-page',
+            slug: 'userscript-wowprogress-character-page',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -127,7 +131,7 @@ export const projects: Projects = {
         },
         {
             name: 'Old Reddit Emotes',
-            repoUrl: 'https://github.com/Trinovantes/userscript-old-reddit-emotes',
+            slug: 'userscript-old-reddit-emotes',
             tech: [
                 Tech.Typescript,
                 Tech.VueJs,
@@ -136,41 +140,36 @@ export const projects: Projects = {
     ],
     [ProjectCategory.Node]: [
         {
-            name: 'RST Compiler',
+            name: 'rst-compiler',
             slug: 'rst-compiler',
-            repoUrl: 'https://github.com/Trinovantes/rst-compiler',
             tech: [
                 Tech.Typescript,
             ],
         },
         {
-            name: 'BBCode Compiler',
+            name: 'bbcode-compiler',
             slug: 'bbcode-compiler',
-            repoUrl: 'https://github.com/Trinovantes/bbcode-compiler',
             tech: [
                 Tech.Typescript,
             ],
         },
         {
-            name: 'Puppeteer Prerender Plugin',
+            name: 'puppeteer-prerender-plugin',
             slug: 'puppeteer-prerender-plugin',
-            repoUrl: 'https://github.com/Trinovantes/puppeteer-prerender-plugin',
             tech: [
                 Tech.Typescript,
             ],
         },
         {
-            name: 'Vue SSR Assets Plugin',
+            name: 'vue-ssr-assets-plugin',
             slug: 'vue-ssr-assets-plugin',
-            repoUrl: 'https://github.com/Trinovantes/vue-ssr-assets-plugin',
             tech: [
                 Tech.Typescript,
             ],
         },
         {
-            name: 'Quasar Unused Plugin',
+            name: 'quasar-unused-plugin',
             slug: 'quasar-unused-plugin',
-            repoUrl: 'https://github.com/Trinovantes/quasar-unused-plugin',
             tech: [
                 Tech.Typescript,
             ],
