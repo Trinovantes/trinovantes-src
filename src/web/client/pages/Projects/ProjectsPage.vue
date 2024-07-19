@@ -81,7 +81,7 @@ const projects = await loadProjects(ssrContext)
                         <a
                             v-if="project.slug && !project.isPrivate"
                             :href="getRepoUrl(project.slug)"
-                            :title="project.slug"
+                            :title="getRepoUrl(project.slug)"
                             target="_blank"
                             rel="noopener"
                         >
