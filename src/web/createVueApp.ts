@@ -10,7 +10,7 @@ import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
 import { createVueRouter } from './client/router/createVueRouter'
 import { AppContext } from './AppContext'
-import { createRouter } from 'vue-router'
+import type { createRouter } from 'vue-router'
 
 type VueApp = {
     app: ReturnType<typeof createSSRApp>
