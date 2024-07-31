@@ -1,46 +1,24 @@
 <script lang="ts" setup>
-import 'highlight.js/styles/stackoverflow-light.css'
 import { ref, computed, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
 import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { escapeHtml } from '@/web/client/utils/escapeHtml'
-import { type LanguageFn } from 'highlight.js'
 
 const props = withDefaults(defineProps<{
     code: string
     language?: string
     ignoreIllegals?: boolean
-    preWhiteSpace?: string
 }>(), {
     language: 'txt',
     ignoreIllegals: true,
-    preWhiteSpace: 'pre',
 })
-
-const languageMap = new Map<string, string>([
-    ['js', 'javascript'],
-    ['ts', 'typescript'],
-    ['html', 'xml'],
-])
 
 const highlightedCode = ref<string>()
 watch(() => props, async() => {
-    if (props.language === 'txt') {
-        highlightedCode.value = escapeHtml(props.code)
-    } else {
-        const { default: hljs } = await import('highlight.js')
-
-        if (!hljs.getLanguage(props.language)) {
-            const fileName = languageMap.get(props.language) ?? props.language
-            const { default: languageFn } = await import(`highlight.js/lib/languages/${fileName}.js`) as { default: LanguageFn }
-            hljs.registerLanguage(props.language, languageFn)
-        }
-
-        highlightedCode.value = hljs.highlight(props.code, {
-            language: props.language,
-            ignoreIllegals: props.ignoreIllegals,
-        }).value
-    }
+    const { codeToHtml } = await import('shiki')
+    highlightedCode.value = await codeToHtml(props.code, {
+        lang: props.language,
+        theme: 'github-light',
+    })
 }, {
     immediate: true,
     deep: true,
@@ -72,11 +50,14 @@ async function copyToClipboard() {
 
 <template>
     <div class="code-block">
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <button v-if="clipboardEnabled" title="Copy code to clipboard" @click="copyToClipboard" v-html="copyIcon" />
+        <button
+            v-if="clipboardEnabled"
+            title="Copy code to clipboard"
+            @click="copyToClipboard"
+            v-html="copyIcon"
+        />
 
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <pre :class="`hljs ${language}`" :style="`white-space: ${props.preWhiteSpace};`"><code v-html="highlightedCode" /></pre>
+        <div v-html="highlightedCode" />
     </div>
 </template>
 
@@ -121,7 +102,8 @@ async function copyToClipboard() {
         }
     }
 
-    pre.hljs{
+    :deep(pre.shiki){
+        background: $light-on-dark !important;
         line-height: $btn-size;
 
         code{

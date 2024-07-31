@@ -8,7 +8,6 @@ WORKDIR /app
 COPY tsconfig.json              ./
 COPY yarn.lock package.json     ./
 COPY node_modules               ./node_modules
-COPY patches/                   ./patches/
 RUN yarn install
 
 # Build app
