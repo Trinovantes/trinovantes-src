@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
 
 const props = withDefaults(defineProps<{
@@ -45,30 +45,15 @@ onBeforeUnmount(() => {
 })
 
 const imageRef = ref<HTMLImageElement | null>(null)
-const naturalWidth = ref(0)
-const naturalHeight = ref(0)
 const onImageLoadSuccess = () => {
     if (!imageRef.value) {
         throw new Error('Cannot find imageRef')
     }
 
-    naturalWidth.value = imageRef.value.naturalWidth
-    naturalHeight.value = imageRef.value.naturalHeight
-
     if (props.enableZoom) {
         mediumZoom(imageRef.value)
     }
 }
-
-const paddingTop = computed<string>(() => {
-    let aspectRatio = props.aspectRatio
-
-    if (naturalWidth.value > 0 && naturalHeight.value > 0) {
-        aspectRatio = naturalWidth.value / naturalHeight.value
-    }
-
-    return `${100 / aspectRatio}%`
-})
 </script>
 
 <template>
@@ -78,9 +63,7 @@ const paddingTop = computed<string>(() => {
             border: enableBorder,
         }"
     >
-        <picture
-            :style="{ paddingTop }"
-        >
+        <picture>
             <img
                 v-if="hasScrolledIntoView"
                 ref="imageRef"
@@ -113,21 +96,16 @@ figure{
     }
 
     picture{
+        background: $light-on-dark;
         display: block;
-        position: relative;
         width: 100%;
 
         img{
             display: block;
             object-fit: cover;
             object-position: center;
-        }
-
-        img,
-        .loading-spinner{
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            margin: 0 auto;
+            max-width: 100%;
         }
     }
 
