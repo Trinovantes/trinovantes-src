@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import 'katex/dist/katex.css'
-import katex from 'katex'
 import { ref, watch } from 'vue'
 
 const props = defineProps<{
@@ -8,8 +7,9 @@ const props = defineProps<{
 }>()
 
 const renderedStr = ref<string>()
-watch(() => props, () => {
-    renderedStr.value = katex.renderToString(props.tex, {
+watch(() => props, async() => {
+    const katex = await import('katex') as { default: typeof import('katex') }
+    renderedStr.value = katex.default.renderToString(props.tex, {
         throwOnError: true,
         displayMode: true,
     })
@@ -19,8 +19,10 @@ watch(() => props, () => {
 </script>
 
 <template>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div class="math-block" v-html="renderedStr" />
+    <div
+        class="math-block"
+        v-html="renderedStr"
+    />
 </template>
 
 <style lang="scss" scoped>
