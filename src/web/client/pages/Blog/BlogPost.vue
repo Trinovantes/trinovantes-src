@@ -164,11 +164,10 @@ onBeforeUnmount(() => {
 
 .post-container{
     $gap: $padding * 2;
-    $gap-left-right: $gap * 2;
 
     --full: minmax(#{$gap}, 1fr);
     --popout: minmax(0, #{$vspace - $gap});
-    --content: min(80ch, calc(#{$container-width} - #{$gap-left-right}), calc(#{$max-container-width} - #{$gap-left-right}));
+    --content: min(calc(#{$container-width} - #{$gap * 2}), calc(#{$max-container-width} - #{$gap * 2}));
 
     display: grid;
     gap: $gap;
@@ -204,10 +203,5 @@ onBeforeUnmount(() => {
     > :deep(.full){
         grid-column: full;
     }
-
-    // &.content{
-    //     padding-top: $vspace;
-    //     padding-bottom: $vspace;
-    // }
 }
 </style>

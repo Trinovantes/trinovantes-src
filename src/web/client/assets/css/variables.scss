@@ -10,8 +10,8 @@ $vspace: $padding * 8;
 
 $icon-size: $padding * 1.5;
 $container-width: math.div(1, $ratio) * 100%;
-$max-container-width: 1280px;
-$mobile-breakpoint: $max-container-width - 1px;
+$max-container-width: 900px;
+$mobile-breakpoint: 1280px - 1px;
 
 $header-line-height: $padding * 2;
 $header-height: $header-line-height + ($padding * 2);
