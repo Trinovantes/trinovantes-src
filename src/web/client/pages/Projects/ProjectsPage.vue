@@ -3,7 +3,6 @@ import { useSeoMeta } from '@unhead/vue'
 import { projects as unhydratedProjects } from '@/common/Project'
 import { formatUrl } from '@/common/utils/formatUrl'
 import { useAppContext } from '@/web/AppContext'
-import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 import { loadProjects } from './loadProjects'
 import { getRepoUrl } from '@/common/utils/getRepoUrl'
 
@@ -67,12 +66,10 @@ const projects = await loadProjects(ssrContext)
                             rel="noopener"
                         >
                             <template v-if="project.url.includes('npmjs.com/package/')">
-                                <!-- eslint-disable-next-line vue/no-v-html -->
-                                <span class="icon" v-html="getIconSvgRaw('npm')" />
+                                <SvgIcon name="npm" />
                             </template>
                             <template v-else>
-                                <!-- eslint-disable-next-line vue/no-v-html -->
-                                <span class="icon" v-html="getIconSvgRaw('open')" />
+                                <SvgIcon name="open" />
                             </template>
 
                             {{ formatUrl(project.url) }}
@@ -85,9 +82,7 @@ const projects = await loadProjects(ssrContext)
                             target="_blank"
                             rel="noopener"
                         >
-                            <!-- eslint-disable-next-line vue/no-v-html -->
-                            <span class="icon" v-html="getIconSvgRaw('github')" />
-
+                            <SvgIcon name="github" />
                             GitHub
                         </a>
                     </div>

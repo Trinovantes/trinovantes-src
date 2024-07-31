@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { sleep } from '@/common/utils/sleep'
-import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 
 const props = withDefaults(defineProps<{
     code: string
@@ -24,20 +23,12 @@ watch(() => props, async() => {
     deep: true,
 })
 
-const showCheckmark = ref(false)
-const copyIcon = computed<string>(() => {
-    if (showCheckmark.value) {
-        return getIconSvgRaw('done')
-    } else {
-        return getIconSvgRaw('copy')
-    }
-})
-
 const clipboardEnabled = ref(false)
 onMounted(() => {
     clipboardEnabled.value = 'clipboard' in navigator
 })
 
+const showCheckmark = ref(false)
 async function copyToClipboard() {
     await navigator.clipboard.writeText(props.code)
 
@@ -54,8 +45,16 @@ async function copyToClipboard() {
             v-if="clipboardEnabled"
             title="Copy code to clipboard"
             @click="copyToClipboard"
-            v-html="copyIcon"
-        />
+        >
+            <SvgIcon
+                v-if="showCheckmark"
+                name="done"
+            />
+            <SvgIcon
+                v-else
+                name="copy"
+            />
+        </button>
 
         <div v-html="highlightedCode" />
     </div>

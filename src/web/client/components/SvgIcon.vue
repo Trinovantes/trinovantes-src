@@ -8,8 +8,14 @@ defineProps<{
 </script>
 
 <template>
-    <!-- eslint-disable-next-line vue/no-v-html -->
-    <div :class="`svg-wrapper ${isDark ? 'dark' : ''} ${name}`" v-html="getIconSvgRaw(name)" />
+    <div
+        :class="{
+            ['svg-wrapper']: true,
+            [name]: true,
+            dark: isDark,
+        }"
+        v-html="getIconSvgRaw(name)"
+    />
 </template>
 
 <style lang="scss">

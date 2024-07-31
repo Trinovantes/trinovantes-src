@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { CONTACTS } from '@/common/Constants'
 import { slugify } from '@/common/utils/slugify'
-import SvgIcon from '@/web/client/components/SvgIcon.vue'
 
 defineProps<{
     isDark?: boolean
