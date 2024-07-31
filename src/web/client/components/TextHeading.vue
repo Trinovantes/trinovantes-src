@@ -73,6 +73,7 @@ const render = () => {
         text-decoration: none;
 
         display: flex;
+        flex-wrap: wrap;
         gap: math.div($padding, 2);
 
         .svg{
