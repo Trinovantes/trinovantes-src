@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------
-FROM ghcr.io/trinovantes/puppeteer-prerender-plugin as builder
+FROM ghcr.io/trinovantes/puppeteer-prerender-plugin AS builder
 # -----------------------------------------------------------------------------
 
 WORKDIR /app
@@ -22,7 +22,7 @@ RUN --mount=type=secret,id=GIT_HASH \
 
 # -----------------------------------------------------------------------------
 FROM caddy:2-alpine
-LABEL org.opencontainers.image.source https://github.com/Trinovantes/template-spa-typescript-vue
+LABEL org.opencontainers.image.source=https://github.com/Trinovantes/template-spa-typescript-vue
 # -----------------------------------------------------------------------------
 
 WORKDIR /app
