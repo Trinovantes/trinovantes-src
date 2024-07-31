@@ -1,12 +1,12 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue'
+<script lang="ts" setup>
+import { ref } from 'vue'
 import HsrWeaknessCoverage from './HsrWeaknessCoverage.vue'
 import { chooseFromSet } from './chooseFromSet'
 import { getHsrElementIcon, hsrElements, hsrEnemies } from './HsrData'
 
-export const TITLE = 'Optimal Honkai Star Rail Enemy Weakness Coverage'
-export const CREATED_AT = new Date('2024-03-30').getTime()
-export const UPDATED_AT = new Date('2024-07-04').getTime()
+const TITLE = 'Optimal Honkai Star Rail Enemy Weakness Coverage'
+const CREATED_AT = new Date('2024-03-30').getTime()
+const UPDATED_AT = new Date('2024-07-04').getTime()
 
 const hasFullCoverage = (elementIdxs: Array<number>) => {
     for (const enemy of hsrEnemies) {
@@ -26,38 +26,15 @@ const hasFullCoverage = (elementIdxs: Array<number>) => {
     return true
 }
 
-export default defineComponent({
-    components: {
-        HsrWeaknessCoverage,
-    },
+const currentTeamElements = ref<Array<boolean>>(hsrElements.map(() => false))
+const toggleElement = (elementIdx: number) => {
+    currentTeamElements.value[elementIdx] = !currentTeamElements.value[elementIdx]
+}
 
-    setup() {
-        const currentTeamElements = ref<Array<boolean>>(hsrElements.map(() => false))
-        const toggleElement = (elementIdx: number) => {
-            currentTeamElements.value[elementIdx] = !currentTeamElements.value[elementIdx]
-        }
-
-        const allFourElementTeam = chooseFromSet([...Array(hsrElements.length).keys()], 4).filter(hasFullCoverage)
-        const selectFourElementTeam = (teamIdx: number) => {
-            currentTeamElements.value = hsrElements.map((_, elementIdx) => allFourElementTeam[teamIdx].includes(elementIdx))
-        }
-
-        return {
-            TITLE,
-            CREATED_AT,
-            UPDATED_AT,
-
-            hsrElements,
-            getHsrElementIcon,
-
-            currentTeamElements,
-            toggleElement,
-
-            allFourElementTeam,
-            selectFourElementTeam,
-        }
-    },
-})
+const allFourElementTeam = chooseFromSet([...Array(hsrElements.length).keys()], 4).filter(hasFullCoverage)
+const selectFourElementTeam = (teamIdx: number) => {
+    currentTeamElements.value = hsrElements.map((_, elementIdx) => allFourElementTeam[teamIdx].includes(elementIdx))
+}
 </script>
 
 <template>

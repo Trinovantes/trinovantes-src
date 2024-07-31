@@ -1,14 +1,8 @@
-import { slugify } from '@/common/utils/slugify'
-import { ComponentOptions } from 'vue'
+import { slugify } from '../../common/utils/slugify'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 
-export type BlogPostSourceFile = {
-    TITLE?: string
-    SLUG?: string
-    CREATED_AT?: number // ms since epoc
-    UPDATED_AT?: number // ms since epoc
-
-    default: ComponentOptions
-}
+const BLOG_POSTS_ROOT_DIR = path.resolve(process.cwd(), 'src/web/client/pages/Blog')
 
 export type BlogPost = {
     title: string
@@ -21,40 +15,39 @@ export type BlogPost = {
 export type BlogPosts = Array<BlogPost>
 
 export async function fetchBlogPosts(): Promise<BlogPosts> {
-    // This function must be processed by webpack since we are using a webpack-specific directive "require.context"
-    // Regex must be part of the call expression for static analysis
-    const blogPostMatches = require.context('@/web/client/pages/Blog', true, /.\/([\w-]+)\/BlogPost.vue/)
-    const blogEntries = blogPostMatches
-        .keys()
-        .filter((path) => !path.includes('template'))
-        .map((path) => /.\/([\w-]+)\/BlogPost.vue/.exec(path)?.[1])
-
     const posts: BlogPosts = []
+    const blogEntries = await fs.readdir(BLOG_POSTS_ROOT_DIR, { withFileTypes: true })
+
     for (const entry of blogEntries) {
-        if (!entry) {
+        if (!entry.isDirectory()) {
+            continue
+        }
+        if (!/\d{4}-.+/.test(entry.name)) {
             continue
         }
 
-        const blogPostSrc = await import(`@/web/client/pages/Blog/${entry}/BlogPost.vue`) as BlogPostSourceFile
+        const filePath = path.join(BLOG_POSTS_ROOT_DIR, entry.name, 'BlogPost.vue')
+        const fileContents = (await fs.readFile(filePath)).toString()
 
-        if (!blogPostSrc.TITLE) {
-            throw new Error(`${blogPostSrc.default.__file} is missing TITLE export`)
+        const title = /^(export )?const TITLE = ['"](?<title>.+)['"]$/m.exec(fileContents)?.groups?.title
+        const createdAt = /^(export )?const CREATED_AT = new Date\('(?<createdAt>\d{4}-\d{2}-\d{2})'\).getTime\(\)$/m.exec(fileContents)?.groups?.createdAt
+        const updatedAt = /^(export )?const UPDATED_AT = new Date\('(?<updatedAt>\d{4}-\d{2}-\d{2})'\).getTime\(\)$/m.exec(fileContents)?.groups?.updatedAt
+
+        if (!title) {
+            throw new Error(`${filePath} is missing TITLE export`)
         }
-
-        if (typeof blogPostSrc.CREATED_AT !== 'number') {
-            throw new Error(`${blogPostSrc.default.__file} is missing CREATED_AT export`)
+        if (!createdAt) {
+            throw new Error(`${filePath} is missing CREATED_AT export`)
         }
 
         posts.push({
-            title: blogPostSrc.TITLE,
-            slug: blogPostSrc.SLUG ?? slugify(blogPostSrc.TITLE),
-            createdAt: blogPostSrc.CREATED_AT,
-            updatedAt: blogPostSrc.UPDATED_AT,
-            dir: entry,
+            title: title,
+            slug: slugify(title),
+            createdAt: new Date(createdAt).getTime(),
+            updatedAt: updatedAt ? new Date(updatedAt).getTime() : undefined,
+            dir: entry.name,
         })
     }
 
-    return posts.sort((postA, postB) => {
-        return postB.createdAt - postA.createdAt
-    })
+    return posts.toSorted((postA, postB) => postB.createdAt - postA.createdAt)
 }

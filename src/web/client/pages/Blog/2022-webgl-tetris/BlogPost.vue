@@ -1,21 +1,8 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import TetrisGame from './TetrisGame.vue'
 
-export const TITLE = 'Tetris in WebGL'
-export const CREATED_AT = new Date('2022-11-01').getTime()
-
-export default defineComponent({
-    components: {
-        TetrisGame,
-    },
-    setup() {
-        return {
-            TITLE,
-            CREATED_AT,
-        }
-    },
-})
+const TITLE = 'Tetris in WebGL'
+const CREATED_AT = new Date('2022-11-01').getTime()
 </script>
 
 <template>

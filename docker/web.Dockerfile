@@ -19,7 +19,7 @@ RUN --mount=type=secret,id=GIT_HASH \
     --mount=type=secret,id=AWS_ENDPOINT_URL \
     --mount=type=secret,id=AWS_ACCESS_KEY_ID \
     --mount=type=secret,id=AWS_SECRET_ACCESS_KEY \
-    yarn buildWeb
+    yarn build
 
 # -----------------------------------------------------------------------------
 FROM caddy:2-alpine

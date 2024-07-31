@@ -1,24 +1,9 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
 import VuexGenerator from './VuexGenerator.vue'
 
-export const TITLE = 'Vuex 4 Typescript Declarations Generator'
-export const CREATED_AT = new Date('2021-07-22').getTime()
-export const UPDATED_AT = new Date('2022-04-28').getTime()
-
-export default defineComponent({
-    components: {
-        VuexGenerator,
-    },
-
-    setup() {
-        return {
-            TITLE,
-            CREATED_AT,
-            UPDATED_AT,
-        }
-    },
-})
+const TITLE = 'Vuex 4 Typescript Declarations Generator'
+const CREATED_AT = new Date('2021-07-22').getTime()
+const UPDATED_AT = new Date('2022-04-28').getTime()
 </script>
 
 <template>

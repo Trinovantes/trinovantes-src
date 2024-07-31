@@ -1,5 +1,5 @@
 import { Octokit } from '@octokit/rest'
-import { getRuntimeSecret, RuntimeSecret } from '@/api/utils/RuntimeSecret'
+import { getRuntimeSecret, RuntimeSecret } from '@/common/node/RuntimeSecret'
 import { Project, ProjectCategory, Projects, projects } from '@/common/Project'
 import { getS3PublicUrls } from '@/s3/getS3PublicUrls'
 

@@ -7,11 +7,19 @@ import { fetchProjects } from '@/api/services/fetchProjects'
 import { HydrationKey, saveStateToDom } from './client/utils/hydration'
 import { createVueApp } from './createVueApp'
 import { AppContext } from './AppContext'
-import { createAsyncHandler } from '@/api/utils/createAsyncHandler'
+import { RequestHandler, Request, Response, NextFunction } from 'express'
 import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
 
 const assetRenderer = new VueSsrAssetRenderer(DEFINE.SSG_MANIFEST_FILE)
 const htmlTemplate = readFileSync(DEFINE.SSG_HTML_TEMPLATE).toString('utf-8')
+
+function createAsyncHandler(handler: (req: Request, res: Response, next: NextFunction) => Promise<void>): RequestHandler {
+    return (req, res, next) => {
+        handler(req, res, next).catch((err: unknown) => {
+            next(err)
+        })
+    }
+}
 
 const server = new SpaServer({
     entryFilePath: DEFINE.SSG_ENTRY_FILE,

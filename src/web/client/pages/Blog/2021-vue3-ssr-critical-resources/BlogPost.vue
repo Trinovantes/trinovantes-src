@@ -1,19 +1,7 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export const TITLE = 'Critical Webpack Resource Injection for Vue 3 SSR Applications'
-export const CREATED_AT = new Date('2021-09-03').getTime()
-export const UPDATED_AT = new Date('2022-04-28').getTime()
-
-export default defineComponent({
-    setup() {
-        return {
-            TITLE,
-            CREATED_AT,
-            UPDATED_AT,
-        }
-    },
-})
+<script lang="ts" setup>
+const TITLE = 'Critical Webpack Resource Injection for Vue 3 SSR Applications'
+const CREATED_AT = new Date('2021-09-03').getTime()
+const UPDATED_AT = new Date('2022-04-28').getTime()
 </script>
 
 <template>

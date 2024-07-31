@@ -1,66 +1,49 @@
-<script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+<script lang="ts" setup>
+import { computed, ref } from 'vue'
 
-export const TITLE = 'Blocking Spam Websites from Google Search in Firefox'
-export const CREATED_AT = new Date('2021-09-12').getTime()
+const TITLE = 'Blocking Spam Websites from Google Search in Firefox'
+const CREATED_AT = new Date('2021-09-12').getTime()
 
-export default defineComponent({
-    setup() {
-        const spamSites = ref([
-            'medium.com',
-            'quora.com',
-            'dev.to',
-            'dzone.com',
-            'issuehunt.io',
-            'fossies.org',
-            'csdn.net',
-            'gitcom.org',
-            'adoclib.com',
-            'aliyun',
-            'gitmemory',
-            'codegrepper',
-            'bleepcoder',
-            'githubmemory',
-            'programmersought',
-            'semicolonworld',
-        ])
+const spamSites = ref([
+    'medium.com',
+    'quora.com',
+    'dev.to',
+    'dzone.com',
+    'issuehunt.io',
+    'fossies.org',
+    'csdn.net',
+    'gitcom.org',
+    'adoclib.com',
+    'aliyun',
+    'gitmemory',
+    'codegrepper',
+    'bleepcoder',
+    'githubmemory',
+    'programmersought',
+    'semicolonworld',
+])
 
-        const domainInputRef = ref<HTMLInputElement | null>(null)
-        const addSite = () => {
-            if (!domainInputRef.value) {
-                throw new Error('Failed to find domainInputRef')
-            }
+const domainInputRef = ref<HTMLInputElement | null>(null)
+const addSite = () => {
+    if (!domainInputRef.value) {
+        throw new Error('Failed to find domainInputRef')
+    }
 
-            const site = domainInputRef.value.value
-            if (!site) {
-                return
-            }
+    const site = domainInputRef.value.value
+    if (!site) {
+        return
+    }
 
-            spamSites.value.unshift(site)
-            domainInputRef.value.value = ''
-        }
+    spamSites.value.unshift(site)
+    domainInputRef.value.value = ''
+}
 
-        const removeSite = (idx: number) => {
-            spamSites.value.splice(idx, 1)
-        }
+const removeSite = (idx: number) => {
+    spamSites.value.splice(idx, 1)
+}
 
-        const baseUrl = 'https://www.google.com/search?q=%s'
-        const bookmarkUrl = computed(() => `${baseUrl}${spamSites.value.map((site) => `+-${site}`).join('')}`)
-
-        return {
-            TITLE,
-            CREATED_AT,
-
-            spamSites,
-            domainInputRef,
-            addSite,
-            removeSite,
-
-            baseUrl,
-            bookmarkUrl,
-        }
-    },
-})
+const baseUrl = 'https://www.google.com/search?q=%s'
+const bookmarkUrl = computed(() => `${baseUrl}${spamSites.value.map((site) => `+-${site}`).join('')}`)
 </script>
 
 <template>

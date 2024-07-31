@@ -1,7 +1,5 @@
 import path from 'node:path'
-import fs from 'node:fs/promises'
-import { existsSync } from 'node:fs'
-import { slugify } from '../src/common/utils/slugify'
+import { fetchBlogPosts } from '../src/api/services/fetchBlogPosts'
 import { getGitHash } from './BuildSecret'
 
 // Assume we are running webpack from the project root (../)
@@ -50,35 +48,7 @@ export const buildConstants = {
 }
 
 export const prerenderRoutes: Promise<Array<string>> = (async() => {
-    const blogDir = path.resolve(srcWebDir, 'client/pages/Blog')
-    const blogDirItems = await fs.readdir(blogDir, { withFileTypes: true })
-    const blogPostRoutes: Array<string> = []
-
-    for (const subDir of blogDirItems) {
-        if (!subDir.isDirectory()) {
-            continue
-        }
-        if (subDir.name === 'template') {
-            continue
-        }
-
-        const blogPostVueFile = path.resolve(blogDir, subDir.name, 'BlogPost.vue')
-        if (!existsSync(blogPostVueFile)) {
-            console.warn(`${blogPostVueFile} does not exist`)
-            continue
-        }
-
-        const blogPostContentsBuffer = await fs.readFile(blogPostVueFile)
-        const blogPostContents = blogPostContentsBuffer.toString()
-
-        const title = /^export const TITLE = '(.+)'$/m.exec(blogPostContents)?.[1]
-        if (!title) {
-            throw new Error(`Failed to find TITLE in ${blogPostVueFile}`)
-        }
-
-        const slug = slugify(title)
-        blogPostRoutes.push(`/${slug}`)
-    }
+    const blogPostRoutes = (await fetchBlogPosts()).map((blogPost) => `/${blogPost.slug}`)
 
     return [
         ...blogPostRoutes,

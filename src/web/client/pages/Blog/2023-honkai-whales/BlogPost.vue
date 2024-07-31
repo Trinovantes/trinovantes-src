@@ -1,39 +1,22 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+const TITLE = 'How Much Do Whales Spend in Honkai Impact?'
+const CREATED_AT = new Date('2023-10-31').getTime()
+const UPDATED_AT = new Date('2023-11-26').getTime()
 
-export const TITLE = 'How Much Do Whales Spend in Honkai Impact?'
-export const CREATED_AT = new Date('2023-10-31').getTime()
-export const UPDATED_AT = new Date('2023-11-26').getTime()
+const exchangeRate = 0.14
+const gemsPerPull = 280
+const gemsInBundle = 8088
+const costOfBundle = 99.99
+const costPerPull = costOfBundle / gemsInBundle * gemsPerPull
 
-export default defineComponent({
-    setup() {
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        })
-
-        const exchangeRate = 0.14
-        const gemsPerPull = 280
-        const gemsInBundle = 8088
-        const costOfBundle = 99.99
-        const costPerPull = costOfBundle / gemsInBundle * gemsPerPull
-
-        return {
-            TITLE,
-            CREATED_AT,
-            UPDATED_AT,
-
-            currency: (amount: number) => formatter.format(amount),
-            rmbToUsd: (rmbWan: number) => `$${(rmbWan * 10000 * exchangeRate / 1e6).toFixed(0)}M`,
-            calcNumPulls: (pity: number) => (300 - ((50 / 210) * pity)) / ((50 / 210) + (30 / pity)) + pity,
-
-            gemsPerPull,
-            gemsInBundle,
-            costOfBundle,
-            costPerPull,
-        }
-    },
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
 })
+
+const currency = (amount: number) => formatter.format(amount)
+const rmbToUsd = (rmbWan: number) => `$${(rmbWan * 10000 * exchangeRate / 1e6).toFixed(0)}M`
+const calcNumPulls = (pity: number) => (300 - ((50 / 210) * pity)) / ((50 / 210) + (30 / pity)) + pity
 </script>
 
 <template>

@@ -1,19 +1,7 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export const TITLE = 'Fastest Node.js Fizzbuzz'
-export const CREATED_AT = new Date('2022-06-24').getTime()
-export const UPDATED_AT = new Date('2022-10-05').getTime()
-
-export default defineComponent({
-    setup() {
-        return {
-            TITLE,
-            CREATED_AT,
-            UPDATED_AT,
-        }
-    },
-})
+<script lang="ts" setup>
+const TITLE = 'Fastest Node.js Fizzbuzz'
+const CREATED_AT = new Date('2022-06-24').getTime()
+const UPDATED_AT = new Date('2022-10-05').getTime()
 </script>
 
 <template>

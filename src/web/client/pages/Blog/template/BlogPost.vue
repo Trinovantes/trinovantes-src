@@ -1,17 +1,6 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export const TITLE = ''
-export const CREATED_AT = new Date('1970-01-01').getTime()
-
-export default defineComponent({
-    setup() {
-        return {
-            TITLE,
-            CREATED_AT,
-        }
-    },
-})
+<script lang="ts" setup>
+const TITLE = ''
+const CREATED_AT = new Date('1970-01-01').getTime()
 </script>
 
 <template>

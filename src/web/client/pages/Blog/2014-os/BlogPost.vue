@@ -1,17 +1,6 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-export const TITLE = 'Adventures of Writing an OS Kernel from Scratch on a Cortex M3 Board'
-export const CREATED_AT = new Date('2014-02-18').getTime()
-
-export default defineComponent({
-    setup() {
-        return {
-            TITLE,
-            CREATED_AT,
-        }
-    },
-})
+<script lang="ts" setup>
+const TITLE = 'Adventures of Writing an OS Kernel from Scratch on a Cortex M3 Board'
+const CREATED_AT = new Date('2014-02-18').getTime()
 </script>
 
 <template>

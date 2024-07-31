@@ -1,4 +1,4 @@
-import { getRuntimeSecret, RuntimeSecret } from '@/api/utils/RuntimeSecret'
+import { getRuntimeSecret, RuntimeSecret } from '@/common/node/RuntimeSecret'
 import { S3_BUCKET_NAME } from '@/common/Constants'
 import { projects } from '@/common/Project'
 import { S3Client, ListObjectsCommand, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
@@ -107,7 +107,7 @@ export class ImageCache {
         }
     }
 
-    async fetchOgImage(projectSlug: string): Promise<ArrayBuffer> {
+    async fetchOgImage(projectSlug: string): Promise<ArrayBuffer | Uint8Array> {
         const repoUrl = getRepoUrl(projectSlug)
         const githubRes = await fetch(repoUrl)
         const isPrivateRepo = githubRes.status === 404

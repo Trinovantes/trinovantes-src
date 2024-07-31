@@ -42,11 +42,13 @@ jobs:
           node-version: 20
           cache: yarn
 
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
-      - name: Build
-        run: yarn buildReadme
 
       - name: Run
         run: yarn generateReadme

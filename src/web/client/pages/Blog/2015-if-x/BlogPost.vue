@@ -1,27 +1,13 @@
-<script lang="ts">
+<script lang="ts" setup>
 import pluralize from 'pluralize'
-import { computed, defineComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { professions } from './professions'
 
-export const TITLE = 'If X Were Hired Like Programmers'
-export const CREATED_AT = new Date('2015-02-14').getTime()
+const TITLE = 'If X Were Hired Like Programmers'
+const CREATED_AT = new Date('2015-02-14').getTime()
 
-export default defineComponent({
-    setup() {
-        const currentProfessionIdx = ref<string>('0')
-        const currentProfession = computed(() => professions[parseInt(currentProfessionIdx.value)])
-
-        return {
-            TITLE,
-            CREATED_AT,
-            pluralize,
-
-            professions,
-            currentProfessionIdx,
-            currentProfession,
-        }
-    },
-})
+const currentProfessionIdx = ref<string>('0')
+const currentProfession = computed(() => professions[parseInt(currentProfessionIdx.value)])
 </script>
 
 <template>

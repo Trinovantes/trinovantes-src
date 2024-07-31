@@ -1,26 +1,14 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, PropType, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useSeoMeta } from '@unhead/vue'
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
 
-const props = defineProps({
-    title: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String as PropType<string | undefined>,
-        default: undefined,
-    },
-    createdAt: {
-        type: Number,
-        required: true,
-    },
-    updatedAt: {
-        type: Number as PropType<number | null>,
-        default: null,
-    },
-})
+const props = defineProps<{
+    title: string
+    image?: string
+    createdAt: number
+    updatedAt?: number
+}>()
 
 useSeoMeta({
     title: props.title,
@@ -41,7 +29,7 @@ const dateInfos = computed<Array<DateInfo>>(() => {
         },
     ]
 
-    if (typeof props.updatedAt === 'number') {
+    if (props.updatedAt !== undefined) {
         dateInfos.push({
             date: formatDate(props.updatedAt),
             label: `Updated on ${formatDateDisplay(props.updatedAt)}`,
@@ -175,11 +163,6 @@ onBeforeUnmount(() => {
 }
 
 .post-container{
-    &.content{
-        padding-top: $vspace;
-        padding-bottom: $vspace;
-    }
-
     $gap: $padding * 2;
     $gap-left-right: $gap * 2;
 
@@ -221,5 +204,10 @@ onBeforeUnmount(() => {
     > :deep(.full){
         grid-column: full;
     }
+
+    // &.content{
+    //     padding-top: $vspace;
+    //     padding-bottom: $vspace;
+    // }
 }
 </style>
