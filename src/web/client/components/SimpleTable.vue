@@ -41,6 +41,8 @@ const tbodyRows = computed(() => [...props.data].splice(1))
 
 <style lang="scss" scoped>
 figure.simple-table{
+    overflow: auto;
+
     table{
         margin: 0 auto;
     }

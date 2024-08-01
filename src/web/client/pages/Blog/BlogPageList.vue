@@ -43,6 +43,15 @@ ul.blog-posts{
                 font-family: 'Courier New', Courier, monospace;
                 white-space: nowrap;
             }
+
+            @media (max-width: $mobile-breakpoint) {
+                grid-template-columns: auto;
+                gap: 0;
+
+                &:not(:last-child){
+                    margin-bottom: $padding * 2;
+                }
+            }
         }
     }
 }

@@ -58,7 +58,7 @@ const UPDATED_AT = new Date('2022-04-28').getTime()
             If we simply render <code>main.js</code> and let Webpack load the rest, then the user will briefly see a Flash of Unstyled Content (FOUC) because all the HTML was rendered on the server but our components' CSS and JavaScript are not resolved until much later.
         </p>
 
-        <div class="grid grid-3">
+        <div class="grid-3">
             <SimpleImage :img="require('./img/fouc-1.png')">
                 Initial page load where only <code>vendor.css</code> is loaded (CSS from <code>node_modules</code> such as UI libraries, hence the styled buttons)
             </SimpleImage>

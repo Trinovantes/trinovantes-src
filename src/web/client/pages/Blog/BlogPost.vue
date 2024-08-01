@@ -148,6 +148,10 @@ onBeforeUnmount(() => {
 
             margin: 0 (-$padding * 2);
             padding: $padding * 2;
+
+            @media (max-width: $mobile-breakpoint) {
+                font-size: 2rem;
+            }
         }
     }
 

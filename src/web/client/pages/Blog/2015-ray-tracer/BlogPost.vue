@@ -25,7 +25,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             For this objective I placed a glass sphere with varying refraction indices infront of two boxes and put everything inside a cube room. I generated these initial images without applying Beer's Law.
         </p>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/1-refraction/1-refraction-1-no-attenuation.png')">
                 Refraction Index 1.0
             </SimpleImage>
@@ -41,7 +41,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             Also note that the horizontal line in these spheres are simply reflections of my sunset background.
         </p>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/1-refraction/1-refraction-3-no-attenuation.png')">
                 Refraction Index 2.5
             </SimpleImage>
@@ -60,7 +60,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             I re-rendered the above images after implementing Beer's Law using a <strong>very</strong> crude approximation. Instead of taking account of the material's internal attenuation factors, I simply used the inverse bouding volume size. While not realistic, it does improve my non-attenuated images (somewhat... maybe?).
         </p>
 
-        <div class="grid grid-4">
+        <div class="grid-4">
             <SimpleImage :img="require('./img/1-refraction/1-refraction-1.png')">
                 Refraction Index 1.0
             </SimpleImage>
@@ -96,7 +96,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             Once the exponent value is over 10000, the glossiness is not noticable enough to see and the material can be approximated to a true mirror.
         </p>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/2-glossy-reflections/2-reflection-1.png')">
                 Glossy Reflections with Varying Distribution Exponents
             </SimpleImage>
@@ -143,7 +143,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             Not much to say here... I ported Ken Perlin's <a href="http://mrl.nyu.edu/~perlin/noise/">Java implementation</a> and then experimented with different scales and octaves until I found a texture that seemed realistic. The columns from left to right varies the octaves from 1 to 4. The rows from bottom to top varies the scaling from 1 to 4.
         </p>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/3-perlin-noise/3-perlin-noise-1.png')">
                 Marble Texture
             </SimpleImage>
@@ -168,7 +168,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             Sphere Mapping
         </TextHeading>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/4-texture-mapping/4-texture-mapping-1.png')">
                 Sphere Mapping
             </SimpleImage>
@@ -185,7 +185,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             The most annoying part for this objective is that I had to reboot into Windows to use Photoshop to create these cube textures. I can't believe there isn't a user-friendly alternative on Linux yet.
         </p>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/4-texture-mapping/4-texture-mapping-3.png')">
                 Cube Mapping with a Debug Texture
             </SimpleImage>
@@ -194,7 +194,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             </SimpleImage>
         </div>
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/4-texture-mapping/4-texture-mapping-4.png')">
                 Cube Mapping
             </SimpleImage>
@@ -231,7 +231,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             With the uv-mapping from the previous objective, it was easy to implement bump mapping.
         </p>
 
-        <div class="grid grid-3">
+        <div class="grid-3">
             <SimpleImage :img="require('./img/5-bump-mapping/5-bump-mapping-1.png')">
                 Light at <code>x=-200</code>
             </SimpleImage>
@@ -278,7 +278,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             ]"
         />
 
-        <div class="grid grid-2">
+        <div class="grid-2">
             <SimpleImage :img="require('./img/6-bvh/cornell-box.png')">
                 Cornell Box
             </SimpleImage>
@@ -291,7 +291,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             7. Anti-Aliasing
         </TextHeading>
 
-        <div class="grid grid-3">
+        <div class="grid-3">
             <SimpleImage :img="require('./img/7-antialias/cornell-box-no-antialiasing.png')">
                 No Anti-Aliasing
             </SimpleImage>
@@ -341,7 +341,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             This was one of the first Monte-Carlo techniques that I implemented. It was implemented by sampling random points on area lights. After 49 samples (7x7 grid), there isn't much improvement.
         </p>
 
-        <div class="grid grid-4">
+        <div class="grid-4">
             <SimpleImage :img="require('./img/8-soft-shadows/8-soft-shadows-1.png')">
                 1 Sample
             </SimpleImage>
@@ -364,7 +364,7 @@ const CREATED_AT = new Date('2015-07-22').getTime()
             Another Monte-Carlo technique by sampling various points on the camera.
         </p>
 
-        <div class="grid grid-3">
+        <div class="grid-3">
             <SimpleImage :img="require('./img/9-dof/9-dof-1.png')">
                 Focal Distance of 250
             </SimpleImage>
