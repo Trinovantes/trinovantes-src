@@ -5,10 +5,10 @@ import { sleep } from '@/common/utils/sleep'
 const props = withDefaults(defineProps<{
     code: string
     language?: string
-    ignoreIllegals?: boolean
+    popout?: boolean
 }>(), {
     language: 'txt',
-    ignoreIllegals: true,
+    popout: false,
 })
 
 const highlightedCode = ref<string>()
@@ -40,7 +40,12 @@ async function copyToClipboard() {
 </script>
 
 <template>
-    <div class="code-block">
+    <div
+        :class="{
+            'code-block': true,
+            popout,
+        }"
+    >
         <button
             v-if="clipboardEnabled"
             title="Copy code to clipboard"
@@ -67,6 +72,7 @@ async function copyToClipboard() {
     $pre-padding: $padding * 2;
     $btn-offset: math.div(($pre-padding + $btn-size + $pre-padding) - ($btn-total-size), 2);
 
+    overflow: hidden;
     position: relative;
 
     button{
@@ -102,8 +108,11 @@ async function copyToClipboard() {
     }
 
     :deep(pre.shiki){
-        background: $light-on-dark !important;
+        background: $light-bg !important;
         line-height: $btn-size;
+        overflow: auto;
+        padding: $padding * 2;
+        width: 100%;
 
         code{
             background: unset;

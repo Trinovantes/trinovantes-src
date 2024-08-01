@@ -93,7 +93,7 @@ const selectFourElementTeam = (teamIdx: number) => {
 
 <style lang="scss" scoped>
 .team{
-    border: 1px solid $light-on-light;
+    border: 1px solid $light-border;
     cursor: pointer;
     padding: $padding;
 

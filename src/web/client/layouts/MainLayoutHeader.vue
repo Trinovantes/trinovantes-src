@@ -49,12 +49,14 @@ a{
 }
 
 a.home-btn{
+    $border-color: rgba(#ccc, 0.2);
+
     color: white;
     font-size: 1.5rem;
     font-weight: 900;
 
     align-items: center;
-    border-color: $light-on-dark;
+    border-color: $border-color;
     display: flex;
     padding: $padding;
 
@@ -63,7 +65,7 @@ a.home-btn{
     }
 
     @media (max-width: $mobile-breakpoint) {
-        border-bottom: 1px solid $light-on-dark;
+        border-bottom: 1px solid $border-color;
         justify-content: center;
         padding: $padding * 2;
     }

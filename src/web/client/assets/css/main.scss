@@ -94,19 +94,8 @@ li{
     }
 }
 
-pre{
-    overflow: auto;
-    padding: $padding * 2;
-    width: 100%;
-    text-align: left !important;
-
-    *{
-        font-family: 'Courier New', Courier, monospace;
-    }
-}
-
 code{
-    background: $light-on-light;
+    background: $light-bg;
     border-radius: math.div($padding, 4);
     font-family: 'Courier New', Courier, monospace;
     overflow-wrap: break-word;
@@ -148,7 +137,7 @@ label{
 
 input,
 select{
-    border: 1px solid $light-on-light;
+    border: 1px solid $light-border;
     padding: math.div($padding, 2);
 }
 
@@ -189,7 +178,7 @@ select{
     @extend .flex-vgap;
 
     border-left: 5px solid;
-    background-color: $light-on-light;
+    background-color: $light-bg;
     padding: $padding * 2;
 
     &.warning{

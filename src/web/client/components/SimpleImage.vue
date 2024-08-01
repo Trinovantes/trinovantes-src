@@ -96,7 +96,7 @@ figure{
     }
 
     picture{
-        background: $light-on-dark;
+        background: $light-bg;
         display: block;
         width: 100%;
 

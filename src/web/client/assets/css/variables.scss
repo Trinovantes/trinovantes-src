@@ -32,6 +32,6 @@ $info      : #31CCEC;
 $warning   : #F2C037;
 
 $primary-on-dark:   lighten($primary, 20%);
-$light-on-dark:     rgba(#ccc, 0.2);
 $text-on-dark:      rgba(#ccc, 0.8);
-$light-on-light:    rgba(#222, 0.1);
+$light-border:      rgba(#222, 0.1);
+$light-bg:          rgba(#ccc, 0.1);

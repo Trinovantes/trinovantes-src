@@ -132,8 +132,8 @@ const bookmarkUrl = computed(() => `${baseUrl}${spamSites.value.map((site) => `+
     gap: $padding;
 
     button{
-        background: $light-on-light;
-        border: 1px solid $light-on-light;
+        background: $light-bg;
+        border: 1px solid $light-border;
         border-radius: math.div($padding, 4);
         cursor: pointer;
         display: block;
