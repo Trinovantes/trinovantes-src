@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 import { useSeoMeta } from '@unhead/vue'
 import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
 
@@ -38,37 +38,10 @@ const dateInfos = computed<Array<DateInfo>>(() => {
 
     return dateInfos
 })
-
-const progressRef = ref<HTMLElement | null>(null)
-const contentRef = ref<HTMLElement | null>(null)
-const showProgress = ref(false)
-const progress = ref('0%')
-const updateProgress = () => {
-    const startPosition = contentRef.value?.offsetTop ?? 0
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight - startPosition
-    const scrollPosition = document.documentElement.scrollTop - startPosition
-    const scrollProgress = scrollPosition / totalHeight * 100
-
-    showProgress.value = totalHeight > 0 && scrollProgress > 0
-    progress.value = `${scrollProgress}%`
-}
-
-onMounted(() => {
-    window.addEventListener('scroll', updateProgress)
-})
-onBeforeUnmount(() => {
-    window.removeEventListener('scroll', updateProgress)
-})
 </script>
 
 <template>
     <article class="blog-post">
-        <div
-            v-if="showProgress"
-            ref="progressRef"
-            class="progress"
-        />
-
         <div
             class="hero-unit"
             :style="{
@@ -113,16 +86,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style lang="scss" scoped>
-.progress{
-    position: sticky;
-    top: 0;
-    z-index: 1;
-
-    background: $primary;
-    width: v-bind(progress);
-    height: math.div($padding, 2);
-}
-
 .hero-unit{
     background-color: lighten($dark, 10%);
     background-repeat: no-repeat;
