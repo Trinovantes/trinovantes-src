@@ -72,6 +72,7 @@ async function copyToClipboard() {
     $pre-padding: $padding * 2;
     $btn-offset: math.div(($pre-padding + $btn-size + $pre-padding) - ($btn-total-size), 2);
 
+    border: 1px solid $dark;
     overflow: hidden;
     position: relative;
 
