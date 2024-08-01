@@ -31,6 +31,7 @@ HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \\
 
         <SimpleImage
             :img="require('./img/docker-ps.png')"
+            class="popout"
         >
             Okay, now what?
         </SimpleImage>
