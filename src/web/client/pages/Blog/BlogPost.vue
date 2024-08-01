@@ -49,7 +49,7 @@ const updateProgress = () => {
     const scrollPosition = document.documentElement.scrollTop - startPosition
     const scrollProgress = scrollPosition / totalHeight * 100
 
-    showProgress.value = scrollProgress > 0
+    showProgress.value = totalHeight > 0 && scrollProgress > 0
     progress.value = `${scrollProgress}%`
 }
 
