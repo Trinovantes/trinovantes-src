@@ -69,18 +69,21 @@ const render = () => {
 <style lang="scss" scoped>
 .linked-heading{
     :deep(a) {
-        color: $dark;
         text-decoration: none;
-
-        display: flex;
-        flex-wrap: wrap;
-        gap: math.div($padding, 2);
+        color: $dark;
+        position: relative;
 
         .svg{
             display: flex;
             align-items: center;
             opacity: 0;
             transition: $transition;
+
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            bottom: calc(-12px + 0.5lh); // Relative to bottom, shift down half of svg 12px (to center icon) then up half lineheight (to center last line)
+            right: -24px - math.div($padding, 2);
         }
 
         &:hover{
