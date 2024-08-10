@@ -127,6 +127,7 @@ article{
                     border: math.div($padding, 2) solid $dark;
                     display: block;
                     width: 100%;
+                    min-height: math.div(1, $ratio) * 100%;
                     object-fit: cover;
                     object-position: center;
                 }
