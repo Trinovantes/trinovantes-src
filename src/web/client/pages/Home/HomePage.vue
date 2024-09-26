@@ -29,7 +29,7 @@ useSeoMeta({
 
 <style lang="scss" scoped>
 article.home-page{
-    background: lighten($dark, 10%);
+    background: color.adjust($dark, $lightness: 10%);
     color: white;
     display: grid;
     align-items: center;

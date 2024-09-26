@@ -169,7 +169,7 @@ section.category{
                 gap: math.div($padding, 2) $padding;
 
                 span{
-                    color: lighten($dark, 30%);
+                    color: color.adjust($dark, $lightness: 30%);
                     font-size: 1rem;
                 }
             }

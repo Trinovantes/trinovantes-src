@@ -87,7 +87,7 @@ const dateInfos = computed<Array<DateInfo>>(() => {
 
 <style lang="scss" scoped>
 .hero-unit{
-    background-color: lighten($dark, 10%);
+    background-color: color.adjust($dark, $lightness: 10%);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
