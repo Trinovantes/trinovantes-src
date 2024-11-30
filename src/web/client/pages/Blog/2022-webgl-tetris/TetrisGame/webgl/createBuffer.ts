@@ -33,7 +33,7 @@ export const FLOAT_SIZE = 4 // 32-bits
 
 export function createBuffer(gl: WebGL2RenderingContext, bufferData: BufferSource): WebGLBuffer {
     const vertPositionBuffer = gl.createBuffer()
-    if (!vertPositionBuffer) {
+    if (vertPositionBuffer === null) {
         throw new Error('Failed to create buffer')
     }
 

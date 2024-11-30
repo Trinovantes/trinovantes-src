@@ -1,6 +1,6 @@
 export function createProgram(gl: WebGL2RenderingContext, shaders: Array<WebGLShader>): WebGLProgram {
     const program = gl.createProgram()
-    if (!program) {
+    if (program === null) {
         throw new Error('Failed to create program')
     }
 
