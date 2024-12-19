@@ -41,7 +41,6 @@ withDefaults(defineProps<{
                     `"
                     :src="project.img.original"
                     :title="project.name"
-                    loading="lazy"
                 >
             </div>
 
