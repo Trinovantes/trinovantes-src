@@ -5,15 +5,17 @@ const props = defineProps<{
     data: Array<Array<string | number>>
 }>()
 
-const theadRow = computed(() => props.data[0])
-const tbodyRows = computed(() => [...props.data].splice(1))
+const theadRow = computed(() => props.data.length === 0 ? [] : props.data[0])
+const tbodyRows = computed(() => props.data.length <= 1 ? [] : props.data.toSpliced(1))
 </script>
 
 <template>
     <figure class="simple-table">
         <table>
             <thead>
-                <tr>
+                <tr
+                    v-if="theadRow.length > 0"
+                >
                     <td
                         v-for="[colIdx, col] of theadRow.entries()"
                         :key="colIdx"
