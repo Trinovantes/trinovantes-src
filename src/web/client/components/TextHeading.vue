@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-import { computed, h, useSlots } from 'vue'
+import { computed, h, VNode } from 'vue'
 import { useRoute } from 'vue-router'
 import { slugify } from '@/common/utils/slugify'
 import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
 
-const slots = useSlots()
+const slots = defineSlots<{
+    default: () => Array<VNode>
+}>()
+
 const props = withDefaults(defineProps<{
     size?: number
     disableLink?: boolean
