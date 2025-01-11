@@ -10,7 +10,7 @@ const CREATED_AT = new Date('2024-10-17').getTime()
     >
         <div class="callout positive">
             <p>
-                If you just want the solution, you can skip to the <a href="#solution">bottom</a>.
+                TLDR code at the <a href="#solution">bottom</a>
             </p>
         </div>
 
