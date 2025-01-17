@@ -46,7 +46,7 @@
         "html-webpack-plugin": "^5.3.1",
         "http-errors": "^2.0.0",
         "jsdom": "^26.0.0",
-        "katex": "^0.16.9",
+        "katex": "^0.16.21",
         "medium-zoom": "^1.0.6",
         "mini-css-extract-plugin": "^2.0.0",
         "null-loader": "^4.0.1",
