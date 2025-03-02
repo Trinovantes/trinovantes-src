@@ -1,26 +1,19 @@
-export const enum Tech {
+export type Tech =
     // General
-    CPP = 'C++',
+    'C++' |
 
     // Frontend
-    Typescript = 'Typescript',
-    VueJs = 'Vue.js',
+    'Typescript' |
+    'Vue.js' |
 
     // Backend
-    NodeJs = 'Node.js',
-    ExpressJs = 'Express.js',
-    Sqlite = 'SQLite',
-    Electron = 'Electron',
+    'Node.js' |
+    'Express.js' |
+    'SQLite' |
+    'Electron' |
 
     // Devops
-    Docker = 'Docker',
-}
-
-export const enum ProjectCategory {
-    Apps = 'Apps',
-    Userscript = 'Userscripts',
-    Node = 'Node Projects',
-}
+    'Docker'
 
 export type ProjectImgUrl = {
     original: string
@@ -40,18 +33,25 @@ export type Project = {
     img?: ProjectImgUrl
 }
 
+export const ALL_PROJECT_CATEGORIES = [
+    'Apps',
+    'Userscripts',
+    'Node Projects',
+] as const
+
+export type ProjectCategory = typeof ALL_PROJECT_CATEGORIES[number]
 export type Projects = Partial<Record<ProjectCategory, Array<Project>>>
 
-export const projects: Projects = {
-    [ProjectCategory.Apps]: [
+export const projects: Required<Projects> = {
+    ['Apps']: [
         {
             name: 'StarRail Warp Tracker',
             slug: 'starrail-warp-tracker',
             tech: [
-                Tech.Typescript,
-                Tech.Electron,
-                Tech.Sqlite,
-                Tech.VueJs,
+                'Typescript',
+                'Electron',
+                'SQLite',
+                'Vue.js',
             ],
         },
         {
@@ -59,119 +59,119 @@ export const projects: Projects = {
             slug: 'holomemes',
             isPrivate: true,
             tech: [
-                Tech.Typescript,
-                Tech.NodeJs,
-                Tech.Sqlite,
-                Tech.ExpressJs,
-                Tech.VueJs,
-                Tech.Docker,
+                'Typescript',
+                'Node.js',
+                'SQLite',
+                'Express.js',
+                'Vue.js',
+                'Docker',
             ],
         },
         {
             name: 'WoWPay2Win',
             slug: 'wowpay2win',
             tech: [
-                Tech.Typescript,
-                Tech.VueJs,
-                Tech.Docker,
+                'Typescript',
+                'Vue.js',
+                'Docker',
             ],
         },
         {
             name: 'MAL Cover CSS',
             slug: 'mal-cover-css',
             tech: [
-                Tech.Typescript,
-                Tech.NodeJs,
-                Tech.Sqlite,
-                Tech.ExpressJs,
-                Tech.VueJs,
-                Tech.Docker,
+                'Typescript',
+                'Node.js',
+                'SQLite',
+                'Express.js',
+                'Vue.js',
+                'Docker',
             ],
         },
         {
             name: 'Quest Schedule Exporter',
             slug: 'quest-schedule-exporter',
             tech: [
-                Tech.Typescript,
+                'Typescript',
             ],
         },
     ],
-    [ProjectCategory.Userscript]: [
+    ['Userscripts']: [
         {
             name: 'YouTube Playlist Organizer',
             slug: 'userscript-youtube-playlist-organizer',
             tech: [
-                Tech.Typescript,
-                Tech.VueJs,
+                'Typescript',
+                'Vue.js',
             ],
         },
         {
             name: 'Delete Workflow Runs',
             slug: 'userscript-delete-workflow-runs',
             tech: [
-                Tech.Typescript,
-                Tech.VueJs,
+                'Typescript',
+                'Vue.js',
             ],
         },
         {
             name: 'GitHub Repository Categories',
             slug: 'userscript-github-repository-categories',
             tech: [
-                Tech.Typescript,
-                Tech.VueJs,
+                'Typescript',
+                'Vue.js',
             ],
         },
         {
             name: 'WoWProgress Character Page',
             slug: 'userscript-wowprogress-character-page',
             tech: [
-                Tech.Typescript,
-                Tech.VueJs,
+                'Typescript',
+                'Vue.js',
             ],
         },
         {
             name: 'Old Reddit Emotes',
             slug: 'userscript-old-reddit-emotes',
             tech: [
-                Tech.Typescript,
-                Tech.VueJs,
+                'Typescript',
+                'Vue.js',
             ],
         },
     ],
-    [ProjectCategory.Node]: [
+    ['Node Projects']: [
         {
             name: 'rst-compiler',
             slug: 'rst-compiler',
             tech: [
-                Tech.Typescript,
+                'Typescript',
             ],
         },
         {
             name: 'bbcode-compiler',
             slug: 'bbcode-compiler',
             tech: [
-                Tech.Typescript,
+                'Typescript',
             ],
         },
         {
             name: 'puppeteer-prerender-plugin',
             slug: 'puppeteer-prerender-plugin',
             tech: [
-                Tech.Typescript,
+                'Typescript',
             ],
         },
         {
             name: 'vue-ssr-assets-plugin',
             slug: 'vue-ssr-assets-plugin',
             tech: [
-                Tech.Typescript,
+                'Typescript',
             ],
         },
         {
             name: 'quasar-unused-plugin',
             slug: 'quasar-unused-plugin',
             tech: [
-                Tech.Typescript,
+                'Typescript',
             ],
         },
     ],

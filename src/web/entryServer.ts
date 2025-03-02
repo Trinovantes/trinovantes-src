@@ -4,7 +4,7 @@ import { SpaServer } from 'puppeteer-prerender-plugin'
 import { renderSSRHead } from '@unhead/ssr'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { HydrationKey, saveStateToDom } from './client/utils/hydration'
+import { saveStateToDom } from './client/utils/hydration'
 import { createVueApp } from './createVueApp'
 import { AppContext } from './AppContext'
 import { RequestHandler, Request, Response, NextFunction } from 'express'
@@ -47,8 +47,8 @@ const server = new SpaServer({
             const { header, footer } = assetRenderer.renderAssets(appContext._matchedComponents)
             const headerText = `
                 <script>
-                    ${saveStateToDom(HydrationKey.BlogPosts, appContext.blogPosts)};
-                    ${saveStateToDom(HydrationKey.Projects, appContext.projects)};
+                    ${saveStateToDom('__BLOG_POSTS__', appContext.blogPosts)};
+                    ${saveStateToDom('__PROJECTS__', appContext.projects)};
                 </script>
 
                 ${header}

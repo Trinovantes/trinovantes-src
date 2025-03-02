@@ -1,4 +1,4 @@
-import { getRuntimeSecret, RuntimeSecret } from '@/common/node/RuntimeSecret'
+import { getRuntimeSecret } from '@/common/node/RuntimeSecret'
 import { S3_BUCKET_NAME } from '@/common/Constants'
 import { projects } from '@/common/Project'
 import { S3Client, ListObjectsCommand, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
@@ -6,7 +6,7 @@ import { add, isBefore } from 'date-fns'
 import { getS3FileNamesWithExt, getS3FileNameWithExt, S3_CONTENT_TYPE } from './getS3PublicUrls'
 import { JSDOM } from 'jsdom'
 import sharp from 'sharp'
-import { ALL_CACHE_SIZES, CacheSize } from './CacheSize'
+import { ALL_CACHE_SIZES } from './CacheSize'
 import { getRepoUrl } from '@/common/utils/getRepoUrl'
 
 export class ImageCache {
@@ -15,9 +15,9 @@ export class ImageCache {
     readonly #lastModified = new Map<string, Date>()
 
     constructor() {
-        const endpoint = getRuntimeSecret(RuntimeSecret.AWS_ENDPOINT_URL)
-        const accessKeyId = getRuntimeSecret(RuntimeSecret.AWS_ACCESS_KEY_ID)
-        const secretAccessKey = getRuntimeSecret(RuntimeSecret.AWS_SECRET_ACCESS_KEY)
+        const endpoint = getRuntimeSecret('AWS_ENDPOINT_URL')
+        const accessKeyId = getRuntimeSecret('AWS_ACCESS_KEY_ID')
+        const secretAccessKey = getRuntimeSecret('AWS_SECRET_ACCESS_KEY')
 
         this.#s3Client = new S3Client({
             region: 'auto',
@@ -92,7 +92,7 @@ export class ImageCache {
 
             for (const size of ALL_CACHE_SIZES) {
                 const fileName = getS3FileNameWithExt(projectSlug, size)
-                const imgData = size === CacheSize.ORIGINAL
+                const imgData = size === 0
                     ? await sharp(origData).jpeg().toBuffer()
                     : await sharp(origData).jpeg().resize(size).toBuffer()
 
@@ -114,7 +114,7 @@ export class ImageCache {
 
         if (isPrivateRepo) {
             // If private repo, then assume original size is manually uploaded to s3
-            const fileName = getS3FileNameWithExt(projectSlug, CacheSize.ORIGINAL)
+            const fileName = getS3FileNameWithExt(projectSlug, 0)
             const getObjCmd = new GetObjectCommand({
                 Bucket: S3_BUCKET_NAME,
                 Key: fileName,

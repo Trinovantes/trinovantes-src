@@ -6,18 +6,18 @@ export const S3_CONTENT_TYPE = 'image/jpeg'
 
 export function getS3PublicUrls(projectSlug: string): ProjectImgUrl {
     return {
-        original: `${S3_PUBLIC_URL}/${getS3FileNameWithExt(projectSlug, CacheSize.ORIGINAL)}`,
-        small: `${S3_PUBLIC_URL}/${getS3FileNameWithExt(projectSlug, CacheSize.SMALL)}`,
-        medium: `${S3_PUBLIC_URL}/${getS3FileNameWithExt(projectSlug, CacheSize.MEDIUM)}`,
+        original: `${S3_PUBLIC_URL}/${getS3FileNameWithExt(projectSlug, 0)}`,
+        small: `${S3_PUBLIC_URL}/${getS3FileNameWithExt(projectSlug, 320)}`,
+        medium: `${S3_PUBLIC_URL}/${getS3FileNameWithExt(projectSlug, 640)}`,
     }
 }
 
 export function getS3FileNameWithExt(projectSlug: string, size: CacheSize): string {
-    switch (size) {
-        case CacheSize.ORIGINAL: return `${projectSlug}.jpg`
-        case CacheSize.SMALL: return `${projectSlug}-${CacheSize.SMALL}.jpg`
-        case CacheSize.MEDIUM: return `${projectSlug}-${CacheSize.MEDIUM}.jpg`
+    if (size <= 0) {
+        return `${projectSlug}.jpg`
     }
+
+    return `${projectSlug}-${size}.jpg`
 }
 
 export function getS3FileNamesWithExt(projectSlug: string): Array<string> {

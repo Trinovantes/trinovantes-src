@@ -5,15 +5,13 @@ import { config } from 'dotenv'
 const envFile = process.env.ENV_FILE ?? '.env'
 config({ path: envFile })
 
-export enum RuntimeSecret {
-    GITHUB_PAT = 'GITHUB_PAT',
+export type RuntimeSecret =
+    'GITHUB_PAT' |
+    'AWS_ENDPOINT_URL' |
+    'AWS_ACCESS_KEY_ID' |
+    'AWS_SECRET_ACCESS_KEY'
 
-    AWS_ENDPOINT_URL = 'AWS_ENDPOINT_URL',
-    AWS_ACCESS_KEY_ID = 'AWS_ACCESS_KEY_ID',
-    AWS_SECRET_ACCESS_KEY = 'AWS_SECRET_ACCESS_KEY',
-}
-
-export function getRuntimeSecret(key: string): string {
+export function getRuntimeSecret(key: RuntimeSecret): string {
     // Check if it's already defined in process.env
     const envValue = process.env[key]
     if (envValue) {

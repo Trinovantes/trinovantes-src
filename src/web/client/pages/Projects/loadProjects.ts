@@ -1,4 +1,4 @@
-import { loadStateFromDom, HydrationKey } from '@/web/client/utils/hydration'
+import { loadStateFromDom } from '@/web/client/utils/hydration'
 import { Projects } from '@/common/Project'
 import { AppContext } from '@/web/AppContext'
 
@@ -12,5 +12,5 @@ export async function loadProjects(ssrContext?: AppContext): Promise<Projects> {
         return await res.json() as Projects
     }
 
-    return loadStateFromDom(HydrationKey.Projects) ?? {}
+    return loadStateFromDom('__PROJECTS__') ?? {}
 }

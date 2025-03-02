@@ -2,10 +2,7 @@ import { loadBlogPosts } from '../pages/Blog/loadBlogPosts'
 import { AppContext } from '@/web/AppContext'
 import { RouteRecordRaw } from 'vue-router'
 
-export enum RouteName {
-    Home = 'Home',
-    Error404 = 'Error404',
-}
+const ERROR_404_ROUTE_NAME = 'Error404'
 
 export async function getRoutes(ssrContext?: AppContext): Promise<Array<RouteRecordRaw>> {
     const blogPosts = await loadBlogPosts(ssrContext)
@@ -20,7 +17,6 @@ export async function getRoutes(ssrContext?: AppContext): Promise<Array<RouteRec
             component: () => import('@/web/client/layouts/MainLayout.vue'),
             children: [
                 {
-                    name: RouteName.Home,
                     path: '',
                     component: () => import('@/web/client/pages/Home/HomePage.vue'),
                 },
@@ -38,7 +34,7 @@ export async function getRoutes(ssrContext?: AppContext): Promise<Array<RouteRec
                 },
                 ...blogPostRoutes,
                 {
-                    name: RouteName.Error404,
+                    name: ERROR_404_ROUTE_NAME,
                     path: '404',
                     component: () => import('@/web/client/pages/Error/404Page.vue'),
                 },
@@ -47,7 +43,7 @@ export async function getRoutes(ssrContext?: AppContext): Promise<Array<RouteRec
         {
             path: '/:pathMatch(.*)*',
             redirect: {
-                name: RouteName.Error404,
+                name: ERROR_404_ROUTE_NAME,
             },
         },
     ]

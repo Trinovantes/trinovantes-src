@@ -5,24 +5,26 @@ import { createVertexBuffer, FLOAT_SIZE } from './webgl/createBuffer'
 import { createProgram } from './webgl/createProgram'
 import { createFragmentShader, createVertexShader } from './webgl/createShader'
 
-enum Uniform {
+const ALL_UNIFORMS = [
     // Vertex Shader
-    MODEL_MATRIX = 'modelMatrix',
-    MODEL_NORMAL_MATRIX = 'modelNormalMatrix',
-    MVP_MATRIX = 'mvpMatrix',
+    'modelMatrix',
+    'modelNormalMatrix',
+    'mvpMatrix',
 
     // Fragment Shader
-    CAMERA_POSITION = 'cameraPos_worldspace',
-    LIGHT_POSITION = 'lightPos_worldspace',
+    'cameraPos_worldspace',
+    'lightPos_worldspace',
 
-    MATERIAL_IA = 'material.ia',
-    MATERIAL_ID = 'material.id',
-    MATERIAL_IS = 'material.is',
-    MATERIAL_KA = 'material.ka',
-    MATERIAL_KD = 'material.kd',
-    MATERIAL_KS = 'material.ks',
-    MATERIAL_SHININESS = 'material.shininess',
-}
+    'material.ia',
+    'material.id',
+    'material.is',
+    'material.ka',
+    'material.kd',
+    'material.ks',
+    'material.shininess',
+] as const
+
+type Uniform = typeof ALL_UNIFORMS[number]
 
 const GAME_SPEED_MS = 500
 const FONT_SIZE = 20
@@ -166,7 +168,7 @@ export class GameController {
         this.#vertexLocation = gl.getAttribLocation(this.#glProgram, 'vertex_modelspace')
         this.#normalLocation = gl.getAttribLocation(this.#glProgram, 'normal_modelspace')
 
-        for (const uniformName of Object.values(Uniform)) {
+        for (const uniformName of ALL_UNIFORMS) {
             const uniformLocation = gl.getUniformLocation(this.#glProgram, uniformName)
             this.#uniforms.set(uniformName, uniformLocation)
         }
@@ -304,19 +306,19 @@ export class GameController {
 
     #setCamera(gl: WebGL2RenderingContext) {
         const { position } = this.camera
-        const uniform = this.#uniforms.get(Uniform.CAMERA_POSITION) ?? null
+        const uniform = this.#uniforms.get('cameraPos_worldspace') ?? null
         gl.uniform3fv(uniform, position)
     }
 
     #setLight(gl: WebGL2RenderingContext) {
         const lightPosition = this.light
-        const uniform = this.#uniforms.get(Uniform.LIGHT_POSITION) ?? null
+        const uniform = this.#uniforms.get('lightPos_worldspace') ?? null
         gl.uniform3fv(uniform, lightPosition)
     }
 
     #setModelMatrixUniforms(gl: WebGL2RenderingContext, modelMatrix: mat4) {
         {
-            const uniform = this.#uniforms.get(Uniform.MODEL_MATRIX) ?? null
+            const uniform = this.#uniforms.get('modelMatrix') ?? null
             gl.uniformMatrix4fv(uniform, false, modelMatrix)
         }
         {
@@ -324,7 +326,7 @@ export class GameController {
             mat4.invert(modelNormalMatrix, modelNormalMatrix)
             mat4.transpose(modelNormalMatrix, modelNormalMatrix)
 
-            const uniform = this.#uniforms.get(Uniform.MODEL_NORMAL_MATRIX) ?? null
+            const uniform = this.#uniforms.get('modelNormalMatrix') ?? null
             gl.uniformMatrix4fv(uniform, false, modelNormalMatrix)
         }
         {
@@ -333,31 +335,31 @@ export class GameController {
             mat4.multiply(mvpMatrix, mvpMatrix, this.cameraMatrix)
             mat4.multiply(mvpMatrix, mvpMatrix, modelMatrix)
 
-            const uniform = this.#uniforms.get(Uniform.MVP_MATRIX) ?? null
+            const uniform = this.#uniforms.get('mvpMatrix') ?? null
             gl.uniformMatrix4fv(uniform, false, mvpMatrix)
         }
     }
 
     #setMaterial(gl: WebGL2RenderingContext, material: Material) {
-        const iaUniform = this.#uniforms.get(Uniform.MATERIAL_IA) ?? null
+        const iaUniform = this.#uniforms.get('material.ia') ?? null
         gl.uniform3fv(iaUniform, material.ia)
 
-        const idUniform = this.#uniforms.get(Uniform.MATERIAL_ID) ?? null
+        const idUniform = this.#uniforms.get('material.id') ?? null
         gl.uniform3fv(idUniform, material.id)
 
-        const isUniform = this.#uniforms.get(Uniform.MATERIAL_IS) ?? null
+        const isUniform = this.#uniforms.get('material.is') ?? null
         gl.uniform3fv(isUniform, material.is)
 
-        const kaUniform = this.#uniforms.get(Uniform.MATERIAL_KA) ?? null
+        const kaUniform = this.#uniforms.get('material.ka') ?? null
         gl.uniform1f(kaUniform, material.ka)
 
-        const kdUniform = this.#uniforms.get(Uniform.MATERIAL_KD) ?? null
+        const kdUniform = this.#uniforms.get('material.kd') ?? null
         gl.uniform1f(kdUniform, material.kd)
 
-        const ksUniform = this.#uniforms.get(Uniform.MATERIAL_KS) ?? null
+        const ksUniform = this.#uniforms.get('material.ks') ?? null
         gl.uniform1f(ksUniform, material.ks)
 
-        const shininessUniform = this.#uniforms.get(Uniform.MATERIAL_SHININESS) ?? null
+        const shininessUniform = this.#uniforms.get('material.shininess') ?? null
         gl.uniform1f(shininessUniform, material.shininess)
     }
 

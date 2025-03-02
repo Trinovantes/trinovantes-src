@@ -1,5 +1,5 @@
 import { Octokit } from '@octokit/rest'
-import { getRuntimeSecret, RuntimeSecret } from '@/common/node/RuntimeSecret'
+import { getRuntimeSecret } from '@/common/node/RuntimeSecret'
 import { Project, ProjectCategory, Projects, projects } from '@/common/Project'
 import { getS3PublicUrls } from '@/s3/getS3PublicUrls'
 
@@ -16,7 +16,7 @@ export async function fetchProjects(): Promise<Projects> {
 
 async function hydrateProjects(): Promise<Projects> {
     const hydratedProjects: Projects = {}
-    const githubToken = getRuntimeSecret(RuntimeSecret.GITHUB_PAT)
+    const githubToken = getRuntimeSecret('GITHUB_PAT')
     const octokit = new Octokit({ auth: githubToken })
 
     for (const [category, categoryProjects] of Object.entries(projects)) {

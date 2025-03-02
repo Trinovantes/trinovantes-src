@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useSeoMeta } from '@unhead/vue'
-import { ProjectCategory, projects as unhydratedProjects } from '@/common/Project'
+import { projects as unhydratedProjects } from '@/common/Project'
 import { useAppContext } from '@/web/AppContext'
 import { loadProjects } from './loadProjects'
 import CategoryProjectsList from './CategoryProjectsList.vue'
@@ -20,26 +20,26 @@ const projects = await loadProjects(ssrContext)
 <template>
     <article class="container text-container full">
         <CategoryProjectsList
-            :projects="projects[ProjectCategory.Apps] ?? []"
+            :projects="projects['Apps'] ?? []"
         >
             <TextHeading :size="1">
-                {{ ProjectCategory.Apps }}
+                Apps
             </TextHeading>
         </CategoryProjectsList>
 
         <CategoryProjectsList
-            :projects="projects[ProjectCategory.Userscript] ?? []"
+            :projects="projects['Userscripts'] ?? []"
         >
             <TextHeading :size="1">
-                {{ ProjectCategory.Userscript }}
+                Userscripts
             </TextHeading>
         </CategoryProjectsList>
 
         <CategoryProjectsList
-            :projects="projects[ProjectCategory.Node] ?? []"
+            :projects="projects['Node Projects'] ?? []"
         >
             <TextHeading :size="1">
-                {{ ProjectCategory.Node }}
+                Node Projects
             </TextHeading>
         </CategoryProjectsList>
     </article>

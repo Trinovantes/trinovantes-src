@@ -1,4 +1,4 @@
-import { loadStateFromDom, HydrationKey } from '@/web/client/utils/hydration'
+import { loadStateFromDom } from '@/web/client/utils/hydration'
 import { AppContext } from '@/web/AppContext'
 import { BlogPosts } from '@/api/services/fetchBlogPosts'
 
@@ -12,5 +12,5 @@ export async function loadBlogPosts(ssrContext?: AppContext): Promise<BlogPosts>
         return await res.json() as BlogPosts
     }
 
-    return loadStateFromDom(HydrationKey.BlogPosts) ?? []
+    return loadStateFromDom('__BLOG_POSTS__') ?? []
 }

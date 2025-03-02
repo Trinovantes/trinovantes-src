@@ -5,11 +5,11 @@ import { formatUrl } from '@/common/utils/formatUrl'
 import { slugify } from '@/common/utils/slugify'
 import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
 import { fetchProjects } from '@/api/services/fetchProjects'
-import { Project, ProjectCategory } from '@/common/Project'
+import { Project } from '@/common/Project'
 import { CacheSize } from '@/s3/CacheSize'
 import { getRepoUrl } from '@/common/utils/getRepoUrl'
 
-const IMG_WIDTH = CacheSize.SMALL
+const IMG_WIDTH: CacheSize = 320
 const TABLE_ICON_SIZE = 48
 const INLINE_ICON_SIZE = 16
 
@@ -55,13 +55,13 @@ export class ReadmeGenerator {
         const projects = await fetchProjects()
 
         this.addLn('# Node Projects')
-        this.generateProjectsTable(projects[ProjectCategory.Node])
+        this.generateProjectsTable(projects['Node Projects'])
 
         this.addLn('# Apps')
-        this.generateProjectsTableWithPreview(projects[ProjectCategory.Apps])
+        this.generateProjectsTableWithPreview(projects['Apps'])
 
         this.addLn('# UserScripts')
-        this.generateProjectsTableWithPreview(projects[ProjectCategory.Userscript])
+        this.generateProjectsTableWithPreview(projects['Userscripts'])
     }
 
     private generateProjectsTable(projects: Array<Project> = []): void {
