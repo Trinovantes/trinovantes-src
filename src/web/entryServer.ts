@@ -9,6 +9,7 @@ import { createVueApp } from './createVueApp'
 import { AppContext } from './AppContext'
 import { RequestHandler, Request, Response, NextFunction } from 'express'
 import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
+import { createHead } from '@unhead/vue/server'
 
 const assetRenderer = new VueSsrAssetRenderer(DEFINE.SSG_MANIFEST_FILE)
 const htmlTemplate = readFileSync(DEFINE.SSG_HTML_TEMPLATE).toString('utf-8')
@@ -36,7 +37,8 @@ const server = new SpaServer({
                 projects: await fetchProjects(),
             }
 
-            const { app, router, head } = await createVueApp(appContext)
+            const head = createHead({ disableDefaults: true })
+            const { app, router } = await createVueApp(head, appContext)
             if (router.currentRoute.value.fullPath !== url) {
                 res.redirect(router.currentRoute.value.fullPath)
                 return

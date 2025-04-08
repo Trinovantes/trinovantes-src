@@ -1,23 +1,23 @@
 import { createMemoryHistory, createRouter, createWebHistory, Router } from 'vue-router'
 import { getRoutes } from './routes'
-import { AppContext } from '@/web/AppContext'
+import type { AppContext } from '@/web/AppContext'
 
 // ----------------------------------------------------------------------------
 // Router
 // ----------------------------------------------------------------------------
 
-export async function createVueRouter(ssrContext?: AppContext): Promise<Router> {
-    const routes = await getRoutes(ssrContext)
+export async function createVueRouter(appContext?: AppContext): Promise<Router> {
+    const routes = await getRoutes(appContext)
     const router = createRouter({
-        history: ssrContext !== undefined
+        history: appContext !== undefined
             ? createMemoryHistory()
             : createWebHistory(),
 
         routes,
     })
 
-    if (ssrContext?.url) {
-        await router.push(ssrContext.url)
+    if (appContext?.url) {
+        await router.push(appContext.url)
     }
 
     return router

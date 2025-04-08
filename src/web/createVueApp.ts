@@ -1,5 +1,4 @@
 import { createSSRApp } from 'vue'
-import { createHead } from '@unhead/vue'
 import AppLoader from './client/AppLoader.vue'
 import CodeBlock from './client/components/CodeBlock.vue'
 import MathBlock from './client/components/MathBlock.vue'
@@ -10,16 +9,16 @@ import SvgIcon from './client/components/SvgIcon.vue'
 import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
 import { createVueRouter } from './client/router/createVueRouter'
-import { AppContext } from './AppContext'
-import type { createRouter } from 'vue-router'
+import { createRouter } from 'vue-router'
+import type { createHead } from '@unhead/vue/client'
+import type { AppContext } from './AppContext'
 
 type VueApp = {
     app: ReturnType<typeof createSSRApp>
     router: ReturnType<typeof createRouter>
-    head: ReturnType<typeof createHead>
 }
 
-export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
+export async function createVueApp(head: ReturnType<typeof createHead>, appContext?: AppContext): Promise<VueApp> {
     // Vue
     const app = createSSRApp(AppLoader)
     app.component('CodeBlock', CodeBlock)
@@ -32,17 +31,15 @@ export async function createVueApp(ssrContext?: AppContext): Promise<VueApp> {
     app.component('BlogPost', BlogPost)
 
     // Vue Router
-    const router = await createVueRouter(ssrContext)
+    const router = await createVueRouter(appContext)
     app.use(router)
     await router.isReady()
 
     // Unhead
-    const head = createHead()
     app.use(head)
 
     return {
         app,
         router,
-        head,
     }
 }
