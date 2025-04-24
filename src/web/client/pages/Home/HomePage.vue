@@ -13,12 +13,8 @@ useSeoMeta({
     <article class="home-page">
         <div class="container">
             <h1>
-                {{ APP_NAME }}
-            </h1>
-
-            <h2>
                 {{ APP_DESC }}
-            </h2>
+            </h1>
 
             <ContactLinks
                 :is-dark="true"
@@ -29,7 +25,7 @@ useSeoMeta({
 
 <style lang="scss" scoped>
 article.home-page{
-    background: color.adjust($dark, $lightness: 10%);
+    background: $dark;
     color: white;
     display: grid;
     align-items: center;
@@ -39,7 +35,7 @@ article.home-page{
         padding-bottom: $padding * 2;
 
         display: grid;
-        gap: $padding * 4;
+        gap: $padding * 2;
 
         @media (max-width: $mobile-breakpoint) {
             gap: $padding * 2;
@@ -47,19 +43,10 @@ article.home-page{
     }
 
     h1{
-        color: $primary-on-dark;
-        font-size: 6rem;
-        font-weight: 900;
-
-        @media (max-width: $mobile-breakpoint) {
-            font-size: 3rem;
-        }
-    }
-
-    h2{
         color: $text-on-dark;
         font-weight: normal;
-        font-size: 3rem;
+        font-size: 2rem;
+        line-height: 1.5;
 
         @media (max-width: $mobile-breakpoint) {
             font-size: 1.5rem;
@@ -68,11 +55,10 @@ article.home-page{
 
     a{
         font-size: 1.5rem;
-        line-height: $padding * 2;
+        line-height: 1;
 
         @media (max-width: $mobile-breakpoint) {
             font-size: 1rem;
-            line-height: 1;
         }
     }
 }

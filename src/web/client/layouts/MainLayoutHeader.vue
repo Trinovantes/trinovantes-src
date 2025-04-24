@@ -65,7 +65,6 @@ a.home-btn{
     }
 
     @media (max-width: $mobile-breakpoint) {
-        border-bottom: 1px solid $border-color;
         justify-content: center;
         padding: $padding * 2;
     }

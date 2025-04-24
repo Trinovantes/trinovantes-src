@@ -1,5 +1,5 @@
 export const APP_NAME = 'Stephen Li'
-export const APP_DESC = "I'm a Canadian indie game developer. I also build random websites."
+export const APP_DESC = "I'm a Canadian indie game/software developer"
 
 export const CONTACTS = [
     {
