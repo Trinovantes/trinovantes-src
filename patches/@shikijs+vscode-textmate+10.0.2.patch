@@ -1,0 +1,13 @@
+diff --git a/node_modules/@shikijs/vscode-textmate/dist/index.js b/node_modules/@shikijs/vscode-textmate/dist/index.js
+index 8323de2..ba1c378 100644
+--- a/node_modules/@shikijs/vscode-textmate/dist/index.js
++++ b/node_modules/@shikijs/vscode-textmate/dist/index.js
+@@ -1780,7 +1780,7 @@ var ScopeMatcher = class {
+ 
+ // src/debug.ts
+ var DebugFlags = {
+-  InDebugMode: typeof process !== "undefined" && !!process.env["VSCODE_TEXTMATE_DEBUG"]
++  InDebugMode: typeof process !== "undefined" && typeof process.env !== "undefined" && !!process.env["VSCODE_TEXTMATE_DEBUG"]
+ };
+ var UseOnigurumaFindOptions = false;
+ 
