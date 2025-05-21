@@ -175,6 +175,11 @@ select{
         border-left-color: $positive;
         background-color: color.adjust($positive, $lightness: 50%);
     }
+
+    &.info{
+        border-left-color: $info;
+        background-color: color.adjust($info, $lightness: 35%);
+    }
 }
 
 .border-box{
