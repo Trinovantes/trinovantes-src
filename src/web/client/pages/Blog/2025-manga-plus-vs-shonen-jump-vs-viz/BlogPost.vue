@@ -51,14 +51,17 @@ const vizUrl = 'https://www.viz.com/manga-books/vizmanga/section/free-chapters'
                     <td>
                         Manga
                     </td>
-                    <td width="160">
+                    <td>
                         Manga Plus
+                        <br>($6.49)
                     </td>
-                    <td width="160">
+                    <td>
                         Shonen Jump
+                        <br>($3.99)
                     </td>
-                    <td width="160">
+                    <td>
                         Viz
+                        <br>($2.79)
                     </td>
                 </tr>
             </thead>
@@ -119,6 +122,7 @@ table#manga-catalog{
 
     td:not(:first-child){
         text-align: center;
+        width: 160px;
     }
 }
 </style>
