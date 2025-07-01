@@ -1,19 +1,19 @@
 export type Tech =
     // General
-    'C++' |
+    | 'C++'
 
     // Frontend
-    'Typescript' |
-    'Vue.js' |
+    | 'Typescript'
+    | 'Vue.js'
 
     // Backend
-    'Node.js' |
-    'Express.js' |
-    'SQLite' |
-    'Electron' |
+    | 'Node.js'
+    | 'Express.js'
+    | 'SQLite'
+    | 'Electron'
 
     // Devops
-    'Docker'
+    | 'Docker'
 
 export type ProjectImgUrl = {
     original: string
