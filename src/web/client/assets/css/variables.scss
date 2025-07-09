@@ -34,6 +34,7 @@ $negative  : #C10015;
 $info      : #31CCEC;
 $warning   : #F2C037;
 
+$primary-on-light:  color.adjust($primary, $lightness: -10%);
 $primary-on-dark:   color.adjust($primary, $lightness: 20%);
 $text-on-dark:      rgba(#ccc, 0.8);
 $light-border:      rgba(#222, 0.1);

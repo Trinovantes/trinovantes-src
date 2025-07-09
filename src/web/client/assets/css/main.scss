@@ -30,6 +30,18 @@ a{
     }
 }
 
+code{
+    background: $light-border;
+    border-radius: math.div($padding, 4);
+    font-family: 'Courier New', Courier, monospace;
+    overflow-wrap: break-word;
+    padding: math.div($padding, 4) math.div($padding, 2);
+
+    a{
+        color: $primary-on-light;
+    }
+}
+
 h1{
     font-size: 4.2rem;
     font-weight: 900;
@@ -93,14 +105,6 @@ li{
             margin-bottom: $padding * 2;
         }
     }
-}
-
-code{
-    background: $light-border;
-    border-radius: math.div($padding, 4);
-    font-family: 'Courier New', Courier, monospace;
-    overflow-wrap: break-word;
-    padding: math.div($padding, 4) math.div($padding, 2);
 }
 
 table{

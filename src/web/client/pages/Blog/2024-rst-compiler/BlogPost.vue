@@ -9,7 +9,7 @@ const CREATED_AT = new Date('2024-07-07').getTime()
         :created-at="CREATED_AT"
     >
         <p>
-            Over the last couple of months, I spent my free time building a reStructuredText (RST) to Markdown compiler (<a href="https://trinovantes.github.io/rst-compiler/"><code>rst-compiler</code></a>) in TypeScript.
+            Over the last couple of months, I spent my free time building a reStructuredText (RST) to Markdown compiler (<code><a href="https://trinovantes.github.io/rst-compiler/">rst-compiler</a></code>) in TypeScript.
             As it turns out, it is also the world's first feature-complete pure-JavaScript RST compiler publicly available on NPM.
         </p>
 
