@@ -1,0 +1,11 @@
+ignoredBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
+  - sharp
+
+onlyBuiltDependencies:
+  - puppeteer
+
+patchedDependencies:
+  '@nuxt/devalue': patches/@nuxt__devalue.patch
+  vue-loader: patches/vue-loader.patch

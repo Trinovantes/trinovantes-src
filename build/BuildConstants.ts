@@ -1,6 +1,6 @@
 import path from 'node:path'
-import { fetchBlogPosts } from '../src/api/services/fetchBlogPosts'
-import { getGitHash } from './BuildSecret'
+import { fetchBlogPosts } from '../src/api/services/fetchBlogPosts.ts'
+import { getGitHash } from './BuildSecret.ts'
 
 // Assume we are running webpack from the project root (../)
 const rootDir = path.resolve()
@@ -32,22 +32,22 @@ export const srcWebTemplate = path.resolve(srcDir, 'web', 'index.html')
 export const srcWebStaticDir = path.resolve(srcDir, 'web', 'static')
 
 export const buildConstants = {
-    '__VUE_OPTIONS_API__': JSON.stringify(false),
-    '__VUE_PROD_DEVTOOLS__': JSON.stringify(false),
-    '__VUE_PROD_HYDRATION_MISMATCH_DETAILS__': JSON.stringify(false),
+    __VUE_OPTIONS_API__: JSON.stringify(false),
+    __VUE_PROD_DEVTOOLS__: JSON.stringify(false),
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false),
 
-    'DEFINE.IS_DEV': JSON.stringify(isDev),
-    'DEFINE.IS_SSR': "(typeof window === 'undefined')",
-    'DEFINE.GIT_HASH': JSON.stringify(gitHash),
+    __IS_DEV__: JSON.stringify(isDev),
+    __IS_SSR__: "(typeof window === 'undefined')",
+    __GIT_HASH__: JSON.stringify(gitHash),
 
-    'DEFINE.SSG_PUBLIC_PATH': JSON.stringify(publicPath),
-    'DEFINE.SSG_PUBLIC_DIR': JSON.stringify(distWebPublicDir),
-    'DEFINE.SSG_ENTRY_FILE': JSON.stringify(distWebEntryFile),
-    'DEFINE.SSG_HTML_TEMPLATE': JSON.stringify(distSsgTemplate),
-    'DEFINE.SSG_MANIFEST_FILE': JSON.stringify(distSsgManifest),
+    __SSG_PUBLIC_PATH__: JSON.stringify(publicPath),
+    __SSG_PUBLIC_DIR__: JSON.stringify(distWebPublicDir),
+    __SSG_ENTRY_FILE__: JSON.stringify(distWebEntryFile),
+    __SSG_HTML_TEMPLATE__: JSON.stringify(distSsgTemplate),
+    __SSG_MANIFEST_FILE__: JSON.stringify(distSsgManifest),
 }
 
-export const prerenderRoutes: Promise<Array<string>> = (async() => {
+export const prerenderRoutes: Promise<Array<string>> = (async () => {
     const blogPostRoutes = (await fetchBlogPosts()).map((blogPost) => `/${blogPost.slug}`)
 
     return [

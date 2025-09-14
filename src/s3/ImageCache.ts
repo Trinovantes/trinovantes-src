@@ -1,13 +1,13 @@
-import { getRuntimeSecret } from '@/common/node/RuntimeSecret'
-import { S3_BUCKET_NAME } from '@/common/Constants'
-import { projects } from '@/common/Project'
+import { getRuntimeSecret } from '../common/node/RuntimeSecret.ts'
+import { S3_BUCKET_NAME } from '../common/Constants.ts'
+import { projects } from '../common/Project.ts'
 import { S3Client, ListObjectsCommand, GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 import { add, isBefore } from 'date-fns'
-import { getS3FileNamesWithExt, getS3FileNameWithExt, S3_CONTENT_TYPE } from './getS3PublicUrls'
+import { getS3FileNamesWithExt, getS3FileNameWithExt, S3_CONTENT_TYPE } from './getS3PublicUrls.ts'
 import { JSDOM } from 'jsdom'
 import sharp from 'sharp'
-import { ALL_CACHE_SIZES } from './CacheSize'
-import { getRepoUrl } from '@/common/utils/getRepoUrl'
+import { ALL_CACHE_SIZES } from './CacheSize.ts'
+import { getRepoUrl } from '../common/utils/getRepoUrl.ts'
 
 export class ImageCache {
     readonly #s3Client: S3Client

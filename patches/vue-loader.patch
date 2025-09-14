@@ -1,0 +1,13 @@
+diff --git a/dist/index.js b/dist/index.js
+index a5e9827ce34efb14f0ccdd5759d13fa4147b7d27..9d0071f50f5bfb29d6005699a65f2a0faeb0086e 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -84,7 +84,7 @@ function loader(source) {
+         .replace(/^(\.\.[\/\\])+/, '');
+     const shortFilePath = rawShortFilePath.replace(/\\/g, '/');
+     const id = hash(isProduction
+-        ? shortFilePath + '\n' + source.replace(/\r\n/g, '\n')
++        ? shortFilePath
+         : shortFilePath);
+     // if the query has a type field, this is a language block request
+     // e.g. foo.vue?type=template&id=xxxxx

@@ -1,13 +1,13 @@
-import { loadStateFromDom } from '@/web/client/utils/hydration'
-import { Projects } from '@/common/Project'
-import { AppContext } from '@/web/AppContext'
+import type { Projects } from '../../../../common/Project.ts'
+import type { AppContext } from '../../../AppContext.ts'
+import { loadStateFromDom } from '../../utils/hydration.ts'
 
 export async function loadProjects(ssrContext?: AppContext): Promise<Projects> {
-    if (DEFINE.IS_SSR) {
+    if (__IS_SSR__) {
         return ssrContext?.projects ?? {}
     }
 
-    if (DEFINE.IS_DEV) {
+    if (__IS_DEV__) {
         const res = await fetch('/api/projects')
         return await res.json() as Projects
     }

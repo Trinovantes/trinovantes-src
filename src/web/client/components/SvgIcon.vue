@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { getIconSvgRaw } from '../utils/ResponsiveLoaderAsset'
+import { getIconSvgRaw } from '../utils/ResponsiveLoaderAsset.ts'
 
 defineProps<{
     name: string

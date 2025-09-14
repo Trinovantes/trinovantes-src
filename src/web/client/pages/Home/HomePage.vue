@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useSeoMeta } from '@unhead/vue'
 import ContactLinks from '../About/ContactLinks.vue'
-import { APP_NAME, APP_DESC } from '@/common/Constants'
+import { APP_DESC, APP_NAME } from '../../../../common/Constants.ts'
 
 useSeoMeta({
     title: APP_NAME,

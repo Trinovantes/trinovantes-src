@@ -1,5 +1,5 @@
 import { writeFile } from 'node:fs/promises'
-import { ReadmeGenerator } from './ReadmeGenerator'
+import { ReadmeGenerator } from './ReadmeGenerator.ts'
 
 async function main() {
     const generator = new ReadmeGenerator()

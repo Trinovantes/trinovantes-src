@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, getCurrentInstance } from 'vue'
 import { ref } from 'vue'
-import { getTargetSpeed } from './HsrAv'
+import { getTargetSpeed } from './HsrAv.ts'
 
 const uid = getCurrentInstance()?.uid
 const MAX_TURNS = 8

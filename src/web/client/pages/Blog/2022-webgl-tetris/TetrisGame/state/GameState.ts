@@ -1,5 +1,5 @@
-import { blockMaterials, Material } from './Material'
-import { Tetriminoe, defaultTetriminoePoints } from './Tetriminoe'
+import { blockMaterials, type Material } from './Material.ts'
+import { Tetriminoe, defaultTetriminoePoints } from './Tetriminoe.ts'
 
 type BoardCol = Material | null
 type BoardRow = Array<BoardCol>

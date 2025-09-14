@@ -1,4 +1,4 @@
-import { slugify } from '../../common/utils/slugify'
+import { slugify } from '../../common/utils/slugify.ts'
 import fs from 'node:fs/promises'
 import path from 'node:path'
 

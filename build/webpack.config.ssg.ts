@@ -1,16 +1,16 @@
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import { VueSsrAssetsServerPlugin } from 'vue-ssr-assets-plugin'
-import { Configuration } from 'webpack'
+import type { Configuration } from 'webpack'
 import { merge } from 'webpack-merge'
-import { srcWebDir, distSsgDir, distSsgTemplate, srcWebTemplate, distWebDir, prerenderRoutes } from './BuildConstants'
-import { commonNodeConfig } from './webpack.common'
+import { srcWebDir, distSsgDir, distSsgTemplate, srcWebTemplate, distWebDir, prerenderRoutes } from './BuildConstants.ts'
+import { commonNodeConfig } from './webpack.common.ts'
 import { PuppeteerPrerenderPlugin } from 'puppeteer-prerender-plugin'
 
 // ----------------------------------------------------------------------------
 // Server
 // ----------------------------------------------------------------------------
 
-export default (async(): Promise<Configuration> => merge(commonNodeConfig, {
+export default (async (): Promise<Configuration> => merge(commonNodeConfig, {
     entry: {
         www: `${srcWebDir}/entryServer.ts`,
     },
@@ -33,7 +33,7 @@ export default (async(): Promise<Configuration> => merge(commonNodeConfig, {
             enabled: true,
             enablePageJs: false,
             entryDir: distSsgDir,
-            entryFile: 'www.js',
+            entryFile: 'www.cjs',
             outputDir: distWebDir,
             routes: [
                 '/404',

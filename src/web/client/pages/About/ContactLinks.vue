@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { CONTACTS } from '@/common/Constants'
-import { slugify } from '@/common/utils/slugify'
+import { CONTACTS } from '../../../../common/Constants.ts'
+import { slugify } from '../../../../common/utils/slugify.ts'
 
 defineProps<{
     isDark?: boolean

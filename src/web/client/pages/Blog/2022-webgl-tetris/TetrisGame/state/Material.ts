@@ -1,5 +1,5 @@
 import { vec3 } from 'gl-matrix'
-import { defaultTetriminoePoints } from './Tetriminoe'
+import { defaultTetriminoePoints } from './Tetriminoe.ts'
 
 export type Material = {
     ia: vec3 // ambiant intensity

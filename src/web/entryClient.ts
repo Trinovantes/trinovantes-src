@@ -1,9 +1,9 @@
 import './client/assets/css/main.scss'
-import { createVueApp } from './createVueApp'
+import { createVueApp } from './createVueApp.ts'
 import { createHead } from '@unhead/vue/client'
 
 async function main() {
-    console.info('Release', DEFINE.GIT_HASH)
+    console.info('Release', __GIT_HASH__)
     const head = createHead()
     const { app } = await createVueApp(head)
     app.mount('#app')

@@ -1,5 +1,5 @@
-import { BrandedType } from '@/@types/brand'
-import { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
+import type { BrandedType } from '../../../../../@types/brand.js'
+import type { ResponsiveLoaderAsset } from '../../../utils/ResponsiveLoaderAsset.ts'
 import bossData from './Bosses.csv'
 
 export type HsrElement = BrandedType<string, 'HsrElement'>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import mediumZoom from 'medium-zoom'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { ResponsiveLoaderAsset } from '@/web/client/utils/ResponsiveLoaderAsset'
+import type { ResponsiveLoaderAsset } from '../utils/ResponsiveLoaderAsset.ts'
 
 const props = withDefaults(defineProps<{
     img: ResponsiveLoaderAsset

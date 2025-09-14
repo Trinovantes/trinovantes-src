@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useSeoMeta } from '@unhead/vue'
-import { formatDate, formatDateDisplay } from '@/common/utils/formatDate'
+import { formatDate, formatDateDisplay } from '../../../../common/utils/formatDate.ts'
 
 const props = defineProps<{
     title: string

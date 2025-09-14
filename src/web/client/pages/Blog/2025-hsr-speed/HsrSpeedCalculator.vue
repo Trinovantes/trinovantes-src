@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, getCurrentInstance, ref } from 'vue'
 import HsrAvTimeline from './HsrAvTimeline.vue'
-import { computeCycleTurns, computeUnitTurns, getTotalAv, getAvFromSpeed } from './HsrAv'
+import { computeCycleTurns, computeUnitTurns, getTotalAv, getAvFromSpeed } from './HsrAv.ts'
 
 const INIT_SPEED = 160
 const MAX_CYCLES = 4

@@ -1,13 +1,13 @@
 import assert from 'node:assert'
-import { CLIENT_SRC_WEB_URL } from '@/common/Constants'
-import { formatDate } from '@/common/utils/formatDate'
-import { formatUrl } from '@/common/utils/formatUrl'
-import { slugify } from '@/common/utils/slugify'
-import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
-import { fetchProjects } from '@/api/services/fetchProjects'
-import { Project } from '@/common/Project'
-import { CacheSize } from '@/s3/CacheSize'
-import { getRepoUrl } from '@/common/utils/getRepoUrl'
+import { CLIENT_SRC_WEB_URL } from '../common/Constants.ts'
+import { formatDate } from '../common/utils/formatDate.ts'
+import { formatUrl } from '../common/utils/formatUrl.ts'
+import { slugify } from '../common/utils/slugify.ts'
+import { fetchBlogPosts } from '../api/services/fetchBlogPosts.ts'
+import { fetchProjects } from '../api/services/fetchProjects.ts'
+import type { Project } from '../common/Project.ts'
+import type { CacheSize } from '../s3/CacheSize.ts'
+import { getRepoUrl } from '../common/utils/getRepoUrl.ts'
 
 const IMG_WIDTH: CacheSize = 320
 const TABLE_ICON_SIZE = 48

@@ -1,18 +1,16 @@
-import { HydrationMap } from '@/web/client/utils/hydration'
+import { HydrationMap } from '../web/client/utils/hydration.ts'
 
 declare global {
-    const DEFINE: Readonly<{
-        IS_DEV: boolean
-        IS_SSR: boolean
-        GIT_HASH: string
+    const __IS_DEV__: boolean
+    const __IS_SSR__: boolean
+    const __GIT_HASH__: string
 
-        // ssg specific
-        SSG_PUBLIC_PATH: string
-        SSG_PUBLIC_DIR: string
-        SSG_ENTRY_FILE: string
-        SSG_HTML_TEMPLATE: string
-        SSG_MANIFEST_FILE: string
-    }>
+    // ssg specific
+    const __SSG_PUBLIC_PATH__: string
+    const __SSG_PUBLIC_DIR__: string
+    const __SSG_ENTRY_FILE__: string
+    const __SSG_HTML_TEMPLATE__: string
+    const __SSG_MANIFEST_FILE__: string
 
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/consistent-type-definitions
     interface Window extends HydrationMap {}
