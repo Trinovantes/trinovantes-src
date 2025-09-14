@@ -7,7 +7,7 @@ const props = defineProps<{
 }>()
 
 const renderedStr = ref<string>()
-watch(() => props, async() => {
+watch(() => props, async () => {
     const katex = await import('katex')
     renderedStr.value = katex.default.renderToString(props.tex, {
         throwOnError: true,

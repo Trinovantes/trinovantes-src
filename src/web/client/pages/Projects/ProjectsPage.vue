@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { useSeoMeta } from '@unhead/vue'
-import { projects as unhydratedProjects } from '@/common/Project'
-import { useAppContext } from '@/web/AppContext'
-import { loadProjects } from './loadProjects'
+import { loadProjects } from './loadProjects.ts'
 import CategoryProjectsList from './CategoryProjectsList.vue'
+import { useAppContext } from '../../../AppContext.ts'
+import { projects as unhydratedProjects } from '../../../../common/Project.ts'
 
 const title = 'Projects'
 useSeoMeta({

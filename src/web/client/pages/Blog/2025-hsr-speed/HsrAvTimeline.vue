@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import HsrAvTimelineItem from './HsrAvTimelineItem.vue'
-import { HsrTurn } from './HsrAv'
+import type { HsrTurn } from './HsrAv.ts'
 
 defineProps<{
     label: string

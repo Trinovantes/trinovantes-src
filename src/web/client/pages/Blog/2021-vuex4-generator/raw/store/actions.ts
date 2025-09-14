@@ -1,4 +1,4 @@
-import { sleep } from '@/common/utils/sleep'
+import { sleep } from '../common/utils/sleep.ts'
 import { ActionContext, ActionTree } from 'vuex'
 import { ExampleState } from '.'
 import { ExampleGetters } from './getters'

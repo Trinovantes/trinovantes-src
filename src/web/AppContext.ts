@@ -1,7 +1,7 @@
 import { useSSRContext } from 'vue'
-import { Projects } from '@/common/Project'
-import { SSRContext } from '@vue/server-renderer'
-import { BlogPosts } from '@/api/services/fetchBlogPosts'
+import type { Projects } from '../common/Project.ts'
+import type { SSRContext } from '@vue/server-renderer'
+import type { BlogPosts } from '../api/services/fetchBlogPosts.ts'
 
 type VueSsrAssetsPluginContext = {
     _matchedComponents: Set<string>
@@ -14,7 +14,7 @@ export type AppContext = SSRContext & VueSsrAssetsPluginContext & {
 }
 
 export function useAppContext(): AppContext | undefined {
-    if (DEFINE.IS_SSR) {
+    if (__IS_SSR__) {
         return useSSRContext()
     } else {
         return undefined

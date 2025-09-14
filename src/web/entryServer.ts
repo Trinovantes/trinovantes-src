@@ -3,32 +3,24 @@ import { renderToString } from '@vue/server-renderer'
 import { SpaServer } from 'puppeteer-prerender-plugin'
 import { renderSSRHead } from '@unhead/ssr'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
-import { fetchProjects } from '@/api/services/fetchProjects'
-import { saveStateToDom } from './client/utils/hydration'
-import { createVueApp } from './createVueApp'
-import { AppContext } from './AppContext'
-import { RequestHandler, Request, Response, NextFunction } from 'express'
-import { fetchBlogPosts } from '@/api/services/fetchBlogPosts'
+import { fetchProjects } from '../api/services/fetchProjects.ts'
+import { saveStateToDom } from './client/utils/hydration.ts'
+import { createVueApp } from './createVueApp.ts'
+import type { AppContext } from './AppContext.ts'
+import { fetchBlogPosts } from '../api/services/fetchBlogPosts.ts'
 import { createHead } from '@unhead/vue/server'
+import { createAsyncHandler } from '../common/node/createAsyncHandler.ts'
 
-const assetRenderer = new VueSsrAssetRenderer(DEFINE.SSG_MANIFEST_FILE)
-const htmlTemplate = readFileSync(DEFINE.SSG_HTML_TEMPLATE).toString('utf-8')
-
-function createAsyncHandler(handler: (req: Request, res: Response, next: NextFunction) => Promise<void>): RequestHandler {
-    return (req, res, next) => {
-        handler(req, res, next).catch((err: unknown) => {
-            next(err)
-        })
-    }
-}
+const assetRenderer = new VueSsrAssetRenderer(__SSG_MANIFEST_FILE__)
+const htmlTemplate = readFileSync(__SSG_HTML_TEMPLATE__).toString('utf-8')
 
 const server = new SpaServer({
-    entryFilePath: DEFINE.SSG_ENTRY_FILE,
-    publicDir: DEFINE.SSG_PUBLIC_DIR,
-    publicPath: DEFINE.SSG_PUBLIC_PATH,
+    entryFilePath: __SSG_ENTRY_FILE__,
+    publicDir: __SSG_PUBLIC_DIR__,
+    publicPath: __SSG_PUBLIC_PATH__,
 
     handlers: {
-        '*': createAsyncHandler(async(req, res) => {
+        '*': createAsyncHandler(async (req, res) => {
             const url = req.originalUrl
             const appContext: AppContext = {
                 _matchedComponents: new Set(),

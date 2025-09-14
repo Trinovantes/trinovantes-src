@@ -1,7 +1,7 @@
 import { Octokit } from '@octokit/rest'
-import { getRuntimeSecret } from '@/common/node/RuntimeSecret'
-import { Project, ProjectCategory, Projects, projects } from '@/common/Project'
-import { getS3PublicUrls } from '@/s3/getS3PublicUrls'
+import { getRuntimeSecret } from '../../common/node/RuntimeSecret.ts'
+import { type Projects, projects, type Project, type ProjectCategory } from '../../common/Project.ts'
+import { getS3PublicUrls } from '../../s3/getS3PublicUrls.ts'
 
 // SSG needs to call fetchProjects for every page so we cache the results once
 let hydratedProjects: Projects | null = null

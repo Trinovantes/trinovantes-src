@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import HsrWeaknessCoverage from './HsrWeaknessCoverage.vue'
-import { chooseFromSet } from './chooseFromSet'
-import { getHsrElementIcon, hsrElements, hsrEnemies } from './HsrData'
+import { chooseFromSet } from './chooseFromSet.ts'
+import { getHsrElementIcon, hsrElements, hsrEnemies } from './HsrData.ts'
 
 const TITLE = 'Optimal Honkai Star Rail Enemy Weakness Coverage'
 const CREATED_AT = new Date('2024-03-30').getTime()

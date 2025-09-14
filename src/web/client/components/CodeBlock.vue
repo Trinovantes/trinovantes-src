@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch, onMounted } from 'vue'
-import { sleep } from '@/common/utils/sleep'
+import { sleep } from '../../../common/utils/sleep.ts'
 
 const props = withDefaults(defineProps<{
     code: string
@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{
 })
 
 const highlightedCode = ref<string>()
-watch(() => props, async() => {
+watch(() => props, async () => {
     const { codeToHtml } = await import('shiki')
     highlightedCode.value = await codeToHtml(props.code, {
         lang: props.language,

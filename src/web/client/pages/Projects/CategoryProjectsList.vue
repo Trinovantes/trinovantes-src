@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { Project } from '@/common/Project'
-import { formatUrl } from '@/common/utils/formatUrl'
-import { getRepoUrl } from '@/common/utils/getRepoUrl'
+import type { Project } from '../../../../common/Project.ts'
+import { formatUrl } from '../../../../common/utils/formatUrl.ts'
+import { getRepoUrl } from '../../../../common/utils/getRepoUrl.ts'
 
 withDefaults(defineProps<{
     projects: Array<Project>

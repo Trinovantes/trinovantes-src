@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { computed, h, VNode } from 'vue'
+import { computed, h, type VNode } from 'vue'
 import { useRoute } from 'vue-router'
-import { slugify } from '@/common/utils/slugify'
-import { getIconSvgRaw } from '@/web/client/utils/ResponsiveLoaderAsset'
+import { slugify } from '../../../common/utils/slugify.ts'
+import { getIconSvgRaw } from '../utils/ResponsiveLoaderAsset.ts'
 
 const slots = defineSlots<{
     default: () => Array<VNode>

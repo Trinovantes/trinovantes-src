@@ -6,17 +6,17 @@ import SitemapPlugin from 'sitemap-webpack-plugin'
 import { VueSsrAssetsClientPlugin } from 'vue-ssr-assets-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 import 'webpack-dev-server'
-import { merge } from 'webpack-merge'
-import { Configuration } from 'webpack'
-import { srcWebDir, distWebPublicDir, publicPath, isDev, entryFile, distWebDir, prerenderRoutes, distSsgManifest, srcWebStaticDir, distWebEntryFile } from './BuildConstants'
-import { commonWebConfig } from './webpack.common'
-import { isAnalyze } from './BuildSecret'
+import merge from 'webpack-merge'
+import type { Configuration } from 'webpack'
+import { srcWebDir, distWebPublicDir, publicPath, isDev, entryFile, distWebDir, prerenderRoutes, distSsgManifest, srcWebStaticDir, distWebEntryFile } from './BuildConstants.ts'
+import { commonWebConfig } from './webpack.common.ts'
+import { isAnalyze } from './BuildSecret.ts'
 
 // ----------------------------------------------------------------------------
 // Web
 // ----------------------------------------------------------------------------
 
-export default (async(): Promise<Configuration> => merge(commonWebConfig, {
+export default (async (): Promise<Configuration> => merge.default(commonWebConfig, {
     target: 'web',
 
     entry: {
@@ -81,7 +81,7 @@ export default (async(): Promise<Configuration> => merge(commonWebConfig, {
                 ? '[name].css'
                 : '[name].[contenthash].css',
         }),
-        new SitemapPlugin({
+        new SitemapPlugin.default({
             base: 'https://www.stephenli.ca',
             paths: await prerenderRoutes,
             options: {

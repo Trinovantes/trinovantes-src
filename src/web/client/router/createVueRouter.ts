@@ -1,6 +1,6 @@
-import { createMemoryHistory, createRouter, createWebHistory, Router } from 'vue-router'
-import { getRoutes } from './routes'
-import type { AppContext } from '@/web/AppContext'
+import { createMemoryHistory, createRouter, createWebHistory, type Router } from 'vue-router'
+import { getRoutes } from './routes.ts'
+import type { AppContext } from '../../AppContext.ts'
 
 // ----------------------------------------------------------------------------
 // Router

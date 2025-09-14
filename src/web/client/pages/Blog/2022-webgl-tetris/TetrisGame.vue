@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { GameController } from './TetrisGame/GameController'
+import { GameController } from './TetrisGame/GameController.ts'
 
 const containerRef = ref<HTMLDivElement | null>(null)
 const glCanvasRef = ref<HTMLCanvasElement | null>(null)
@@ -30,7 +30,7 @@ const onFocusOut = () => {
 }
 
 const errorMsg = ref<string | null>(null)
-onMounted(async() => {
+onMounted(async () => {
     if (!containerRef.value) {
         throw new Error('Cannot find containerRef')
     }

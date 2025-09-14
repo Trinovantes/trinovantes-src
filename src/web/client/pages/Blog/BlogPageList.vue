@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { formatDate } from '@/common/utils/formatDate'
-import { loadBlogPosts } from './loadBlogPosts'
-import { useAppContext } from '@/web/AppContext'
+import { formatDate } from '../../../../common/utils/formatDate.ts'
+import { useAppContext } from '../../../AppContext.ts'
+import { loadBlogPosts } from './loadBlogPosts.ts'
 
 const appContext = useAppContext()
 const blogPosts = await loadBlogPosts(appContext)

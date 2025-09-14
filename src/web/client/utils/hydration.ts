@@ -1,6 +1,6 @@
 import devalue from '@nuxt/devalue'
-import { Projects } from '@/common/Project'
-import { BlogPosts } from '@/api/services/fetchBlogPosts'
+import type { BlogPosts } from '../../../api/services/fetchBlogPosts.ts'
+import type { Projects } from '../../../common/Project.ts'
 
 export type HydrationMap = {
     ['__BLOG_POSTS__']: BlogPosts
@@ -12,7 +12,7 @@ export function saveStateToDom<K extends keyof HydrationMap>(key: K, state: Hydr
 }
 
 export function loadStateFromDom<K extends keyof HydrationMap>(key: K): HydrationMap[K] | undefined {
-    if (DEFINE.IS_SSR) {
+    if (__IS_SSR__) {
         return undefined
     }
 

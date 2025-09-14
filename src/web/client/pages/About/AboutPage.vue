@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { getProfilePicture } from '@/web/client/utils/ResponsiveLoaderAsset'
-import { APP_DESC } from '@/common/Constants'
+import { APP_DESC } from '../../../../common/Constants.ts'
+import { getProfilePicture } from '../../utils/ResponsiveLoaderAsset.ts'
 import ContactLinks from './ContactLinks.vue'
 import { useSeoMeta } from '@unhead/vue'
 

@@ -1,9 +1,9 @@
 import { mat4, vec3 } from 'gl-matrix'
-import { GameState } from './state/GameState'
-import { gridHighlightMaterial, gridMaterial, Material } from './state/Material'
-import { createVertexBuffer, FLOAT_SIZE } from './webgl/createBuffer'
-import { createProgram } from './webgl/createProgram'
-import { createFragmentShader, createVertexShader } from './webgl/createShader'
+import { GameState } from './state/GameState.ts'
+import { gridHighlightMaterial, gridMaterial, type Material } from './state/Material.ts'
+import { createVertexBuffer, FLOAT_SIZE } from './webgl/createBuffer.ts'
+import { createProgram } from './webgl/createProgram.ts'
+import { createFragmentShader, createVertexShader } from './webgl/createShader.ts'
 
 const ALL_UNIFORMS = [
     // Vertex Shader

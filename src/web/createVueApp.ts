@@ -8,10 +8,10 @@ import SimpleTable from './client/components/SimpleTable.vue'
 import SvgIcon from './client/components/SvgIcon.vue'
 import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
-import { createVueRouter } from './client/router/createVueRouter'
+import { createVueRouter } from './client/router/createVueRouter.ts'
 import { createRouter } from 'vue-router'
 import type { createHead } from '@unhead/vue/client'
-import type { AppContext } from './AppContext'
+import type { AppContext } from './AppContext.ts'
 
 type VueApp = {
     app: ReturnType<typeof createSSRApp>

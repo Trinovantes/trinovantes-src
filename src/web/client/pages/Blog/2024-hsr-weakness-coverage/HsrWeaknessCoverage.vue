@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { hsrEnemies, getHsrElementIcon, hsrElements, HsrEnemy } from './HsrData'
+import { hsrEnemies, getHsrElementIcon, hsrElements, type HsrEnemy } from './HsrData.ts'
 
 const props = defineProps<{
     teamElements: Array<boolean>

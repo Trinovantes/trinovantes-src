@@ -1,6 +1,6 @@
-import { S3_PUBLIC_URL } from '@/common/Constants'
-import { ProjectImgUrl } from '@/common/Project'
-import { ALL_CACHE_SIZES, CacheSize } from './CacheSize'
+import { S3_PUBLIC_URL } from '../common/Constants.ts'
+import type { ProjectImgUrl } from '../common/Project.ts'
+import { ALL_CACHE_SIZES, type CacheSize } from './CacheSize.ts'
 
 export const S3_CONTENT_TYPE = 'image/jpeg'
 

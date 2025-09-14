@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import pluralize from 'pluralize'
 import { computed, ref } from 'vue'
-import { professions } from './professions'
+import { professions } from './professions.ts'
 
 const TITLE = 'If X Were Hired Like Programmers'
 const CREATED_AT = new Date('2015-02-14').getTime()
