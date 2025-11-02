@@ -1,0 +1,3 @@
+import html from "./index.html?raw"
+
+console.log(html); // <!DOCTYPE html><html><head>...

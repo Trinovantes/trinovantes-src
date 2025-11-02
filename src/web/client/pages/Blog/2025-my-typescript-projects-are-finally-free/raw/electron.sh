@@ -1,0 +1,1 @@
+ELECTRON_RUN_AS_NODE=1 electron --import=./preload.ts main.ts
