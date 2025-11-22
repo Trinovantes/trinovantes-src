@@ -98,6 +98,14 @@ export const projects: Required<Projects> = {
     ],
     ['Userscripts']: [
         {
+            name: 'YouTube Music Sleep Timer',
+            slug: 'userscript-youtube-music-sleep-timer',
+            tech: [
+                'Typescript',
+                'Vue.js',
+            ],
+        },
+        {
             name: 'YouTube Playlist Organizer',
             slug: 'userscript-youtube-playlist-organizer',
             tech: [
