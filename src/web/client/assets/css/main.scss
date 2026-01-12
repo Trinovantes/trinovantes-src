@@ -182,7 +182,7 @@ select{
 
     &.info{
         border-left-color: $info;
-        background-color: color.adjust($info, $lightness: 35%);
+        background-color: color.adjust($info, $lightness: 40%);
     }
 }
 
