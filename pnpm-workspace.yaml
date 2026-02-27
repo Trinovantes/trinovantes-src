@@ -9,3 +9,8 @@ onlyBuiltDependencies:
 patchedDependencies:
   '@nuxt/devalue': patches/@nuxt__devalue.patch
   vue-loader: patches/vue-loader.patch
+
+overrides:
+  '@types/node': '^24'
+  '@types/express': '^4'
+  'express': '^4'
