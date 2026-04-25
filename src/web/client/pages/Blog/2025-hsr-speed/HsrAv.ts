@@ -1,9 +1,20 @@
 export const VONWACQ_ADVANCE = 0.4
+export const EAGLE_ADVANCE = 0.25
+export const DDD_ADVANCE = 0.25
 
 export type HsrTurn = {
     turnNum: number
     actionValue: number
     time: number
+    hasCastUlt?: boolean
+}
+
+export type HsrCharOptions = {
+    speed: number
+    turnsForUlt: number
+    hasVonwacq: boolean
+    hasEagle: boolean
+    hasDdd: boolean
 }
 
 export function getTotalAv(numCycles: number): number {
@@ -45,25 +56,40 @@ export function computeCycleTurns(numCycles: number): Array<HsrTurn> {
     return turns
 }
 
-export function computeUnitTurns(speed: number, maxAv: number, hasVonwacq?: boolean | null): Array<HsrTurn> {
+export function computeUnitTurns(maxAv: number, charOpts: HsrCharOptions): Array<HsrTurn> {
     const turns = new Array<HsrTurn>()
-    const baseActionValue = getAvFromSpeed(speed)
+    const baseActionValue = getAvFromSpeed(charOpts.speed)
     const EPSILON = 0.0001
 
     let turnNum = 0
-    let time = 0
+    let currTurntime = 0
+    let prevTurnTime = 0
 
-    while (time + EPSILON < maxAv) {
-        const actionValue = (turnNum === 0 && hasVonwacq) ? baseActionValue * (1 - VONWACQ_ADVANCE) : baseActionValue
+    while (currTurntime + EPSILON < maxAv) {
+        const isFirstTurn = turnNum === 0
+        const hasCastUlt = turnNum % charOpts.turnsForUlt === 0
 
         turnNum += 1
-        time += actionValue
+        currTurntime += baseActionValue
+
+        if (isFirstTurn && charOpts.hasVonwacq) {
+            currTurntime -= baseActionValue * VONWACQ_ADVANCE
+        }
+        if (hasCastUlt && charOpts.hasEagle) {
+            currTurntime -= baseActionValue * EAGLE_ADVANCE
+        }
+        if (hasCastUlt && charOpts.hasDdd) {
+            currTurntime -= baseActionValue * DDD_ADVANCE
+        }
 
         turns.push({
             turnNum,
-            actionValue,
-            time,
+            actionValue: currTurntime - prevTurnTime,
+            time: currTurntime,
+            hasCastUlt,
         })
+
+        prevTurnTime = currTurntime
     }
 
     return turns

@@ -5,7 +5,7 @@ import type { HsrTurn } from './HsrAv.ts'
 defineProps<{
     label: string
     turns: Array<HsrTurn>
-    getTurnLabel: (turnNum: number) => string
+    getTurnLabel: (turn: HsrTurn) => string
 }>()
 </script>
 
@@ -16,11 +16,11 @@ defineProps<{
         </strong>
 
         <HsrAvTimelineItem
-            v-for="{ turnNum, actionValue, time } in turns"
-            :key="turnNum"
-            :label="getTurnLabel(turnNum)"
-            :height="actionValue * 2"
-            :time="time"
+            v-for="turn in turns"
+            :key="turn.turnNum"
+            :label="getTurnLabel(turn)"
+            :height="turn.actionValue * 2"
+            :time="turn.time"
         />
     </div>
 </template>
