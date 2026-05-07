@@ -4,7 +4,8 @@ FROM ghcr.io/trinovantes/puppeteer-prerender-plugin AS builder
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable pnpm
+RUN corepack use pnpm@latest-11 && \
+    corepack enable pnpm
 
 WORKDIR /app
 
