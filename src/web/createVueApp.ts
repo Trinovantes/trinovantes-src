@@ -10,7 +10,7 @@ import TextHeading from './client/components/TextHeading.vue'
 import BlogPost from './client/pages/Blog/BlogPost.vue'
 import { createVueRouter } from './client/router/createVueRouter.ts'
 import { createRouter } from 'vue-router'
-import type { createHead } from '@unhead/vue/client'
+import type { VueHeadClient } from '@unhead/vue/client'
 import type { AppContext } from './AppContext.ts'
 
 type VueApp = {
@@ -18,7 +18,7 @@ type VueApp = {
     router: ReturnType<typeof createRouter>
 }
 
-export async function createVueApp(head: ReturnType<typeof createHead>, appContext?: AppContext): Promise<VueApp> {
+export async function createVueApp(head: VueHeadClient, appContext?: AppContext): Promise<VueApp> {
     // Vue
     const app = createSSRApp(AppLoader)
     app.component('CodeBlock', CodeBlock)

@@ -1,7 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { renderToString } from '@vue/server-renderer'
 import { SpaServer } from 'puppeteer-prerender-plugin'
-import { renderSSRHead } from '@unhead/ssr'
 import { VueSsrAssetRenderer } from 'vue-ssr-assets-plugin'
 import { fetchProjects } from '../api/services/fetchProjects.ts'
 import { saveStateToDom } from './client/utils/hydration.ts'
@@ -37,7 +36,7 @@ const server = new SpaServer({
             }
 
             const appHtml = await renderToString(app, appContext)
-            const payload = await renderSSRHead(head)
+            const payload = head.render()
             const { header, footer } = assetRenderer.renderAssets(appContext._matchedComponents)
             const headerText = `
                 <script>
