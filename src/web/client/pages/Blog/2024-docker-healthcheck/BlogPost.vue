@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const TITLE = 'Docker HEALTHCHECK Does Not Actually Do Anything without an Orchestrator'
+const TITLE = 'Docker HEALTHCHECK Does Not Actually Do Anything Without an Orchestrator'
 const CREATED_AT = new Date('2024-07-31').getTime()
 
 const healthcheckCode = `
