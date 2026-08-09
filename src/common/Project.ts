@@ -45,6 +45,17 @@ export type Projects = Partial<Record<ProjectCategory, Array<Project>>>
 export const projects: Required<Projects> = {
     ['Apps']: [
         {
+            name: 'Expedition 33 Save File Analyzer',
+            slug: 'expedition33-save-file-analyzer',
+            isPrivate: true,
+            tech: [
+                'Typescript',
+                'Node.js',
+                'Vue.js',
+                'Docker',
+            ],
+        },
+        {
             name: 'StarRail Warp Tracker',
             slug: 'starrail-warp-tracker',
             tech: [
