@@ -9,7 +9,7 @@ export const isDev = (process.env.NODE_ENV === 'development')
 export const gitHash = getGitHash(rootDir)
 export const manifestFile = 'ssr-manifest.json'
 export const entryFile = 'app.html'
-export const publicPath = '/public/'
+export const publicPath = '/assets/'
 export const rawDirRegexp = /\/raw\//
 
 export const distDir = path.resolve(rootDir, 'dist')
@@ -17,7 +17,7 @@ export const distApiDir = path.resolve(distDir, 'api')
 export const distReadmeDir = path.resolve(distDir, 'readme')
 
 export const distWebDir = path.resolve(distDir, 'web')
-export const distWebPublicDir = path.resolve(distWebDir, 'public')
+export const distWebPublicDir = path.resolve(distWebDir, publicPath)
 export const distWebEntryFile = path.resolve(distWebDir, entryFile)
 
 export const distSsgDir = path.resolve(distDir, 'ssg')

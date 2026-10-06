@@ -36,8 +36,8 @@ export default (async (): Promise<Configuration> => merge.default(commonWebConfi
         devMiddleware: {
             index: entryFile,
             writeToDisk: (filePath) => {
-                // Since output.publicPath is '/public', app.html can only be accessed at /public/index.html
-                // Instead, we need to write it to disk and have webpack-dev-server serve it from '/' (contentBasePublicPath)
+                // Since output.publicPath is '/assets', app.html can only be accessed at /assets/index.html
+                // Instead, we need to write it to disk and have webpack-dev-server serve it from '/'
                 return filePath.endsWith('.html')
             },
         },

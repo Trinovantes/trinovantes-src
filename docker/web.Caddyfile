@@ -1,9 +1,9 @@
 :80 {
     encode gzip
 
-	root * /app/dist/web
-	try_files {path} {path}/index.html /404/index.html
-	file_server
+    root * /app/dist/web
+    try_files {path} {path}/index.html /404/index.html
+    file_server
 
     # Remove trailing slash and index.html
     @ssgPath path_regexp static "(.+)/(index\.html)?$"
@@ -16,4 +16,13 @@
     vars CSP_IMG "img-src 'self' data: cdn.stephenli.ca"
     vars CSP_CONNECT "connect-src 'self' cloudflareinsights.com *.ingest.sentry.io"
     header Content-Security-Policy "default-src 'self'; object-src 'none'; base-uri 'self'; {vars.CSP_SCRIPT}; {vars.CSP_STYLE}; {vars.CSP_FONT}; {vars.CSP_IMG}; {vars.CSP_CONNECT};"
+
+    @static path /assets/*
+    header @static Cache-Control "public, max-age=31536000, immutable"
+
+    @html not path /assets/*
+    header @html Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+
+    @favicon path /favicon.*
+    header @favicon Cache-Control "public, max-age=86400, must-revalidate"
 }
