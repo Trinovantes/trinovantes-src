@@ -39,3 +39,6 @@ WORKDIR /app
 # Copy app
 COPY --from=builder /app/dist/          ./dist/
 COPY ./docker/web.Caddyfile             /etc/caddy/Caddyfile
+
+RUN caddy validate --config /etc/caddy/Caddyfile \
+    && caddy fmt --overwrite /etc/caddy/Caddyfile
