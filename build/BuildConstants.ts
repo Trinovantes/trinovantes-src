@@ -12,24 +12,24 @@ export const entryFile = 'app.html'
 export const publicPath = '/assets/'
 export const rawDirRegexp = /\/raw\//
 
-export const distDir = path.resolve(rootDir, 'dist')
-export const distApiDir = path.resolve(distDir, 'api')
-export const distReadmeDir = path.resolve(distDir, 'readme')
+export const distDir = path.join(rootDir, 'dist')
+export const distApiDir = path.join(distDir, 'api')
+export const distReadmeDir = path.join(distDir, 'readme')
 
-export const distWebDir = path.resolve(distDir, 'web')
-export const distWebPublicDir = path.resolve(distWebDir, publicPath)
-export const distWebEntryFile = path.resolve(distWebDir, entryFile)
+export const distWebDir = path.join(distDir, 'web')
+export const distWebPublicDir = path.join(distWebDir, publicPath)
+export const distWebEntryFile = path.join(distWebDir, entryFile)
 
-export const distSsgDir = path.resolve(distDir, 'ssg')
-export const distSsgManifest = path.resolve(distSsgDir, manifestFile)
-export const distSsgTemplate = path.resolve(distSsgDir, 'index.html')
+export const distSsgDir = path.join(distDir, 'ssg')
+export const distSsgManifest = path.join(distSsgDir, manifestFile)
+export const distSsgTemplate = path.join(distSsgDir, 'index.html')
 
-export const srcDir = path.resolve(rootDir, 'src')
-export const srcApiDir = path.resolve(srcDir, 'api')
-export const srcReadmeDir = path.resolve(srcDir, 'readme')
-export const srcWebDir = path.resolve(srcDir, 'web')
-export const srcWebTemplate = path.resolve(srcDir, 'web', 'index.html')
-export const srcWebStaticDir = path.resolve(srcDir, 'web', 'static')
+export const srcDir = path.join(rootDir, 'src')
+export const srcApiDir = path.join(srcDir, 'api')
+export const srcReadmeDir = path.join(srcDir, 'readme')
+export const srcWebDir = path.join(srcDir, 'web')
+export const srcWebTemplate = path.join(srcDir, 'web', 'index.html')
+export const srcWebStaticDir = path.join(srcDir, 'web', 'static')
 
 export const buildConstants = {
     __VUE_OPTIONS_API__: JSON.stringify(false),
